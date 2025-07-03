@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Dark theme (default) */
             --primary: #0F1419;
             --primary-light: #1A202C;
             --secondary: #FF6B35;
@@ -26,8 +27,34 @@
             --border-light: #718096;
             --glass: rgba(255, 255, 255, 0.1);
             --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-strong: rgba(26, 32, 44, 0.8);
             --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             --shadow-xl: 0 35px 60px -12px rgba(0, 0, 0, 0.35);
+        }
+
+        [data-theme="light"] {
+            /* Light theme */
+            --primary: #1E3A8A;
+            --primary-light: #3B82F6;
+            --secondary: #FF6B35;
+            --secondary-light: #FF8A65;
+            --accent: #0EA5E9;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --text-dark: #374151;
+            --background: #F8FAFC;
+            --surface: #FFFFFF;
+            --surface-light: #F1F5F9;
+            --border: #E5E7EB;
+            --border-light: #D1D5DB;
+            --glass: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --glass-strong: rgba(255, 255, 255, 0.95);
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            --shadow-xl: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
         }
 
         * {
@@ -42,6 +69,7 @@
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
+            transition: all 0.3s ease;
         }
 
         /* Animated Background */
@@ -57,6 +85,7 @@
                         radial-gradient(circle at 40% 80%, rgba(0, 191, 166, 0.1) 0%, transparent 50%);
             pointer-events: none;
             z-index: -1;
+            transition: opacity 0.3s ease;
         }
 
         /* Glass morphism effect */
@@ -68,9 +97,36 @@
         }
 
         .glass-strong {
-            background: rgba(26, 32, 44, 0.8);
+            background: var(--glass-strong);
             backdrop-filter: blur(30px);
             border: 1px solid var(--glass-border);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background: var(--accent);
+            color: white;
         }
 
         /* Login Screen */
@@ -134,7 +190,7 @@
             letter-spacing: 0.5px;
         }
 
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 1rem 1.5rem;
             background: var(--glass);
@@ -145,7 +201,7 @@
             transition: all 0.3s ease;
         }
 
-        .form-group input:focus {
+        .form-group input:focus, .form-group select:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
@@ -638,6 +694,52 @@
             box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
         }
 
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--glass-border);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .payment-option {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-option:hover,
+        .payment-option.selected {
+            border-color: var(--accent);
+            background: rgba(0, 217, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .payment-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
         /* Customer Profile Section */
         .profile-section {
             background: var(--glass);
@@ -784,6 +886,10 @@
             .price-management {
                 grid-template-columns: 1fr;
             }
+
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Animations */
@@ -827,7 +933,7 @@
         .text-warning { color: var(--warning); }
         .text-error { color: var(--error); }
         .font-bold { font-weight: 700; }
-        .font-semibold { color: 600; }
+        .font-semibold { font-weight: 600; }
         
         /* Scrollbar Styling */
         ::-webkit-scrollbar {
@@ -850,6 +956,11 @@
     </style>
 </head>
 <body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-sun" id="themeIcon"></i>
+    </div>
+
     <!-- Login Screen -->
     <div id="loginScreen" class="login-container">
         <div class="login-box animate-fadeInUp">
@@ -1035,40 +1146,54 @@
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
                                 <div>
                                     <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Fuel Type</label>
-                                    <select style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 15px; color: var(--text-primary);">
-                                        <option>Premium Gas</option>
-                                        <option>Regular Gas</option>
-                                        <option>Diesel</option>
+                                    <select id="fuelTypeSelect" style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 15px; color: var(--text-primary);">
+                                        <option value="premium">Premium Gas</option>
+                                        <option value="regular">Regular Gas</option>
+                                        <option value="diesel">Diesel</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Amount</label>
-                                    <select style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 15px; color: var(--text-primary);">
-                                        <option>Fill Tank (15 gal)</option>
-                                        <option>10 gallons</option>
-                                        <option>20 gallons</option>
-                                        <option>Custom amount</option>
+                                    <select id="amountSelect" style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 15px; color: var(--text-primary);">
+                                        <option value="15">Fill Tank (15 gal)</option>
+                                        <option value="10">10 gallons</option>
+                                        <option value="20">20 gallons</option>
+                                        <option value="custom">Custom amount</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div style="background: var(--glass); padding: 2rem; border-radius: 20px; margin-bottom: 2rem;">
+                            <div style="background: var(--glass); padding: 2rem; border-radius: 20px; margin-bottom: 2rem;" id="pricingBreakdown">
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                                    <span>Fuel Cost (15 gal × $3.79):</span>
-                                    <span>$56.85</span>
+                                    <span>Fuel Cost (<span id="gallonAmount">15</span> gal × $<span id="fuelPriceDisplay">3.79</span>):</span>
+                                    <span id="fuelCostDisplay">$56.85</span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
                                     <span>Delivery Fee:</span>
-                                    <span>$4.99</span>
+                                    <span id="deliveryFeeDisplay">$4.99</span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
                                     <span class="text-success">You Save vs Gas Station:</span>
-                                    <span class="text-success font-bold">$3.15</span>
+                                    <span class="text-success font-bold" id="savingsDisplay">$3.15</span>
                                 </div>
                                 <hr style="border: none; height: 1px; background: var(--border); margin: 1rem 0;">
                                 <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 700;">
                                     <span>Total:</span>
-                                    <span>$61.84</span>
+                                    <span id="totalCostDisplay">$61.84</span>
+                                </div>
+                            </div>
+
+                            <!-- Payment Methods -->
+                            <div class="payment-methods">
+                                <div class="payment-option selected" data-payment="stripe">
+                                    <div class="payment-icon">💳</div>
+                                    <div style="font-weight: 600;">Credit Card</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Powered by Stripe</div>
+                                </div>
+                                <div class="payment-option" data-payment="zelle">
+                                    <div class="payment-icon">📱</div>
+                                    <div style="font-weight: 600;">Zelle</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Quick Bank Transfer</div>
                                 </div>
                             </div>
 
@@ -1093,7 +1218,7 @@
                             <input type="text" class="search-input" id="priceLocationInput" placeholder="Enter address or ZIP code" value="Miami Beach, FL">
                             <button class="btn btn-secondary" style="width: 100%; margin-top: 1rem;" onclick="searchPrices()">
                                 <i class="fas fa-search"></i>
-                                Search Prices
+                                <span id="searchBtnText">Search Prices</span>
                             </button>
                         </div>
 
@@ -1141,7 +1266,7 @@
 
                             <div id="addressesTab" class="tab-content hidden">
                                 <div class="vehicle-card">
-                                    <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                                         <h4 style="color: var(--text-primary);">🏠 Home</h4>
                                         <span style="color: var(--success); font-size: 0.8rem;">Primary</span>
                                     </div>
@@ -1163,12 +1288,24 @@
 
                             <div id="paymentTab" class="tab-content hidden">
                                 <div class="vehicle-card">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                                         <div>
                                             <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">💳 Visa ****1234</h4>
                                             <p style="color: var(--text-secondary);">Expires 12/25</p>
                                         </div>
                                         <span style="color: var(--success); font-size: 0.8rem;">Default</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="vehicle-card">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                        <div>
+                                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">📱 Zelle</h4>
+                                            <p style="color: var(--text-secondary);">rexistech@gmail.com</p>
+                                        </div>
+                                        <button style="background: none; border: none; color: var(--accent); cursor: pointer;">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -1322,30 +1459,30 @@
                             <div class="price-management">
                                 <div class="price-input-group">
                                     <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.8rem; display: block;">Our Premium Gas Price</label>
-                                    <input type="number" class="price-input" value="3.79" step="0.01">
+                                    <input type="number" class="price-input" id="premiumPriceInput" value="3.79" step="0.01">
                                     <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.5rem;">Current market avg: $4.04</p>
                                 </div>
                                 
                                 <div class="price-input-group">
                                     <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.8rem; display: block;">Our Regular Gas Price</label>
-                                    <input type="number" class="price-input" value="3.59" step="0.01">
+                                    <input type="number" class="price-input" id="regularPriceInput" value="3.59" step="0.01">
                                     <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.5rem;">Current market avg: $3.84</p>
                                 </div>
                                 
                                 <div class="price-input-group">
                                     <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.8rem; display: block;">Our Diesel Price</label>
-                                    <input type="number" class="price-input" value="4.12" step="0.01">
+                                    <input type="number" class="price-input" id="dieselPriceInput" value="4.12" step="0.01">
                                     <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.5rem;">Current market avg: $4.35</p>
                                 </div>
                                 
                                 <div class="price-input-group">
                                     <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.8rem; display: block;">Delivery Fee</label>
-                                    <input type="number" class="price-input" value="4.99" step="0.01">
+                                    <input type="number" class="price-input" id="deliveryFeeInput" value="4.99" step="0.01">
                                     <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.5rem;">Standard delivery fee</p>
                                 </div>
                             </div>
                             
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" id="updatePricesBtn">
                                 <i class="fas fa-save"></i>
                                 Update Prices
                             </button>
@@ -1418,14 +1555,14 @@
                             </div>
 
                             <div class="location-search">
-                                <input type="text" class="search-input" placeholder="Enter ZIP or address" value="33139">
-                                <button class="btn btn-secondary" style="width: 100%; margin-top: 1rem; padding: 0.8rem;">
+                                <input type="text" class="search-input" id="mobileLocationInput" placeholder="Enter ZIP or address" value="33139">
+                                <button class="btn btn-secondary" style="width: 100%; margin-top: 1rem; padding: 0.8rem;" onclick="searchMobilePrices()">
                                     <i class="fas fa-search"></i>
-                                    Find Gas Prices
+                                    <span id="mobileSearchBtnText">Find Gas Prices</span>
                                 </button>
                             </div>
 
-                            <div style="margin-bottom: 1.5rem;">
+                            <div style="margin-bottom: 1.5rem;" id="mobileStationsContainer">
                                 <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem;">⛽ Nearby Stations</h4>
                                 
                                 <div style="background: var(--glass); border-radius: 15px; padding: 1rem; margin-bottom: 0.8rem; border: 1px solid var(--accent);">
@@ -1435,8 +1572,8 @@
                                             <p style="color: var(--text-secondary); font-size: 0.8rem;">0.5 mi • Fast delivery</p>
                                         </div>
                                         <div style="text-align: right;">
-                                            <div style="color: var(--error); font-size: 0.8rem;">Gas: $4.04</div>
-                                            <div style="color: var(--success); font-size: 1.1rem; font-weight: bold;">Us: $3.79</div>
+                                            <div style="color: var(--error); font-size: 0.8rem;">Gas: $<span class="mobile-gas-price">4.04</span></div>
+                                            <div style="color: var(--success); font-size: 1.1rem; font-weight: bold;">Us: $<span class="mobile-our-price">3.79</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -1448,8 +1585,8 @@
                                             <p style="color: var(--text-secondary); font-size: 0.8rem;">1.2 mi • Quick service</p>
                                         </div>
                                         <div style="text-align: right;">
-                                            <div style="color: var(--error); font-size: 0.8rem;">Gas: $3.98</div>
-                                            <div style="color: var(--success); font-size: 1.1rem; font-weight: bold;">Us: $3.79</div>
+                                            <div style="color: var(--error); font-size: 0.8rem;">Gas: $<span class="mobile-gas-price">3.98</span></div>
+                                            <div style="color: var(--success); font-size: 1.1rem; font-weight: bold;">Us: $<span class="mobile-our-price">3.79</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -1459,7 +1596,7 @@
                                 <h4 style="margin-bottom: 1rem;">Quick Order</h4>
                                 <div style="font-size: 0.9rem; margin-bottom: 0.5rem;">⛽ Premium Gas • 15 gallons</div>
                                 <div style="font-size: 0.9rem; margin-bottom: 0.5rem;">🚗 Honda Civic • 📍 Miami Beach</div>
-                                <div style="font-size: 0.9rem; margin-bottom: 1rem;">💰 Total: $61.84 (Save $3.15)</div>
+                                <div style="font-size: 0.9rem; margin-bottom: 1rem;">💰 Total: $<span id="mobileTotalDisplay">61.84</span> (Save $<span id="mobileSavingsDisplay">3.15</span>)</div>
                                 <button id="mobileOrderBtn" style="background: white; color: var(--primary); border: none; padding: 0.8rem; border-radius: 15px; font-weight: bold; width: 100%;">
                                     <i class="fas fa-shopping-cart"></i> Order Now
                                 </button>
@@ -1481,65 +1618,39 @@
         let currentUser = null;
         let isAdmin = false;
         let activeSection = 'dashboard';
+        let currentPrices = {
+            premium: 3.79,
+            regular: 3.59,
+            diesel: 4.12,
+            deliveryFee: 4.99
+        };
+        let selectedPayment = 'stripe';
 
-        // Gas station data
-        const gasStations = [
-            {
-                name: 'Shell',
-                icon: '🛡️',
-                distance: '0.5 mi',
-                location: 'Biscayne Blvd',
-                rating: 4.8,
-                gasPrice: 4.04,
-                ourPrice: 3.79,
-                features: ['Fast delivery', '24/7 available']
-            },
-            {
-                name: 'BP',
-                icon: '🟢',
-                distance: '1.2 mi',
-                location: 'Flagler Street',
-                rating: 4.5,
-                gasPrice: 3.98,
-                ourPrice: 3.79,
-                features: ['Quick service', 'Premium quality']
-            },
-            {
-                name: 'Chevron',
-                icon: '⚡',
-                distance: '0.8 mi',
-                location: 'Collins Ave',
-                rating: 4.6,
-                gasPrice: 4.09,
-                ourPrice: 3.79,
-                features: ['Premium quality', 'Loyalty rewards']
-            },
-            {
-                name: 'Exxon',
-                icon: '🔴',
-                distance: '1.5 mi',
-                location: 'US Highway 1',
-                rating: 4.4,
-                gasPrice: 4.15,
-                ourPrice: 3.79,
-                features: ['24/7 available', 'Car wash']
-            },
-            {
-                name: 'Sunoco',
-                icon: '☀️',
-                distance: '2.1 mi',
-                location: 'Miami Beach',
-                rating: 4.3,
-                gasPrice: 3.95,
-                ourPrice: 3.79,
-                features: ['Beach location', 'Quick fill']
-            }
-        ];
+        // Gas station data with ZIP code mapping
+        const gasStationsByZip = {
+            '33139': [ // Miami Beach
+                { name: 'Shell', icon: '🛡️', distance: '0.5 mi', location: 'Biscayne Blvd', rating: 4.8, gasPrice: 4.04, features: ['Fast delivery', '24/7 available'] },
+                { name: 'BP', icon: '🟢', distance: '1.2 mi', location: 'Flagler Street', rating: 4.5, gasPrice: 3.98, features: ['Quick service', 'Premium quality'] },
+                { name: 'Chevron', icon: '⚡', distance: '0.8 mi', location: 'Collins Ave', rating: 4.6, gasPrice: 4.09, features: ['Premium quality', 'Loyalty rewards'] }
+            ],
+            '33132': [ // Downtown Miami
+                { name: 'Shell', icon: '🛡️', distance: '0.3 mi', location: 'Brickell Ave', rating: 4.9, gasPrice: 4.12, features: ['Downtown location', '24/7 available'] },
+                { name: 'Exxon', icon: '🔴', distance: '0.7 mi', location: 'Flagler Street', rating: 4.4, gasPrice: 4.18, features: ['Quick service', 'Car wash'] },
+                { name: 'Sunoco', icon: '☀️', distance: '1.1 mi', location: 'NE 2nd Ave', rating: 4.2, gasPrice: 4.05, features: ['Competitive prices', 'Convenience store'] }
+            ],
+            '33134': [ // Coral Gables
+                { name: 'Chevron', icon: '⚡', distance: '0.4 mi', location: 'Coral Way', rating: 4.7, gasPrice: 4.15, features: ['Premium quality', 'Full service'] },
+                { name: 'Shell', icon: '🛡️', distance: '0.9 mi', location: 'US-1', rating: 4.6, gasPrice: 4.08, features: ['24/7 available', 'Quick fill'] },
+                { name: 'BP', icon: '🟢', distance: '1.3 mi', location: 'LeJeune Rd', rating: 4.3, gasPrice: 4.02, features: ['Good prices', 'Clean facilities'] }
+            ]
+        };
 
         // DOM Elements
         const loginScreen = document.getElementById('loginScreen');
         const signupScreen = document.getElementById('signupScreen');
         const appContainer = document.getElementById('appContainer');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
 
         // Initialize App
         function init() {
@@ -1548,6 +1659,9 @@
             populateGasStations();
             setupNavigation();
             setupTabs();
+            setupThemeToggle();
+            setupPaymentMethods();
+            setupPricingUpdates();
         }
 
         function setupEventListeners() {
@@ -1569,6 +1683,186 @@
 
             // Location search
             document.getElementById('locationInput').addEventListener('input', updatePricing);
+            document.getElementById('fuelTypeSelect').addEventListener('change', updatePricing);
+            document.getElementById('amountSelect').addEventListener('change', updatePricing);
+
+            // Admin price updates
+            document.getElementById('updatePricesBtn').addEventListener('click', updateAdminPrices);
+        }
+
+        function setupThemeToggle() {
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                themeIcon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+                
+                showToast(`Switched to ${newTheme} mode`);
+            });
+        }
+
+        function setupPaymentMethods() {
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+                    option.classList.add('selected');
+                    selectedPayment = option.dataset.payment;
+                    showToast(`Payment method: ${selectedPayment === 'stripe' ? 'Credit Card' : 'Zelle'}`);
+                });
+            });
+        }
+
+        function setupPricingUpdates() {
+            // Real-time pricing updates
+            const priceInputs = ['premiumPriceInput', 'regularPriceInput', 'dieselPriceInput', 'deliveryFeeInput'];
+            priceInputs.forEach(inputId => {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.addEventListener('input', () => {
+                        const fuelType = inputId.replace('PriceInput', '').replace('Input', '');
+                        if (fuelType === 'deliveryFee') {
+                            currentPrices.deliveryFee = parseFloat(input.value);
+                        } else {
+                            currentPrices[fuelType] = parseFloat(input.value);
+                        }
+                        updatePricing();
+                    });
+                }
+            });
+        }
+
+        function updateAdminPrices() {
+            const premium = parseFloat(document.getElementById('premiumPriceInput').value);
+            const regular = parseFloat(document.getElementById('regularPriceInput').value);
+            const diesel = parseFloat(document.getElementById('dieselPriceInput').value);
+            const deliveryFee = parseFloat(document.getElementById('deliveryFeeInput').value);
+
+            currentPrices = { premium, regular, diesel, deliveryFee };
+            
+            updatePricing();
+            populateGasStations();
+            updateMobileView();
+            
+            showToast('Prices updated successfully! Changes reflected across all customer screens.');
+        }
+
+        function updatePricing() {
+            const fuelType = document.getElementById('fuelTypeSelect')?.value || 'premium';
+            const amount = parseFloat(document.getElementById('amountSelect')?.value || 15);
+            
+            const fuelPrice = currentPrices[fuelType];
+            const fuelCost = fuelPrice * amount;
+            const deliveryFee = currentPrices.deliveryFee;
+            const total = fuelCost + deliveryFee;
+            
+            // Calculate savings (assuming gas station price is 6% higher)
+            const gasStationPrice = fuelPrice * 1.06;
+            const savings = (gasStationPrice - fuelPrice) * amount;
+
+            // Update displays
+            if (document.getElementById('gallonAmount')) document.getElementById('gallonAmount').textContent = amount;
+            if (document.getElementById('fuelPriceDisplay')) document.getElementById('fuelPriceDisplay').textContent = fuelPrice.toFixed(2);
+            if (document.getElementById('fuelCostDisplay')) document.getElementById('fuelCostDisplay').textContent = `$${fuelCost.toFixed(2)}`;
+            if (document.getElementById('deliveryFeeDisplay')) document.getElementById('deliveryFeeDisplay').textContent = `$${deliveryFee.toFixed(2)}`;
+            if (document.getElementById('savingsDisplay')) document.getElementById('savingsDisplay').textContent = `$${savings.toFixed(2)}`;
+            if (document.getElementById('totalCostDisplay')) document.getElementById('totalCostDisplay').textContent = `$${total.toFixed(2)}`;
+            
+            // Update mobile view
+            if (document.getElementById('mobileTotalDisplay')) document.getElementById('mobileTotalDisplay').textContent = total.toFixed(2);
+            if (document.getElementById('mobileSavingsDisplay')) document.getElementById('mobileSavingsDisplay').textContent = savings.toFixed(2);
+        }
+
+        function updateMobileView() {
+            // Update mobile pricing displays
+            document.querySelectorAll('.mobile-our-price').forEach(el => {
+                el.textContent = currentPrices.premium.toFixed(2);
+            });
+        }
+
+        function searchPrices() {
+            const location = document.getElementById('priceLocationInput').value;
+            const searchBtn = document.getElementById('searchBtnText');
+            
+            searchBtn.innerHTML = '<div class="loading"></div> Searching...';
+            
+            setTimeout(() => {
+                searchBtn.textContent = 'Search Prices';
+                
+                if (location) {
+                    const zipCode = extractZipCode(location);
+                    populateGasStations(zipCode);
+                    showToast(`Found gas stations near ${location}`);
+                } else {
+                    populateGasStations();
+                }
+            }, 1500);
+        }
+
+        function searchMobilePrices() {
+            const location = document.getElementById('mobileLocationInput').value;
+            const searchBtn = document.getElementById('mobileSearchBtnText');
+            
+            searchBtn.innerHTML = '<div class="loading"></div> Searching...';
+            
+            setTimeout(() => {
+                searchBtn.textContent = 'Find Gas Prices';
+                
+                if (location) {
+                    const zipCode = extractZipCode(location);
+                    updateMobileStations(zipCode);
+                    showToast(`Found gas stations near ${location}`);
+                } else {
+                    updateMobileStations();
+                }
+            }, 1500);
+        }
+
+        function extractZipCode(location) {
+            // Extract ZIP code from location string
+            const zipMatch = location.match(/\b\d{5}\b/);
+            if (zipMatch) return zipMatch[0];
+            
+            // Map common Miami locations to ZIP codes
+            const locationMap = {
+                'miami beach': '33139',
+                'downtown': '33132',
+                'coral gables': '33134',
+                'brickell': '33132'
+            };
+            
+            const normalized = location.toLowerCase();
+            for (const [key, zip] of Object.entries(locationMap)) {
+                if (normalized.includes(key)) return zip;
+            }
+            
+            return '33139'; // Default to Miami Beach
+        }
+
+        function updateMobileStations(zipCode = '33139') {
+            const stations = gasStationsByZip[zipCode] || gasStationsByZip['33139'];
+            const container = document.getElementById('mobileStationsContainer');
+            
+            // Keep the header and update stations
+            const stationsHtml = stations.slice(0, 2).map((station, index) => `
+                <div style="background: var(--glass); border-radius: 15px; padding: 1rem; margin-bottom: 0.8rem; border: 1px solid ${index === 0 ? 'var(--accent)' : 'var(--border)'};">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h5 style="color: var(--text-primary); margin-bottom: 0.3rem;">${station.icon} ${station.name}</h5>
+                            <p style="color: var(--text-secondary); font-size: 0.8rem;">${station.distance} • ${station.features[0]}</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: var(--error); font-size: 0.8rem;">Gas: $${station.gasPrice.toFixed(2)}</div>
+                            <div style="color: var(--success); font-size: 1.1rem; font-weight: bold;">Us: $${currentPrices.premium.toFixed(2)}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            container.innerHTML = `
+                <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem;">⛽ Nearby Stations</h4>
+                ${stationsHtml}
+            `;
         }
 
         function handleLogin(e) {
@@ -1592,7 +1886,7 @@
             const password = document.getElementById('signupPassword').value;
             
             if (username && email && password) {
-                alert(`Welcome to FuelFlow, ${username}! Your account has been created.`);
+                showToast(`Welcome to FuelFlow, ${username}! Your account has been created.`);
                 loginAsUser(username);
             } else {
                 alert('Please fill in all fields');
@@ -1605,6 +1899,7 @@
             updateUserDisplay();
             document.getElementById('adminNav').style.display = 'block';
             showApp();
+            showToast('Logged in as Administrator');
         }
 
         function loginAsUser(username) {
@@ -1613,6 +1908,7 @@
             updateUserDisplay();
             document.getElementById('adminNav').style.display = 'none';
             showApp();
+            showToast(`Welcome back, ${username}!`);
         }
 
         function loginAsGuest() {
@@ -1621,6 +1917,7 @@
             updateUserDisplay();
             document.getElementById('adminNav').style.display = 'none';
             showApp();
+            showToast('Exploring as guest');
         }
 
         function logout() {
@@ -1629,6 +1926,7 @@
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
             showLoginScreen();
+            showToast('Logged out successfully');
         }
 
         function updateUserDisplay() {
@@ -1652,6 +1950,7 @@
             loginScreen.classList.add('hidden');
             signupScreen.classList.add('hidden');
             appContainer.classList.add('active');
+            updatePricing();
         }
 
         function setupNavigation() {
@@ -1694,12 +1993,17 @@
             });
         }
 
-        function populateGasStations() {
+        function populateGasStations(zipCode = '33139') {
             const container = document.getElementById('gasStationsList');
+            if (!container) return;
+            
             container.innerHTML = '';
             
-            gasStations.forEach((station, index) => {
-                const savings = (station.gasPrice - station.ourPrice).toFixed(2);
+            const stations = gasStationsByZip[zipCode] || gasStationsByZip['33139'];
+            
+            stations.forEach((station, index) => {
+                const ourPrice = currentPrices.premium;
+                const savings = (station.gasPrice - ourPrice).toFixed(2);
                 const savingsPercent = ((savings / station.gasPrice) * 100).toFixed(0);
                 
                 const stationElement = document.createElement('div');
@@ -1721,7 +2025,7 @@
                         </div>
                         <div class="price-row">
                             <span class="price-label">FuelFlow:</span>
-                            <span class="price our-price">$${station.ourPrice.toFixed(2)}</span>
+                            <span class="price our-price">$${ourPrice.toFixed(2)}</span>
                         </div>
                         <div class="savings">Save $${savings} (${savingsPercent}%)</div>
                     </div>
@@ -1730,40 +2034,23 @@
                 stationElement.addEventListener('click', () => {
                     document.querySelectorAll('.gas-station').forEach(s => s.classList.remove('selected'));
                     stationElement.classList.add('selected');
+                    showToast(`Selected ${station.name} station`);
                 });
                 
                 container.appendChild(stationElement);
             });
         }
 
-        function searchPrices() {
-            const location = document.getElementById('priceLocationInput').value;
-            if (location) {
-                // Simulate searching with location
-                populateGasStations();
-                // Add a toast notification
-                showToast('Prices updated for ' + location);
-            }
-        }
-
-        function updatePricing() {
-            const location = document.getElementById('locationInput').value;
-            // Simulate real-time pricing updates based on location
-            if (location) {
-                // Update mobile view pricing as well
-                showToast('Pricing updated for your location');
-            }
-        }
-
         function handleOrder() {
             const button = event.target;
             const originalText = button.innerHTML;
+            const paymentMethod = selectedPayment === 'stripe' ? 'Credit Card' : 'Zelle';
             
             button.innerHTML = '<i class="fas fa-check"></i> Order Placed!';
             button.style.background = 'var(--success)';
             button.disabled = true;
             
-            showToast('Order placed successfully! Driver will arrive in 12 minutes.');
+            showToast(`Order placed successfully using ${paymentMethod}! Driver will arrive in 12 minutes.`);
             
             setTimeout(() => {
                 button.innerHTML = originalText;
@@ -1776,7 +2063,7 @@
             const toast = document.createElement('div');
             toast.style.cssText = `
                 position: fixed;
-                top: 20px;
+                top: 80px;
                 right: 20px;
                 background: var(--glass-strong);
                 color: var(--text-primary);
@@ -1786,6 +2073,8 @@
                 backdrop-filter: blur(20px);
                 z-index: 10000;
                 animation: fadeInUp 0.3s ease-out;
+                max-width: 300px;
+                box-shadow: var(--shadow);
             `;
             toast.textContent = message;
             
