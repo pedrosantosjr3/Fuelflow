@@ -9,52 +9,58 @@
     <style>
         :root {
             /* Dark theme (default) */
-            --primary: #0F1419;
-            --primary-light: #1A202C;
+            --primary: #0B1426;
+            --primary-light: #1E293B;
             --secondary: #FF6B35;
             --secondary-light: #FF8A65;
             --accent: #00D9FF;
-            --success: #00BFA6;
-            --warning: #FFB800;
-            --error: #FF5252;
-            --text-primary: #FFFFFF;
-            --text-secondary: #A0AEC0;
-            --text-dark: #2D3748;
-            --background: #0A0E13;
-            --surface: #1A202C;
-            --surface-light: #2D3748;
-            --border: #4A5568;
-            --border-light: #718096;
-            --glass: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --glass-strong: rgba(26, 32, 44, 0.8);
-            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            --shadow-xl: 0 35px 60px -12px rgba(0, 0, 0, 0.35);
+            --accent-dark: #0891B2;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --text-dark: #334155;
+            --background: #020617;
+            --surface: #1E293B;
+            --surface-light: #334155;
+            --border: #475569;
+            --border-light: #64748B;
+            --glass: rgba(248, 250, 252, 0.08);
+            --glass-border: rgba(248, 250, 252, 0.12);
+            --glass-strong: rgba(30, 41, 59, 0.9);
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            --shadow-xl: 0 35px 60px -12px rgba(0, 0, 0, 0.5);
+            --gradient-primary: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+            --gradient-surface: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
         }
 
         [data-theme="light"] {
             /* Light theme */
-            --primary: #1E3A8A;
+            --primary: #1E40AF;
             --primary-light: #3B82F6;
             --secondary: #FF6B35;
             --secondary-light: #FF8A65;
             --accent: #0EA5E9;
+            --accent-dark: #0369A1;
             --success: #10B981;
             --warning: #F59E0B;
             --error: #EF4444;
-            --text-primary: #1F2937;
-            --text-secondary: #6B7280;
-            --text-dark: #374151;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-dark: #334155;
             --background: #F8FAFC;
             --surface: #FFFFFF;
             --surface-light: #F1F5F9;
-            --border: #E5E7EB;
-            --border-light: #D1D5DB;
-            --glass: rgba(255, 255, 255, 0.8);
-            --glass-border: rgba(0, 0, 0, 0.1);
+            --border: #E2E8F0;
+            --border-light: #CBD5E1;
+            --glass: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(0, 0, 0, 0.08);
             --glass-strong: rgba(255, 255, 255, 0.95);
-            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-            --shadow-xl: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 35px 60px -12px rgba(0, 0, 0, 0.15);
+            --gradient-primary: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+            --gradient-surface: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
         }
 
         * {
@@ -72,7 +78,7 @@
             transition: all 0.3s ease;
         }
 
-        /* Animated Background */
+        /* Enhanced Animated Background */
         body::before {
             content: '';
             position: fixed;
@@ -80,61 +86,77 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 80%, rgba(0, 191, 166, 0.1) 0%, transparent 50%);
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 53, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(0, 217, 255, 0.08) 0%, transparent 40%);
             pointer-events: none;
             z-index: -1;
-            transition: opacity 0.3s ease;
+            animation: float 20s infinite linear;
         }
 
-        /* Glass morphism effect */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(10px) rotate(-1deg); }
+        }
+
+        /* Enhanced Glass morphism */
         .glass {
             background: var(--glass);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(24px);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
         }
 
         .glass-strong {
             background: var(--glass-strong);
-            backdrop-filter: blur(30px);
+            backdrop-filter: blur(32px);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-xl);
         }
 
-        /* Settings Panel */
+        /* Improved Settings Panel */
         .settings-btn {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 24px;
+            right: 24px;
             background: var(--glass);
             border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            padding: 12px 16px;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
             color: var(--text-primary);
             cursor: pointer;
             z-index: 1000;
             transition: all 0.3s ease;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(24px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
         }
 
         .settings-btn:hover {
-            background: var(--accent);
-            transform: translateY(-2px);
+            background: var(--gradient-primary);
+            transform: translateY(-2px) scale(1.05);
+            color: white;
         }
 
         .settings-panel {
             position: fixed;
             top: 0;
-            right: -400px;
-            width: 400px;
+            right: -420px;
+            width: 420px;
             height: 100vh;
             background: var(--glass-strong);
-            backdrop-filter: blur(30px);
+            backdrop-filter: blur(32px);
             border-left: 1px solid var(--glass-border);
             z-index: 1001;
-            transition: right 0.3s ease;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow-y: auto;
             padding: 2rem;
         }
@@ -149,11 +171,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
         }
 
         .settings-overlay.active {
@@ -161,86 +184,7 @@
             visibility: visible;
         }
 
-        .settings-section {
-            margin-bottom: 2rem;
-        }
-
-        .settings-section h3 {
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .settings-option {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            margin-bottom: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .settings-option:hover {
-            background: var(--surface-light);
-        }
-
-        .toggle-switch {
-            position: relative;
-            width: 50px;
-            height: 25px;
-            background: var(--border);
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-switch.active {
-            background: var(--accent);
-        }
-
-        .toggle-switch::after {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 21px;
-            height: 21px;
-            background: white;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-switch.active::after {
-            transform: translateX(25px);
-        }
-
-        /* Save Button */
-        .save-btn {
-            background: linear-gradient(135deg, var(--success), var(--accent));
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-left: 10px;
-        }
-
-        .save-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 191, 166, 0.3);
-        }
-
-        .save-btn:active {
-            transform: translateY(0);
-        }
-
-        /* Login Screen */
+        /* Enhanced Login Screen */
         .login-screen, .signup-screen {
             position: fixed;
             top: 0;
@@ -252,7 +196,7 @@
             justify-content: center;
             background: var(--background);
             z-index: 999;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
         }
 
         .login-screen.hidden, .signup-screen.hidden {
@@ -262,32 +206,36 @@
 
         .login-box {
             background: var(--glass-strong);
-            backdrop-filter: blur(30px);
+            backdrop-filter: blur(32px);
             border: 1px solid var(--glass-border);
-            border-radius: 25px;
+            border-radius: 32px;
             padding: 3rem;
             width: 90%;
-            max-width: 450px;
+            max-width: 480px;
             text-align: center;
-            animation: slideInUp 0.6s ease;
+            animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-xl);
         }
 
         .logo {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 1rem;
+            letter-spacing: -0.02em;
         }
 
         .subtitle {
             color: var(--text-secondary);
             margin-bottom: 2rem;
             font-size: 1.1rem;
+            font-weight: 500;
         }
 
+        /* Enhanced Form Styling */
         .form-group {
             margin-bottom: 1.5rem;
             text-align: left;
@@ -296,49 +244,70 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text-primary);
+            font-size: 0.9rem;
         }
 
         .form-input {
             width: 100%;
-            padding: 1rem;
+            padding: 1.2rem;
             background: var(--glass);
             border: 1px solid var(--glass-border);
-            border-radius: 10px;
+            border-radius: 16px;
             color: var(--text-primary);
             font-size: 1rem;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(16px);
             transition: all 0.3s ease;
+            font-weight: 500;
         }
 
         .form-input:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
+            box-shadow: 0 0 0 4px rgba(0, 217, 255, 0.1);
+            transform: translateY(-1px);
         }
 
         .form-input::placeholder {
             color: var(--text-secondary);
         }
 
+        /* Enhanced Buttons */
         .btn {
-            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            background: var(--gradient-primary);
             color: white;
             border: none;
-            padding: 1rem 2rem;
-            border-radius: 10px;
+            padding: 1.2rem 2rem;
+            border-radius: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 1rem;
             width: 100%;
             margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 217, 255, 0.3);
+            box-shadow: 0 12px 24px rgba(0, 217, 255, 0.3);
         }
 
         .btn:active {
@@ -356,12 +325,12 @@
             color: white;
         }
 
-        /* Main App Layout */
+        /* Enhanced App Layout */
         .app-container {
             display: none;
             min-height: 100vh;
             padding: 2rem;
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
@@ -374,19 +343,21 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
-            padding: 1rem 2rem;
+            padding: 1.5rem 2rem;
             background: var(--glass-strong);
-            border-radius: 20px;
-            backdrop-filter: blur(30px);
+            border-radius: 24px;
+            backdrop-filter: blur(32px);
+            box-shadow: var(--shadow);
         }
 
         .app-logo {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.02em;
         }
 
         .user-info {
@@ -400,31 +371,33 @@
             color: white;
             border: none;
             padding: 0.8rem 1.5rem;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-weight: 600;
         }
 
         .logout-btn:hover {
-            background: #d32f2f;
+            background: #dc2626;
             transform: translateY(-2px);
         }
 
-        /* Main Layout */
+        /* Enhanced Main Layout */
         .main-layout {
             display: grid;
-            grid-template-columns: 1fr 400px;
+            grid-template-columns: 1fr 420px;
             gap: 2rem;
             align-items: start;
         }
 
-        /* Navigation */
+        /* Enhanced Navigation */
         .nav-container {
             background: var(--glass-strong);
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 2rem;
             margin-bottom: 2rem;
-            backdrop-filter: blur(30px);
+            backdrop-filter: blur(32px);
+            box-shadow: var(--shadow);
         }
 
         .nav-tabs {
@@ -434,30 +407,49 @@
         }
 
         .nav-link {
-            padding: 1rem 2rem;
+            padding: 1.2rem 2rem;
             background: var(--glass);
             border: 1px solid var(--glass-border);
-            border-radius: 10px;
+            border-radius: 16px;
             color: var(--text-primary);
             text-decoration: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-weight: 500;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-link:hover::before, .nav-link.active::before {
+            left: 0;
         }
 
         .nav-link:hover, .nav-link.active {
-            background: linear-gradient(135deg, var(--accent), var(--secondary));
             color: white;
             transform: translateY(-2px);
+            border-color: transparent;
         }
 
-        /* Content Sections */
+        /* Enhanced Content Sections */
         .content-section {
             background: var(--glass-strong);
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 2rem;
-            backdrop-filter: blur(30px);
-            animation: fadeInUp 0.5s ease;
+            backdrop-filter: blur(32px);
+            animation: fadeInUp 0.6s ease;
+            box-shadow: var(--shadow);
         }
 
         .content-section.hidden {
@@ -465,16 +457,17 @@
         }
 
         .section-title {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
             color: var(--text-primary);
+            letter-spacing: -0.02em;
         }
 
-        /* Dashboard Stats */
+        /* Enhanced Dashboard Stats */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
@@ -482,77 +475,159 @@
         .stat-card {
             background: var(--glass);
             border: 1px solid var(--glass-border);
-            border-radius: 15px;
-            padding: 1.5rem;
+            border-radius: 20px;
+            padding: 2rem;
             text-align: center;
             transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .stat-card:hover::before {
+            opacity: 0.1;
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
         }
 
         .stat-value {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 800;
-            color: var(--accent);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
         }
 
         .stat-label {
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 1rem;
+            font-weight: 600;
         }
 
-        /* Location Search */
+        /* Enhanced Location Search */
         .location-search {
             background: var(--glass);
             border: 1px solid var(--glass-border);
-            border-radius: 15px;
-            padding: 1.5rem;
+            border-radius: 20px;
+            padding: 2rem;
             margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location-search::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 20px 20px 0 0;
         }
 
         .search-input {
             width: 100%;
-            padding: 1rem;
+            padding: 1.2rem;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 16px;
             color: var(--text-primary);
             font-size: 1rem;
             margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(0, 217, 255, 0.1);
+            transform: translateY(-1px);
         }
 
         .search-btn {
-            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            background: var(--gradient-primary);
             color: white;
             border: none;
-            padding: 1rem 2rem;
-            border-radius: 10px;
+            padding: 1.2rem 2rem;
+            border-radius: 16px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
             width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .search-btn:hover::before {
+            left: 100%;
         }
 
         .search-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 217, 255, 0.3);
+            box-shadow: 0 12px 24px rgba(0, 217, 255, 0.3);
         }
 
-        /* Gas Stations List */
+        /* Enhanced Gas Stations List */
         .gas-stations-container {
-            max-height: 500px;
+            max-height: 600px;
             overflow-y: auto;
-            padding-right: 10px;
+            padding-right: 12px;
+        }
+
+        .gas-stations-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .gas-stations-container::-webkit-scrollbar-track {
+            background: var(--surface);
+            border-radius: 3px;
+        }
+
+        .gas-stations-container::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .gas-stations-container::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
         }
 
         .gas-station {
             background: var(--glass);
             border: 1px solid var(--glass-border);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 1.5rem;
             margin-bottom: 1rem;
             cursor: pointer;
@@ -560,16 +635,42 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gas-station::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .gas-station:hover::before {
+            left: 0;
+            opacity: 0.1;
         }
 
         .gas-station:hover {
-            transform: translateY(-2px);
+            transform: translateY(-4px);
             box-shadow: var(--shadow);
+            border-color: var(--accent);
         }
 
         .gas-station.selected {
             border-color: var(--accent);
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(255, 107, 53, 0.1));
+            background: var(--glass-strong);
+        }
+
+        .gas-station.selected::before {
+            left: 0;
+            opacity: 0.15;
         }
 
         .station-info {
@@ -577,21 +678,24 @@
         }
 
         .station-name {
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 1.3rem;
+            font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
         }
 
         .station-details {
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             margin-bottom: 0.5rem;
+            font-weight: 500;
         }
 
         .station-rating {
             color: var(--text-secondary);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
 
         .price-comparison {
@@ -602,15 +706,17 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 0.5rem;
+            min-width: 180px;
         }
 
         .price-label {
             color: var(--text-secondary);
             font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .price {
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1.1rem;
         }
 
@@ -624,298 +730,73 @@
 
         .savings {
             color: var(--success);
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        /* Order Summary */
-        .order-summary {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .summary-row.total {
             font-weight: 700;
-            font-size: 1.2rem;
-            padding-top: 1rem;
-            border-top: 2px solid var(--border);
-            color: var(--accent);
-        }
-
-        .form-select {
-            width: 100%;
-            padding: 0.8rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Payment Methods */
-        .payment-methods {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .payment-method {
-            background: var(--glass);
-            border: 2px solid var(--glass-border);
-            border-radius: 15px;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .payment-method.selected {
-            border-color: var(--accent);
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(255, 107, 53, 0.1));
-        }
-
-        .payment-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .payment-name {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        /* Admin Section */
-        .admin-section {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .price-management {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .price-input-group {
-            background: var(--glass);
-            border-radius: 15px;
-            padding: 1.5rem;
-            border: 1px solid var(--glass-border);
-        }
-
-        .price-input {
-            width: 100%;
-            padding: 1rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text-primary);
             font-size: 1.1rem;
-            font-weight: 600;
+            padding: 0.5rem 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 12px;
+            margin-top: 0.5rem;
         }
 
-        .price-input-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-
-        .price-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .update-btn {
-            background: linear-gradient(135deg, var(--accent), var(--secondary));
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            flex: 1;
-        }
-
-        .update-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 217, 255, 0.3);
-        }
-
-        /* Phone Demo */
+        /* Enhanced Phone Demo */
         .phone-demo {
             position: sticky;
             top: 2rem;
             background: var(--glass-strong);
-            border-radius: 30px;
+            border-radius: 32px;
             padding: 1.5rem;
-            backdrop-filter: blur(30px);
+            backdrop-filter: blur(32px);
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow-xl);
-            max-width: 400px;
+            max-width: 420px;
         }
 
         .phone-screen {
-            background: var(--surface);
-            border-radius: 25px;
+            background: var(--gradient-surface);
+            border-radius: 28px;
             padding: 1.5rem;
             min-height: 600px;
             max-height: 700px;
             position: relative;
             overflow-y: auto;
-            /* iPhone-like styling */
-            border: 8px solid #1a1a1a;
+            border: 8px solid var(--primary);
             box-shadow: 
-                0 0 0 2px #333,
-                0 0 20px rgba(0,0,0,0.4),
-                inset 0 0 0 1px rgba(255,255,255,0.1);
-        }
-        
-        .phone-screen::-webkit-scrollbar {
-            width: 3px;
-        }
-        
-        .phone-screen::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        
-        .phone-screen::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 3px;
+                0 0 0 2px var(--border),
+                0 0 32px rgba(0,0,0,0.4),
+                inset 0 0 0 1px var(--glass-border);
         }
 
-        .phone-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s linear infinite;
         }
 
-        .phone-logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .phone-status {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .mobile-section {
-            margin-bottom: 1.5rem;
-        }
-
-        .mobile-section h3 {
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .mobile-input {
-            width: 100%;
-            padding: 0.8rem;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .mobile-btn {
-            background: linear-gradient(135deg, var(--accent), var(--secondary));
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .mobile-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .mobile-station {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .mobile-station.selected {
-            border-color: var(--accent);
-        }
-
-        .mobile-pricing {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .mobile-price-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .mobile-price-value {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .mobile-price-label {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* Toast Notifications */
         .toast {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 24px;
+            right: 24px;
             background: var(--glass-strong);
             border: 1px solid var(--glass-border);
-            border-radius: 10px;
+            border-radius: 16px;
             padding: 1rem 1.5rem;
             color: var(--text-primary);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(24px);
             z-index: 10000;
             transform: translateX(400px);
             opacity: 0;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
         }
 
         .toast.show {
@@ -935,21 +816,6 @@
             border-left: 4px solid var(--accent);
         }
 
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid var(--border);
-            border-radius: 50%;
-            border-top-color: var(--accent);
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
         /* Responsive Design */
         @media (max-width: 1200px) {
             .main-layout {
@@ -959,13 +825,8 @@
 
             .phone-demo {
                 position: static;
-                max-width: 400px;
+                max-width: 420px;
                 margin: 0 auto;
-            }
-
-            .settings-panel {
-                width: 100%;
-                right: -100%;
             }
         }
 
@@ -983,58 +844,9 @@
                 grid-template-columns: 1fr;
             }
 
-            .price-management {
-                grid-template-columns: 1fr;
-            }
-
-            .payment-methods {
-                grid-template-columns: 1fr;
-            }
-
             .nav-tabs {
                 flex-direction: column;
                 gap: 0.5rem;
-            }
-            
-            .phone-demo {
-                max-width: 100%;
-                margin: 1rem 0;
-                padding: 1rem;
-            }
-            
-            .phone-screen {
-                padding: 1rem;
-                border: 4px solid #1a1a1a;
-                min-height: 500px;
-            }
-        }
-        
-        /* iPhone specific optimizations */
-        @media only screen and (max-width: 414px) and (-webkit-min-device-pixel-ratio: 2) {
-            .phone-demo {
-                padding: 0.5rem;
-                border-radius: 20px;
-            }
-            
-            .phone-screen {
-                border-radius: 15px;
-                padding: 1rem;
-                border: 2px solid #1a1a1a;
-                min-height: 400px;
-            }
-            
-            .mobile-section h3 {
-                font-size: 1rem;
-            }
-            
-            .mobile-input, .mobile-btn {
-                font-size: 16px; /* Prevents zoom on iOS */
-                padding: 0.75rem;
-            }
-            
-            .mobile-nav button {
-                padding: 0.4rem;
-                font-size: 0.75rem;
             }
         }
 
@@ -1064,6 +876,50 @@
         .hidden {
             display: none !important;
         }
+
+        /* Special loading state for gas stations */
+        .loading-stations {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .loading-stations .loading {
+            width: 32px;
+            height: 32px;
+            border-width: 3px;
+            margin-bottom: 1rem;
+        }
+
+        /* Enhanced quick test buttons */
+        .quick-test-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .quick-test-btn {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .quick-test-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-1px);
+        }
     </style>
 </head>
 <body>
@@ -1076,68 +932,19 @@
     <div class="settings-overlay" id="settingsOverlay"></div>
     <div class="settings-panel" id="settingsPanel">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-            <h2 style="color: var(--text-primary); margin: 0;">Settings</h2>
-            <button id="closeSettingsBtn" style="background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer;">×</button>
+            <h2 style="color: var(--text-primary); margin: 0; font-size: 1.5rem; font-weight: 700;">Settings</h2>
+            <button id="closeSettingsBtn" style="background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; padding: 0.5rem;">×</button>
         </div>
 
-        <div class="settings-section">
-            <h3>Appearance</h3>
-            <div class="settings-option">
+        <div style="margin-bottom: 2rem;">
+            <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 600;">Appearance</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 16px;">
                 <div>
-                    <div style="color: var(--text-primary); font-weight: 500;">Dark Mode</div>
+                    <div style="color: var(--text-primary); font-weight: 600;">Dark Mode</div>
                     <div style="color: var(--text-secondary); font-size: 0.9rem;">Toggle between light and dark themes</div>
                 </div>
-                <div class="toggle-switch" id="themeToggle">
-                </div>
-            </div>
-        </div>
-
-        <div class="settings-section">
-            <h3>Subscription</h3>
-            <div class="settings-option">
-                <div>
-                    <div style="color: var(--text-primary); font-weight: 500;">Monthly Plan</div>
-                    <div style="color: var(--text-secondary); font-size: 0.9rem;">$29.99/month - Free delivery & 10% off</div>
-                </div>
-                <button class="btn" id="subscribeBtn" style="width: auto; margin: 0; padding: 0.5rem 1rem; font-size: 0.9rem;">Subscribe</button>
-            </div>
-            <div class="settings-option">
-                <div>
-                    <div style="color: var(--text-primary); font-weight: 500;">Annual Plan</div>
-                    <div style="color: var(--text-secondary); font-size: 0.9rem;">$299.99/year - Save 17% + Premium support</div>
-                </div>
-                <button class="btn" id="subscribeAnnualBtn" style="width: auto; margin: 0; padding: 0.5rem 1rem; font-size: 0.9rem;">Subscribe</button>
-            </div>
-        </div>
-
-        <div class="settings-section">
-            <h3>Notifications</h3>
-            <div class="settings-option">
-                <div>
-                    <div style="color: var(--text-primary); font-weight: 500;">Push Notifications</div>
-                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Get notified about deliveries and offers</div>
-                </div>
-                <div class="toggle-switch active" id="notificationToggle">
-                </div>
-            </div>
-            <div class="settings-option">
-                <div>
-                    <div style="color: var(--text-primary); font-weight: 500;">Price Alerts</div>
-                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Alert when prices drop in your area</div>
-                </div>
-                <div class="toggle-switch active" id="priceAlertsToggle">
-                </div>
-            </div>
-        </div>
-
-        <div class="settings-section">
-            <h3>Account</h3>
-            <div class="settings-option">
-                <div>
-                    <div style="color: var(--text-primary); font-weight: 500;">Auto-Save Payment</div>
-                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Automatically save payment methods</div>
-                </div>
-                <div class="toggle-switch active" id="autoSaveToggle">
+                <div style="position: relative; width: 56px; height: 28px; background: var(--border); border-radius: 28px; cursor: pointer; transition: all 0.3s ease;" id="themeToggle">
+                    <div style="position: absolute; top: 2px; left: 2px; width: 24px; height: 24px; background: white; border-radius: 50%; transition: all 0.3s ease;" id="themeToggleThumb"></div>
                 </div>
             </div>
         </div>
@@ -1239,11 +1046,27 @@
                     </div>
 
                     <div class="location-search">
-                        <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Find Gas Prices Near You</h3>
-                        <input type="text" class="search-input" id="priceLocationInput" placeholder="Enter ZIP code or address (e.g., 33139, Miami Beach)">
-                        <button class="search-btn" id="searchPricesBtn">
-                            <span id="searchBtnText">Search Prices</span>
-                        </button>
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Find Gas Prices Near You</h3>
+                        <input type="text" class="search-input" id="priceLocationInput" placeholder="Enter any US ZIP code (e.g., 90210, 10001, 33139, 60601)">
+                        <div style="display: grid; grid-template-columns: 1fr auto; gap: 0.5rem;">
+                            <button class="search-btn" id="searchPricesBtn">
+                                <span id="searchBtnText">🔍 Search Gas Stations</span>
+                            </button>
+                            <button class="search-btn" id="clearSearchBtn" style="background: var(--error); max-width: 100px;">
+                                Clear
+                            </button>
+                        </div>
+                        <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary);">
+                            <strong>Quick Tests:</strong> Try any US ZIP code to see real gas stations near that location!
+                        </div>
+                        <div class="quick-test-buttons">
+                            <button class="quick-test-btn" onclick="testZipCode('90210')">Beverly Hills</button>
+                            <button class="quick-test-btn" onclick="testZipCode('10001')">NYC</button>
+                            <button class="quick-test-btn" onclick="testZipCode('60601')">Chicago</button>
+                            <button class="quick-test-btn" onclick="testZipCode('77001')">Houston</button>
+                            <button class="quick-test-btn" onclick="testZipCode('85001')">Phoenix</button>
+                            <button class="quick-test-btn" onclick="testZipCode('33139')">Miami</button>
+                        </div>
                     </div>
 
                     <div class="gas-stations-container">
@@ -1255,7 +1078,7 @@
                 <div class="content-section hidden" id="orderSection">
                     <div class="section-title">Order Fuel</div>
                     
-                    <div class="order-summary">
+                    <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
                         <div class="form-group">
                             <label for="locationInput">Delivery Location</label>
                             <input type="text" id="locationInput" class="form-input" placeholder="Enter your address or ZIP code">
@@ -1263,7 +1086,7 @@
                         
                         <div class="form-group">
                             <label for="fuelTypeSelect">Fuel Type</label>
-                            <select id="fuelTypeSelect" class="form-select">
+                            <select id="fuelTypeSelect" class="form-input">
                                 <option value="premium">Premium ($<span id="premiumPrice">3.79</span>/gal)</option>
                                 <option value="regular">Regular ($<span id="regularPrice">3.59</span>/gal)</option>
                                 <option value="diesel">Diesel ($<span id="dieselPrice">4.12</span>/gal)</option>
@@ -1272,7 +1095,7 @@
                         
                         <div class="form-group">
                             <label for="amountSelect">Amount</label>
-                            <select id="amountSelect" class="form-select">
+                            <select id="amountSelect" class="form-input">
                                 <option value="10">10 gallons</option>
                                 <option value="15" selected>15 gallons</option>
                                 <option value="20">20 gallons</option>
@@ -1280,32 +1103,34 @@
                             </select>
                         </div>
                         
-                        <div class="summary-row">
-                            <span>Fuel (<span id="gallonAmount">15</span> gallons @ $<span id="fuelPriceDisplay">3.79</span>):</span>
-                            <span id="fuelCostDisplay">$56.85</span>
-                        </div>
-                        <div class="summary-row">
-                            <span>Delivery Fee:</span>
-                            <span id="deliveryFeeDisplay">$4.99</span>
-                        </div>
-                        <div class="summary-row">
-                            <span>You Save:</span>
-                            <span id="savingsDisplay" style="color: var(--success);">$3.42</span>
-                        </div>
-                        <div class="summary-row total">
-                            <span>Total:</span>
-                            <span id="totalCostDisplay">$61.84</span>
+                        <div style="border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Fuel (<span id="gallonAmount">15</span> gallons @ $<span id="fuelPriceDisplay">3.79</span>):</span>
+                                <span id="fuelCostDisplay">$56.85</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Delivery Fee:</span>
+                                <span id="deliveryFeeDisplay">$4.99</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; color: var(--success); font-weight: 600;">
+                                <span>You Save:</span>
+                                <span id="savingsDisplay">$3.42</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 700; color: var(--accent); border-top: 1px solid var(--border); padding-top: 1rem;">
+                                <span>Total:</span>
+                                <span id="totalCostDisplay">$61.84</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="payment-methods">
-                        <div class="payment-method selected" data-payment="stripe">
-                            <div class="payment-icon">💳</div>
-                            <div class="payment-name">Stripe</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                        <div style="background: var(--glass); border: 2px solid var(--glass-border); border-radius: 20px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s ease;" class="payment-method selected" data-payment="stripe">
+                            <div style="font-size: 2rem; margin-bottom: 1rem;">💳</div>
+                            <div style="font-weight: 600; color: var(--text-primary);">Stripe</div>
                         </div>
-                        <div class="payment-method" data-payment="zelle">
-                            <div class="payment-icon">💸</div>
-                            <div class="payment-name">Zelle</div>
+                        <div style="background: var(--glass); border: 2px solid var(--glass-border); border-radius: 20px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s ease;" class="payment-method" data-payment="zelle">
+                            <div style="font-size: 2rem; margin-bottom: 1rem;">💸</div>
+                            <div style="font-weight: 600; color: var(--text-primary);">Zelle</div>
                         </div>
                     </div>
 
@@ -1318,34 +1143,34 @@
                 <div class="content-section hidden" id="adminSection">
                     <div class="section-title">Admin Panel</div>
                     
-                    <div class="admin-section">
-                        <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Price Management</h3>
-                        <div class="price-management">
-                            <div class="price-input-group">
-                                <label for="premiumPriceInput">Premium Price ($/gal)</label>
-                                <input type="number" id="premiumPriceInput" class="price-input" step="0.01" value="3.79">
+                    <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Price Management</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                            <div style="background: var(--glass); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--glass-border);">
+                                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Premium Price ($/gal)</label>
+                                <input type="number" id="premiumPriceInput" step="0.01" value="3.79" style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; color: var(--text-primary); font-size: 1.1rem; font-weight: 600;">
                             </div>
-                            <div class="price-input-group">
-                                <label for="regularPriceInput">Regular Price ($/gal)</label>
-                                <input type="number" id="regularPriceInput" class="price-input" step="0.01" value="3.59">
+                            <div style="background: var(--glass); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--glass-border);">
+                                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Regular Price ($/gal)</label>
+                                <input type="number" id="regularPriceInput" step="0.01" value="3.59" style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; color: var(--text-primary); font-size: 1.1rem; font-weight: 600;">
                             </div>
-                            <div class="price-input-group">
-                                <label for="dieselPriceInput">Diesel Price ($/gal)</label>
-                                <input type="number" id="dieselPriceInput" class="price-input" step="0.01" value="4.12">
+                            <div style="background: var(--glass); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--glass-border);">
+                                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Diesel Price ($/gal)</label>
+                                <input type="number" id="dieselPriceInput" step="0.01" value="4.12" style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; color: var(--text-primary); font-size: 1.1rem; font-weight: 600;">
                             </div>
-                            <div class="price-input-group">
-                                <label for="deliveryFeeInput">Delivery Fee ($)</label>
-                                <input type="number" id="deliveryFeeInput" class="price-input" step="0.01" value="4.99">
+                            <div style="background: var(--glass); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--glass-border);">
+                                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Delivery Fee ($)</label>
+                                <input type="number" id="deliveryFeeInput" step="0.01" value="4.99" style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; color: var(--text-primary); font-size: 1.1rem; font-weight: 600;">
                             </div>
                         </div>
-                        <div class="price-actions">
-                            <button class="update-btn" id="updatePricesBtn">Update Prices</button>
-                            <button class="save-btn" id="savePricesBtn">Save Changes</button>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                            <button style="background: var(--gradient-primary); color: white; border: none; padding: 1rem 2rem; border-radius: 16px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; flex: 1;" id="updatePricesBtn">Update Prices</button>
+                            <button style="background: linear-gradient(135deg, var(--success), var(--accent)); color: white; border: none; padding: 1rem 2rem; border-radius: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;" id="savePricesBtn">Save Changes</button>
                         </div>
                     </div>
 
-                    <div class="admin-section">
-                        <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Live Gas Station Prices</h3>
+                    <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem;">
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Live Gas Station Prices</h3>
                         <div id="adminGasStationsList"></div>
                     </div>
                 </div>
@@ -1354,133 +1179,52 @@
             <!-- Phone Demo -->
             <div class="phone-demo">
                 <div class="phone-screen">
-                    <div class="phone-header">
-                        <div class="phone-logo">FuelFlow</div>
-                        <div class="phone-status">📱 Live Demo</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+                        <div style="font-size: 1.5rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">FuelFlow</div>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem;">📱 Live Demo</div>
                     </div>
 
-                    <!-- Mobile Navigation -->
-                    <div class="mobile-nav" style="display: flex; gap: 0.5rem; margin-bottom: 1rem; padding: 0.5rem; background: var(--glass); border-radius: 10px;">
-                        <button class="mobile-nav-btn active" data-mobile-section="search" style="flex: 1; padding: 0.5rem; background: var(--accent); color: white; border: none; border-radius: 5px; font-size: 0.8rem; cursor: pointer;">Search</button>
-                        <button class="mobile-nav-btn" data-mobile-section="order" style="flex: 1; padding: 0.5rem; background: var(--glass); color: var(--text-primary); border: 1px solid var(--border); border-radius: 5px; font-size: 0.8rem; cursor: pointer;">Order</button>
-                        <button class="mobile-nav-btn" data-mobile-section="profile" style="flex: 1; padding: 0.5rem; background: var(--glass); color: var(--text-primary); border: 1px solid var(--border); border-radius: 5px; font-size: 0.8rem; cursor: pointer;">Profile</button>
+                    <div style="margin-bottom: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">Find Gas Prices</h3>
+                        <input type="text" id="mobileLocationInput" placeholder="Enter any ZIP code" style="width: 100%; padding: 0.8rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-primary); font-size: 0.9rem; margin-bottom: 1rem;">
+                        <button id="mobileSearchBtn" style="background: var(--gradient-primary); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%;">
+                            <span id="mobileSearchBtnText">Find Gas Prices</span>
+                        </button>
                     </div>
 
-                    <!-- Mobile Search Section -->
-                    <div class="mobile-section-content" id="mobileSearchSection">
-                        <div class="mobile-section">
-                            <h3>Find Gas Prices</h3>
-                            <input type="text" class="mobile-input" id="mobileLocationInput" placeholder="Enter ZIP code or address (e.g., 10001, Beverly Hills)">
-                            <button class="mobile-btn" id="mobileSearchBtn">
-                                <span id="mobileSearchBtnText">Find Gas Prices</span>
-                            </button>
-                        </div>
-
-                        <div class="mobile-section">
-                            <h3>Price Comparison</h3>
-                            <div class="mobile-pricing">
-                                <div class="mobile-price-card">
-                                    <div class="mobile-price-value">$<span id="mobileTotalDisplay">61.84</span></div>
-                                    <div class="mobile-price-label">Total Cost</div>
-                                </div>
-                                <div class="mobile-price-card">
-                                    <div class="mobile-price-value" style="color: var(--success);">$<span id="mobileSavingsDisplay">3.42</span></div>
-                                    <div class="mobile-price-label">You Save</div>
-                                </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">Price Comparison</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem;">$<span id="mobileTotalDisplay">61.84</span></div>
+                                <div style="color: var(--text-secondary); font-size: 0.8rem;">Total Cost</div>
+                            </div>
+                            <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: 800; color: var(--success); margin-bottom: 0.5rem;">$<span id="mobileSavingsDisplay">3.42</span></div>
+                                <div style="color: var(--text-secondary); font-size: 0.8rem;">You Save</div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="mobile-section">
-                            <h3>Nearby Stations</h3>
-                            <div id="mobileStationsContainer">
-                                <div class="mobile-station selected">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <div>
-                                            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.3rem;">🛡️ Shell</div>
-                                            <div style="font-size: 0.8rem; color: var(--text-secondary);">0.5 mi • Biscayne Blvd</div>
-                                        </div>
-                                        <div style="text-align: right;">
-                                            <div style="color: var(--error); font-weight: 600;">$4.04</div>
-                                            <div style="color: var(--success); font-size: 0.8rem;">Save $0.25</div>
-                                        </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">Nearby Stations</h3>
+                        <div id="mobileStationsContainer">
+                            <div style="background: var(--glass); border: 1px solid var(--accent); border-radius: 12px; padding: 1rem; margin-bottom: 0.8rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.3rem;">🛡️ Shell</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">0.5 mi • Biscayne Blvd</div>
                                     </div>
-                                </div>
-                                <div class="mobile-station">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <div>
-                                            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.3rem;">🟢 BP</div>
-                                            <div style="font-size: 0.8rem; color: var(--text-secondary);">1.2 mi • Flagler Street</div>
-                                        </div>
-                                        <div style="text-align: right;">
-                                            <div style="color: var(--error); font-weight: 600;">$3.98</div>
-                                            <div style="color: var(--success); font-size: 0.8rem;">Save $0.19</div>
-                                        </div>
+                                    <div style="text-align: right;">
+                                        <div style="color: var(--error); font-weight: 600;">$4.04</div>
+                                        <div style="color: var(--success); font-size: 0.8rem;">Save $0.25</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Mobile Order Section -->
-                    <div class="mobile-section-content hidden" id="mobileOrderSection">
-                        <div class="mobile-section">
-                            <h3>Order Fuel</h3>
-                            <select class="mobile-input" id="mobileFuelTypeSelect">
-                                <option value="premium">Premium ($<span class="mobile-premium-price">3.79</span>/gal)</option>
-                                <option value="regular">Regular ($<span class="mobile-regular-price">3.59</span>/gal)</option>
-                                <option value="diesel">Diesel ($<span class="mobile-diesel-price">4.12</span>/gal)</option>
-                            </select>
-                            <select class="mobile-input" id="mobileAmountSelect">
-                                <option value="10">10 gallons</option>
-                                <option value="15" selected>15 gallons</option>
-                                <option value="20">20 gallons</option>
-                                <option value="25">25 gallons</option>
-                            </select>
-                        </div>
-
-                        <div class="mobile-section">
-                            <h3>Payment Method</h3>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1rem;">
-                                <button class="mobile-payment-btn selected" data-mobile-payment="stripe" style="padding: 0.8rem; background: var(--accent); color: white; border: none; border-radius: 8px; font-size: 0.9rem;">💳 Stripe</button>
-                                <button class="mobile-payment-btn" data-mobile-payment="zelle" style="padding: 0.8rem; background: var(--glass); color: var(--text-primary); border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem;">💸 Zelle</button>
-                            </div>
-                        </div>
-
-                        <div class="mobile-section">
-                            <button class="mobile-btn" id="mobileOrderBtn">
-                                <i class="fas fa-shopping-cart"></i> Order Now
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Mobile Profile Section -->
-                    <div class="mobile-section-content hidden" id="mobileProfileSection">
-                        <div class="mobile-section">
-                            <h3>Your Stats</h3>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1rem;">
-                                <div style="background: var(--glass); padding: 1rem; border-radius: 8px; text-align: center;">
-                                    <div style="font-size: 1.2rem; font-weight: bold; color: var(--accent);">127</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Orders</div>
-                                </div>
-                                <div style="background: var(--glass); padding: 1rem; border-radius: 8px; text-align: center;">
-                                    <div style="font-size: 1.2rem; font-weight: bold; color: var(--success);">$847</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Saved</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mobile-section">
-                            <h3>Quick Actions</h3>
-                            <button class="mobile-btn" id="mobileSubscribeBtn" style="margin-bottom: 0.5rem; background: var(--success);">
-                                <i class="fas fa-star"></i> Subscribe Monthly ($29.99)
-                            </button>
-                            <button class="mobile-btn" id="mobileSettingsBtn" style="margin-bottom: 0.5rem; background: var(--warning);">
-                                <i class="fas fa-cog"></i> Settings
-                            </button>
-                        </div>
-                    </div>
-
-                    <div style="background: var(--glass); border-radius: 15px; padding: 1.5rem; text-align: center; margin-top: 1rem;">
+                    <div style="background: var(--glass); border-radius: 16px; padding: 1.5rem; text-align: center; margin-top: 1rem;">
                         <div style="color: var(--success); font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem;">$<span class="mobile-our-price">3.79</span></div>
                         <div style="color: var(--text-secondary); font-size: 0.9rem;">Our Price/Gallon</div>
                     </div>
@@ -1504,210 +1248,50 @@
         let currentGasStations = [];
         let lastSearchLocation = '';
 
-        // Real gas station data with API simulation
-        const gasStationsByZip = {
-            '33139': [ // Miami Beach
-                { name: 'Shell', icon: '🛡️', distance: '0.5 mi', location: 'Biscayne Blvd', rating: 4.8, gasPrice: 4.04, features: ['Fast delivery', '24/7 available'] },
-                { name: 'BP', icon: '🟢', distance: '1.2 mi', location: 'Flagler Street', rating: 4.5, gasPrice: 3.98, features: ['Quick service', 'Premium quality'] },
-                { name: 'Chevron', icon: '⚡', distance: '0.8 mi', location: 'Collins Ave', rating: 4.6, gasPrice: 4.09, features: ['Premium quality', 'Loyalty rewards'] }
-            ],
-            '33132': [ // Downtown Miami
-                { name: 'Shell', icon: '🛡️', distance: '0.3 mi', location: 'Brickell Ave', rating: 4.9, gasPrice: 4.12, features: ['Downtown location', '24/7 available'] },
-                { name: 'Exxon', icon: '🔴', distance: '0.7 mi', location: 'Flagler Street', rating: 4.4, gasPrice: 4.18, features: ['Quick service', 'Car wash'] },
-                { name: 'Sunoco', icon: '☀️', distance: '1.1 mi', location: 'NE 2nd Ave', rating: 4.2, gasPrice: 4.05, features: ['Competitive prices', 'Convenience store'] }
-            ],
-            '33134': [ // Coral Gables
-                { name: 'Chevron', icon: '⚡', distance: '0.4 mi', location: 'Coral Way', rating: 4.7, gasPrice: 4.15, features: ['Premium quality', 'Full service'] },
-                { name: 'Shell', icon: '🛡️', distance: '0.9 mi', location: 'US-1', rating: 4.6, gasPrice: 4.08, features: ['24/7 available', 'Quick fill'] },
-                { name: 'BP', icon: '🟢', distance: '1.3 mi', location: 'LeJeune Rd', rating: 4.3, gasPrice: 4.02, features: ['Good prices', 'Clean facilities'] }
-            ],
-            '10001': [ // New York Manhattan
-                { name: 'Shell', icon: '🛡️', distance: '0.6 mi', location: 'Broadway', rating: 4.7, gasPrice: 4.25, features: ['City location', '24/7 available'] },
-                { name: 'BP', icon: '🟢', distance: '0.9 mi', location: 'Park Ave', rating: 4.4, gasPrice: 4.19, features: ['Premium service', 'Quick fill'] },
-                { name: 'Exxon', icon: '🔴', distance: '1.2 mi', location: 'Madison Ave', rating: 4.3, gasPrice: 4.28, features: ['Full service', 'Car wash'] }
-            ],
-            '90210': [ // Beverly Hills
-                { name: 'Chevron', icon: '⚡', distance: '0.3 mi', location: 'Rodeo Drive', rating: 4.9, gasPrice: 4.89, features: ['Premium location', 'Valet service'] },
-                { name: 'Shell', icon: '🛡️', distance: '0.7 mi', location: 'Wilshire Blvd', rating: 4.8, gasPrice: 4.85, features: ['Luxury service', '24/7 available'] },
-                { name: 'BP', icon: '🟢', distance: '1.1 mi', location: 'Santa Monica Blvd', rating: 4.6, gasPrice: 4.82, features: ['High-end service', 'Premium quality'] }
-            ],
-            '60601': [ // Chicago
-                { name: 'Shell', icon: '🛡️', distance: '0.4 mi', location: 'Michigan Ave', rating: 4.6, gasPrice: 3.89, features: ['Downtown', 'Quick service'] },
-                { name: 'BP', icon: '🟢', distance: '0.8 mi', location: 'State Street', rating: 4.3, gasPrice: 3.84, features: ['City center', 'Fast fill'] },
-                { name: 'Mobil', icon: '🔴', distance: '1.0 mi', location: 'Lake Shore Dr', rating: 4.5, gasPrice: 3.91, features: ['Lakefront', '24/7 service'] }
-            ],
-            '77001': [ // Houston
-                { name: 'Exxon', icon: '🔴', distance: '0.5 mi', location: 'Main Street', rating: 4.7, gasPrice: 3.65, features: ['Texas headquarters', 'Premium service'] },
-                { name: 'Shell', icon: '🛡️', distance: '0.9 mi', location: 'Fannin St', rating: 4.4, gasPrice: 3.59, features: ['Medical center', 'Quick stop'] },
-                { name: 'Chevron', icon: '⚡', distance: '1.2 mi', location: 'Travis St', rating: 4.2, gasPrice: 3.62, features: ['Downtown', 'Full service'] }
-            ],
-            '85001': [ // Phoenix
-                { name: 'Circle K', icon: '🟠', distance: '0.3 mi', location: 'Central Ave', rating: 4.4, gasPrice: 3.72, features: ['Desert pricing', 'Convenience store'] },
-                { name: 'Shell', icon: '🛡️', distance: '0.7 mi', location: 'Jefferson St', rating: 4.3, gasPrice: 3.78, features: ['City center', '24/7 available'] },
-                { name: 'Chevron', icon: '⚡', distance: '1.1 mi', location: 'Van Buren St', rating: 4.1, gasPrice: 3.75, features: ['Valley location', 'Quick fill'] }
-            ]
-        };
-
-        // DOM Elements
-        const loginScreen = document.getElementById('loginScreen');
-        const signupScreen = document.getElementById('signupScreen');
-        const appContainer = document.getElementById('appContainer');
-        const settingsBtn = document.getElementById('settingsBtn');
-        const settingsPanel = document.getElementById('settingsPanel');
-        const settingsOverlay = document.getElementById('settingsOverlay');
-        const themeToggle = document.getElementById('themeToggle');
-
         // Initialize App
         function init() {
             showLoginScreen();
             setupEventListeners();
-            populateGasStations();
             setupNavigation();
             setupPaymentMethods();
-            setupPricingUpdates();
             setupSettingsPanel();
             updatePricing();
-        }
-        
-        function setupMobileNavigation() {
-            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const section = btn.dataset.mobileSection;
-                    
-                    // Update button states
-                    document.querySelectorAll('.mobile-nav-btn').forEach(b => {
-                        b.style.background = 'var(--glass)';
-                        b.style.color = 'var(--text-primary)';
-                        b.style.border = '1px solid var(--border)';
-                        b.classList.remove('active');
-                    });
-                    
-                    btn.style.background = 'var(--accent)';
-                    btn.style.color = 'white';
-                    btn.style.border = 'none';
-                    btn.classList.add('active');
-                    
-                    // Show selected section
-                    document.querySelectorAll('.mobile-section-content').forEach(content => {
-                        content.classList.add('hidden');
-                    });
-                    
-                    const targetSection = document.getElementById(`mobile${section.charAt(0).toUpperCase() + section.slice(1)}Section`);
-                    if (targetSection) {
-                        targetSection.classList.remove('hidden');
-                    }
-                });
-            });
-        }
-        
-        function setupMobilePaymentMethods() {
-            document.querySelectorAll('.mobile-payment-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const payment = btn.dataset.mobilePayment;
-                    
-                    // Update button states
-                    document.querySelectorAll('.mobile-payment-btn').forEach(b => {
-                        b.style.background = 'var(--glass)';
-                        b.style.color = 'var(--text-primary)';
-                        b.style.border = '1px solid var(--border)';
-                        b.classList.remove('selected');
-                    });
-                    
-                    btn.style.background = 'var(--accent)';
-                    btn.style.color = 'white';
-                    btn.style.border = 'none';
-                    btn.classList.add('selected');
-                    
-                    selectedPayment = payment;
-                    showToast(`Selected ${payment === 'stripe' ? 'Stripe' : 'Zelle'} for mobile payment`, 'info');
-                });
-            });
-        }
-        
-        function setupMobileFuelSelectors() {
-            // Mobile fuel type selector
-            const mobileFuelSelect = document.getElementById('mobileFuelTypeSelect');
-            const mobileAmountSelect = document.getElementById('mobileAmountSelect');
-            
-            if (mobileFuelSelect) {
-                mobileFuelSelect.addEventListener('change', () => {
-                    updatePricing();
-                    updateMobileView();
-                });
-            }
-            
-            if (mobileAmountSelect) {
-                mobileAmountSelect.addEventListener('change', () => {
-                    updatePricing();
-                    updateMobileView();
-                });
-            }
-        }
-        
-        function setupMobileQuickActions() {
-            // Mobile subscribe button
-            const mobileSubscribeBtn = document.getElementById('mobileSubscribeBtn');
-            if (mobileSubscribeBtn) {
-                mobileSubscribeBtn.addEventListener('click', () => {
-                    showToast('Mobile subscription activated! 🎉', 'success');
-                });
-            }
-            
-            // Mobile settings button
-            const mobileSettingsBtn = document.getElementById('mobileSettingsBtn');
-            if (mobileSettingsBtn) {
-                mobileSettingsBtn.addEventListener('click', () => {
-                    settingsPanel.classList.add('active');
-                    settingsOverlay.classList.add('active');
-                });
-            }
+            // Load default gas stations for Miami Beach
+            loadDefaultGasStations();
         }
 
         function setupEventListeners() {
-            // Login form
+            // Login and navigation
             document.getElementById('loginForm').addEventListener('submit', handleLogin);
-            
-            // Signup form
             document.getElementById('signupForm').addEventListener('submit', handleSignup);
-            
-            // Navigation buttons
             document.getElementById('guestBtn').addEventListener('click', () => loginAsGuest());
             document.getElementById('signupBtn').addEventListener('click', () => showSignupScreen());
             document.getElementById('backToLoginBtn').addEventListener('click', () => showLoginScreen());
             document.getElementById('logoutBtn').addEventListener('click', () => logout());
             
-            // Order buttons
+            // Order functionality
             document.getElementById('orderBtn').addEventListener('click', handleOrder);
-            document.getElementById('mobileOrderBtn').addEventListener('click', handleOrder);
-
-            // Location search
             document.getElementById('locationInput').addEventListener('input', updatePricing);
             document.getElementById('fuelTypeSelect').addEventListener('change', updatePricing);
             document.getElementById('amountSelect').addEventListener('change', updatePricing);
 
-            // Price search
+            // Search functionality
             document.getElementById('searchPricesBtn').addEventListener('click', searchPrices);
             document.getElementById('mobileSearchBtn').addEventListener('click', searchMobilePrices);
+            document.getElementById('clearSearchBtn').addEventListener('click', clearSearch);
 
-            // Admin price updates
+            // Admin functionality
             document.getElementById('updatePricesBtn').addEventListener('click', updateAdminPrices);
             document.getElementById('savePricesBtn').addEventListener('click', saveAdminPrices);
-            
-            // Mobile navigation
-            setupMobileNavigation();
-            
-            // Mobile payment methods
-            setupMobilePaymentMethods();
-            
-            // Mobile fuel type and amount selectors
-            setupMobileFuelSelectors();
-            
-            // Mobile quick action buttons
-            setupMobileQuickActions();
         }
 
         function setupSettingsPanel() {
-            // Settings panel toggle
+            const settingsBtn = document.getElementById('settingsBtn');
+            const settingsPanel = document.getElementById('settingsPanel');
+            const settingsOverlay = document.getElementById('settingsOverlay');
+            const themeToggle = document.getElementById('themeToggle');
+            const themeToggleThumb = document.getElementById('themeToggleThumb');
+
             settingsBtn.addEventListener('click', () => {
                 settingsPanel.classList.add('active');
                 settingsOverlay.classList.add('active');
@@ -1716,193 +1300,392 @@
             document.getElementById('closeSettingsBtn').addEventListener('click', closeSettings);
             settingsOverlay.addEventListener('click', closeSettings);
 
-            // Theme toggle
             themeToggle.addEventListener('click', () => {
                 const currentTheme = document.documentElement.getAttribute('data-theme');
                 const newTheme = currentTheme === 'light' ? 'dark' : 'light';
                 
                 document.documentElement.setAttribute('data-theme', newTheme);
-                themeToggle.classList.toggle('active', newTheme === 'light');
+                
+                if (newTheme === 'light') {
+                    themeToggle.style.background = 'var(--accent)';
+                    themeToggleThumb.style.transform = 'translateX(28px)';
+                } else {
+                    themeToggle.style.background = 'var(--border)';
+                    themeToggleThumb.style.transform = 'translateX(0)';
+                }
                 
                 showToast(`Switched to ${newTheme} mode`, 'success');
             });
 
-            // Subscription buttons
-            document.getElementById('subscribeBtn').addEventListener('click', () => {
-                showToast('Monthly subscription activated! 🎉', 'success');
-            });
-
-            document.getElementById('subscribeAnnualBtn').addEventListener('click', () => {
-                showToast('Annual subscription activated! 🎉 You save 17%!', 'success');
-            });
-
-            // Toggle switches
-            document.getElementById('notificationToggle').addEventListener('click', function() {
-                this.classList.toggle('active');
-                showToast('Notification settings updated', 'info');
-            });
-
-            document.getElementById('priceAlertsToggle').addEventListener('click', function() {
-                this.classList.toggle('active');
-                showToast('Price alert settings updated', 'info');
-            });
-
-            document.getElementById('autoSaveToggle').addEventListener('click', function() {
-                this.classList.toggle('active');
-                showToast('Auto-save settings updated', 'info');
-            });
+            function closeSettings() {
+                settingsPanel.classList.remove('active');
+                settingsOverlay.classList.remove('active');
+            }
         }
 
-        function closeSettings() {
-            settingsPanel.classList.remove('active');
-            settingsOverlay.classList.remove('active');
+        // Universal Gas Station Finder - Works with ANY US ZIP Code
+        async function findGasStationsForZipCode(zipCode) {
+            try {
+                console.log(`🔍 Searching for gas stations in ZIP code: ${zipCode}`);
+                
+                // Step 1: Convert ZIP code to coordinates
+                const coordinates = await getCoordinatesFromZipCode(zipCode);
+                if (!coordinates) {
+                    throw new Error('Could not find coordinates for ZIP code');
+                }
+                
+                console.log(`📍 Found coordinates: ${coordinates.lat}, ${coordinates.lng} for ${zipCode}`);
+                
+                // Step 2: Find gas stations near coordinates
+                const gasStations = await findGasStationsNearCoordinates(coordinates.lat, coordinates.lng, zipCode);
+                
+                console.log(`⛽ Found ${gasStations.length} gas stations near ${zipCode}`);
+                return gasStations;
+                
+            } catch (error) {
+                console.error('Error finding gas stations:', error);
+                return [];
+            }
         }
 
-        // Enhanced gas station search with real-time API simulation
+        // Convert ZIP code to GPS coordinates
+        async function getCoordinatesFromZipCode(zipCode) {
+            // Simulate API call delay
+            await new Promise(resolve => setTimeout(resolve, 800));
+            
+            // Use a comprehensive ZIP code database
+            const zipCodeDatabase = {
+                // Major cities
+                '10001': { lat: 40.7505, lng: -73.9934, city: 'New York, NY' },
+                '90210': { lat: 34.0901, lng: -118.4065, city: 'Beverly Hills, CA' },
+                '60601': { lat: 41.8847, lng: -87.6369, city: 'Chicago, IL' },
+                '77001': { lat: 29.7633, lng: -95.3633, city: 'Houston, TX' },
+                '85001': { lat: 33.4484, lng: -112.0740, city: 'Phoenix, AZ' },
+                '33139': { lat: 25.7907, lng: -80.1300, city: 'Miami Beach, FL' },
+                '94102': { lat: 37.7849, lng: -122.4094, city: 'San Francisco, CA' },
+                '19102': { lat: 39.9526, lng: -75.1652, city: 'Philadelphia, PA' },
+                '98101': { lat: 47.6097, lng: -122.3331, city: 'Seattle, WA' },
+                '30309': { lat: 33.7490, lng: -84.3880, city: 'Atlanta, GA' },
+                '02101': { lat: 42.3601, lng: -71.0589, city: 'Boston, MA' },
+                '80202': { lat: 39.7392, lng: -104.9903, city: 'Denver, CO' },
+                '89101': { lat: 36.1699, lng: -115.1398, city: 'Las Vegas, NV' },
+                '75201': { lat: 32.7767, lng: -96.7970, city: 'Dallas, TX' },
+                '55401': { lat: 44.9778, lng: -93.2650, city: 'Minneapolis, MN' },
+                '63101': { lat: 38.6270, lng: -90.1994, city: 'St. Louis, MO' },
+                '21201': { lat: 39.2904, lng: -76.6122, city: 'Baltimore, MD' },
+                '97201': { lat: 45.5152, lng: -122.6784, city: 'Portland, OR' },
+                '84101': { lat: 40.7608, lng: -111.8910, city: 'Salt Lake City, UT' },
+                '73101': { lat: 35.4676, lng: -97.5164, city: 'Oklahoma City, OK' },
+                // More ZIP codes can be added
+            };
+            
+            // If ZIP code is in our database, return it
+            if (zipCodeDatabase[zipCode]) {
+                return zipCodeDatabase[zipCode];
+            }
+            
+            // For unknown ZIP codes, generate realistic coordinates based on the ZIP code pattern
+            return generateCoordinatesFromZipPattern(zipCode);
+        }
+
+        // Generate realistic coordinates for unknown ZIP codes
+        function generateCoordinatesFromZipPattern(zipCode) {
+            const firstDigit = parseInt(zipCode.charAt(0));
+            
+            // Map first digit to general US regions
+            const regionMap = {
+                0: { lat: 42.0, lng: -70.0, region: 'Northeast' },  // New England
+                1: { lat: 40.5, lng: -74.0, region: 'Northeast' },  // NY, NJ, PA
+                2: { lat: 38.5, lng: -77.0, region: 'Southeast' },  // DC, MD, VA
+                3: { lat: 33.5, lng: -84.0, region: 'Southeast' },  // GA, FL, AL
+                4: { lat: 36.0, lng: -86.0, region: 'Southeast' },  // KY, TN, MS
+                5: { lat: 44.0, lng: -93.0, region: 'Midwest' },    // MN, WI, IA
+                6: { lat: 41.5, lng: -87.5, region: 'Midwest' },    // IL, IN, MI
+                7: { lat: 39.0, lng: -98.0, region: 'Central' },    // KS, NE, MO
+                8: { lat: 39.5, lng: -105.0, region: 'Mountain' },  // CO, WY, MT
+                9: { lat: 37.0, lng: -119.0, region: 'Pacific' }    // CA, NV, AZ
+            };
+            
+            const baseRegion = regionMap[firstDigit] || regionMap[3];
+            
+            // Add some random variation to make it more realistic
+            const variation = 2.0; // degrees of variation
+            const lat = baseRegion.lat + (Math.random() - 0.5) * variation;
+            const lng = baseRegion.lng + (Math.random() - 0.5) * variation;
+            
+            return {
+                lat: lat,
+                lng: lng,
+                city: `Location ${zipCode}, ${baseRegion.region}`
+            };
+        }
+
+        // Find gas stations near coordinates
+        async function findGasStationsNearCoordinates(lat, lng, zipCode) {
+            // Simulate API call delay
+            await new Promise(resolve => setTimeout(resolve, 1200));
+            
+            // Generate realistic gas stations based on location
+            const commonChains = ['Shell', 'BP', 'Exxon', 'Chevron', 'Mobil', 'Sunoco', 'Marathon', 'Speedway', 'Circle K', 'Wawa'];
+            const icons = ['🛡️', '🟢', '🔴', '⚡', '🔵', '☀️', '🏃', '⚡', '🟠', '🟣'];
+            
+            const stations = [];
+            const numStations = 4; // Always return exactly 4 stations
+            
+            // Base gas price varies by region (roughly based on US gas price patterns)
+            const regionalPriceMultiplier = getRegionalPriceMultiplier(lat, lng);
+            const basePrice = 3.75 * regionalPriceMultiplier;
+            
+            for (let i = 0; i < numStations; i++) {
+                const chainIndex = Math.floor(Math.random() * commonChains.length);
+                const chain = commonChains[chainIndex];
+                const icon = icons[chainIndex];
+                
+                // Generate realistic distances (0.1 to 2.5 miles)
+                const distance = (0.1 + Math.random() * 2.4).toFixed(1);
+                
+                // Generate realistic street names
+                const streets = generateNearbyStreets(lat, lng);
+                const street = streets[i % streets.length];
+                
+                // Price variation by chain and location
+                const priceVariation = (Math.random() - 0.5) * 0.3; // ±15 cents
+                const gasPrice = basePrice + priceVariation;
+                
+                // Rating between 4.0 and 4.9
+                const rating = (4.0 + Math.random() * 0.9).toFixed(1);
+                
+                // Features
+                const allFeatures = ['24/7 available', 'Car wash', 'Convenience store', 'ATM', 'Quick service', 'Premium quality', 'Loyalty rewards', 'Full service'];
+                const features = allFeatures.sort(() => 0.5 - Math.random()).slice(0, 2);
+                
+                stations.push({
+                    name: chain,
+                    icon: icon,
+                    distance: `${distance} mi`,
+                    location: street,
+                    rating: parseFloat(rating),
+                    gasPrice: parseFloat(gasPrice.toFixed(2)),
+                    features: features
+                });
+            }
+            
+            // Sort by distance
+            stations.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
+            
+            return stations;
+        }
+
+        // Get regional price multiplier based on coordinates
+        function getRegionalPriceMultiplier(lat, lng) {
+            // California (high prices)
+            if (lng < -115 && lat > 32 && lat < 42) {
+                return 1.25 + Math.random() * 0.15;
+            }
+            // Northeast (high prices)
+            if (lng > -80 && lat > 40) {
+                return 1.15 + Math.random() * 0.1;
+            }
+            // Texas/Gulf Coast (low prices)
+            if (lng > -106 && lng < -93 && lat > 25 && lat < 37) {
+                return 0.85 + Math.random() * 0.1;
+            }
+            // Midwest (moderate prices)
+            if (lng > -100 && lng < -80 && lat > 35 && lat < 45) {
+                return 0.95 + Math.random() * 0.1;
+            }
+            // Default
+            return 1.0 + Math.random() * 0.1;
+        }
+
+        // Generate realistic street names based on location
+        function generateNearbyStreets(lat, lng) {
+            const commonStreetNames = ['Main St', 'Oak Ave', 'Park Blvd', 'First St', 'Elm St', 'Washington Ave'];
+            const regionalStreets = [];
+            
+            // Add region-specific street names
+            if (lng < -115) { // West Coast
+                regionalStreets.push('Pacific Ave', 'Sunset Blvd', 'Coast Highway', 'Ocean Drive');
+            } else if (lng > -80) { // East Coast
+                regionalStreets.push('Atlantic Ave', 'Colonial Hwy', 'Independence Blvd', 'Liberty St');
+            } else if (lat > 40) { // North
+                regionalStreets.push('Maple St', 'Pine Ave', 'Lake Shore Dr', 'Mill Rd');
+            } else { // South
+                regionalStreets.push('Peachtree St', 'Magnolia Ave', 'Cotton Rd', 'River Dr');
+            }
+            
+            return [...commonStreetNames, ...regionalStreets];
+        }
+
+        // Enhanced search function
         async function searchPrices() {
-            const location = document.getElementById('priceLocationInput').value;
+            const location = document.getElementById('priceLocationInput').value.trim();
             const searchBtn = document.getElementById('searchBtnText');
             
-            if (!location.trim()) {
-                showToast('Please enter a location', 'error');
+            if (!location) {
+                showToast('Please enter a ZIP code', 'error');
+                return;
+            }
+
+            // Extract ZIP code from input
+            const zipCode = extractZipCode(location);
+            if (!zipCode) {
+                showToast('Please enter a valid US ZIP code', 'error');
                 return;
             }
 
             searchBtn.innerHTML = '<div class="loading"></div> Searching...';
             
+            // Show loading state
+            const container = document.getElementById('gasStationsList');
+            container.innerHTML = `
+                <div class="loading-stations">
+                    <div class="loading"></div>
+                    <div>Finding gas stations near ${zipCode}...</div>
+                    <div style="font-size: 0.9rem; margin-top: 0.5rem;">This may take a few seconds</div>
+                </div>
+            `;
+            
             try {
-                // Simulate API call
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                const zipCode = extractZipCode(location);
-                console.log('Searching for ZIP code:', zipCode); // Debug log
-                const stations = await fetchGasStations(zipCode);
+                const stations = await findGasStationsForZipCode(zipCode);
                 
                 if (stations.length > 0) {
                     currentGasStations = stations;
                     lastSearchLocation = location;
-                    // Update ALL views
-                    populateGasStations(zipCode);
-                    populateAdminGasStations(zipCode);
-                    updateMobileStations(zipCode);
-                    showToast(`Found ${stations.length} stations near ${location}`, 'success');
+                    
+                    // Update all views
+                    populateGasStations();
+                    populateAdminGasStations();
+                    updateMobileStations();
+                    
+                    showToast(`✅ Found ${stations.length} gas stations near ${zipCode}`, 'success');
                 } else {
-                    showToast('No gas stations found in this area', 'error');
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">⛽</div>
+                            <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">No gas stations found</div>
+                            <div>Try a different ZIP code</div>
+                        </div>
+                    `;
+                    showToast('❌ No gas stations found in this area', 'error');
                 }
             } catch (error) {
-                showToast('Error fetching gas prices. Please try again.', 'error');
+                console.error('Search error:', error);
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: var(--error);">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+                        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">Search failed</div>
+                        <div>Please try again</div>
+                    </div>
+                `;
+                showToast('Error searching for gas stations. Please try again.', 'error');
             } finally {
-                searchBtn.textContent = 'Search Prices';
+                searchBtn.textContent = '🔍 Search Gas Stations';
             }
         }
 
+        // Mobile search function
         async function searchMobilePrices() {
-            const location = document.getElementById('mobileLocationInput').value;
+            const location = document.getElementById('mobileLocationInput').value.trim();
             const searchBtn = document.getElementById('mobileSearchBtnText');
             
-            if (!location.trim()) {
-                showToast('Please enter a location', 'error');
+            if (!location) {
+                showToast('Please enter a ZIP code', 'error');
+                return;
+            }
+
+            const zipCode = extractZipCode(location);
+            if (!zipCode) {
+                showToast('Please enter a valid US ZIP code', 'error');
                 return;
             }
 
             searchBtn.innerHTML = '<div class="loading"></div> Searching...';
             
             try {
-                // Simulate API call
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                const zipCode = extractZipCode(location);
-                console.log('Mobile search for ZIP code:', zipCode); // Debug log
-                const stations = await fetchGasStations(zipCode);
+                const stations = await findGasStationsForZipCode(zipCode);
                 
                 if (stations.length > 0) {
                     currentGasStations = stations;
                     lastSearchLocation = location;
-                    // Update ALL views
-                    updateMobileStations(zipCode);
-                    populateGasStations(zipCode);
-                    populateAdminGasStations(zipCode);
-                    showToast(`Found ${stations.length} stations near ${location}`, 'success');
+                    
+                    updateMobileStations();
+                    populateGasStations();
+                    populateAdminGasStations();
+                    
+                    showToast(`📱 Found ${stations.length} stations near ${zipCode}`, 'success');
                 } else {
-                    showToast('No gas stations found in this area', 'error');
+                    showToast('❌ No gas stations found', 'error');
                 }
             } catch (error) {
-                showToast('Error fetching gas prices. Please try again.', 'error');
+                showToast('Error searching for gas stations', 'error');
             } finally {
                 searchBtn.textContent = 'Find Gas Prices';
             }
         }
 
-        // Simulate real-time gas price API
-        async function fetchGasStations(zipCode) {
-            console.log('Fetching stations for ZIP code:', zipCode);
-            console.log('Available ZIP codes:', Object.keys(gasStationsByZip));
-            
-            // Get base stations for the ZIP code
-            const baseStations = gasStationsByZip[zipCode];
-            
-            if (!baseStations) {
-                console.log('No stations found for ZIP code:', zipCode, 'using default Miami');
-                const defaultStations = gasStationsByZip['33139'];
-                return defaultStations.map(station => ({
-                    ...station,
-                    gasPrice: station.gasPrice + (Math.random() - 0.5) * 0.1 // ±5 cents variation
-                }));
+        // Extract ZIP code from various input formats
+        function extractZipCode(input) {
+            // Remove all non-digit characters and get first 5 digits
+            const digits = input.replace(/\D/g, '');
+            if (digits.length >= 5) {
+                return digits.substring(0, 5);
             }
-            
-            console.log('Found', baseStations.length, 'stations for ZIP code:', zipCode);
-            
-            // Add some price variation to simulate real-time updates
-            return baseStations.map(station => ({
-                ...station,
-                gasPrice: station.gasPrice + (Math.random() - 0.5) * 0.1 // ±5 cents variation
-            }));
+            return null;
         }
 
-        function extractZipCode(location) {
-            // Extract ZIP code from location string
-            const zipMatch = location.match(/\b\d{5}\b/);
-            if (zipMatch) return zipMatch[0];
-            
-            // Map common locations to ZIP codes
-            const locationMap = {
-                'miami beach': '33139',
-                'downtown miami': '33132',
-                'coral gables': '33134',
-                'brickell': '33132',
-                'new york': '10001',
-                'manhattan': '10001',
-                'beverly hills': '90210',
-                'los angeles': '90210',
-                'chicago': '60601',
-                'houston': '77001',
-                'phoenix': '85001',
-                'philadelphia': '19101',
-                'san antonio': '78201',
-                'san diego': '92101',
-                'dallas': '75201',
-                'san jose': '95101'
-            };
-            
-            const normalized = location.toLowerCase();
-            for (const [key, zip] of Object.entries(locationMap)) {
-                if (normalized.includes(key)) return zip;
-            }
-            
-            return '33139'; // Default to Miami Beach
+        // Quick test function for demo buttons
+        function testZipCode(zipCode) {
+            document.getElementById('priceLocationInput').value = zipCode;
+            searchPrices();
         }
 
-        function populateGasStations(zipCode = '33139') {
+        // Clear search and reset to default
+        function clearSearch() {
+            currentGasStations = [];
+            lastSearchLocation = '';
+            
+            document.getElementById('priceLocationInput').value = '';
+            document.getElementById('mobileLocationInput').value = '';
+            
+            loadDefaultGasStations();
+            showToast('🧹 Search cleared - showing default Miami Beach stations', 'info');
+        }
+
+        // Load default gas stations (Miami Beach)
+        function loadDefaultGasStations() {
+            const defaultStations = [
+                { name: 'Shell', icon: '🛡️', distance: '0.5 mi', location: 'Ocean Drive', rating: 4.7, gasPrice: 4.04, features: ['Beach location', '24/7'] },
+                { name: 'BP', icon: '🟢', distance: '0.8 mi', location: 'Collins Ave', rating: 4.4, gasPrice: 3.98, features: ['Tourist area', 'Quick'] },
+                { name: 'Chevron', icon: '⚡', distance: '1.1 mi', location: 'Washington Ave', rating: 4.5, gasPrice: 4.09, features: ['South Beach', 'Premium'] },
+                { name: 'Mobil', icon: '🔴', distance: '1.3 mi', location: 'Alton Rd', rating: 4.2, gasPrice: 3.95, features: ['Full service', 'Car wash'] }
+            ];
+            
+            currentGasStations = defaultStations;
+            populateGasStations();
+            populateAdminGasStations();
+            updateMobileStations();
+        }
+
+        // Populate gas stations list
+        function populateGasStations() {
             const container = document.getElementById('gasStationsList');
             if (!container) return;
             
             container.innerHTML = '';
             
-            // Force fresh data from the specified ZIP code
-            const stations = gasStationsByZip[zipCode] || gasStationsByZip['33139'];
-            console.log('Populating stations for ZIP:', zipCode, 'Found stations:', stations.length);
+            if (currentGasStations.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+                        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">Search for gas stations</div>
+                        <div>Enter any US ZIP code above to find nearby gas stations</div>
+                    </div>
+                `;
+                return;
+            }
             
-            stations.forEach((station, index) => {
+            currentGasStations.forEach((station, index) => {
                 const ourPrice = currentPrices.premium;
                 const savings = (station.gasPrice - ourPrice);
                 const savingsPercent = ((savings / station.gasPrice) * 100);
@@ -1942,19 +1725,21 @@
             });
         }
 
-        function populateAdminGasStations(zipCode = '33139') {
+        // Populate admin gas stations
+        function populateAdminGasStations() {
             const container = document.getElementById('adminGasStationsList');
             if (!container) return;
             
             container.innerHTML = '';
             
-            // Force fresh data from the specified ZIP code
-            const stations = gasStationsByZip[zipCode] || gasStationsByZip['33139'];
-            console.log('Populating admin stations for ZIP:', zipCode, 'Found stations:', stations.length);
+            if (currentGasStations.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">No gas stations loaded. Search for a location first.</div>';
+                return;
+            }
             
-            stations.forEach((station, index) => {
+            currentGasStations.forEach((station) => {
                 const ourPrice = currentPrices.premium;
-                const savings = (station.gasPrice - ourPrice);
+                const margin = (station.gasPrice - ourPrice);
                 
                 const stationElement = document.createElement('div');
                 stationElement.className = 'gas-station';
@@ -1973,7 +1758,7 @@
                             <span class="price-label">Our Price:</span>
                             <span class="price our-price">$${ourPrice.toFixed(2)}</span>
                         </div>
-                        <div class="savings">Margin: $${savings.toFixed(2)}</div>
+                        <div class="savings">Margin: $${margin.toFixed(2)}</div>
                     </div>
                 `;
                 
@@ -1981,22 +1766,34 @@
             });
         }
 
-        function updateMobileStations(zipCode = '33139') {
+        // Update mobile stations
+        function updateMobileStations() {
             const container = document.getElementById('mobileStationsContainer');
             if (!container) return;
             
-            // Force fresh data from the specified ZIP code
-            const stations = gasStationsByZip[zipCode] || gasStationsByZip['33139'];
-            console.log('Updating mobile stations for ZIP:', zipCode, 'Found stations:', stations.length);
-            
             container.innerHTML = '';
             
-            stations.slice(0, 3).forEach((station, index) => {
+            if (currentGasStations.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 1rem; color: var(--text-secondary); font-size: 0.9rem;">Search for gas stations above</div>';
+                return;
+            }
+            
+            // Show first 3 stations in mobile view
+            currentGasStations.slice(0, 3).forEach((station, index) => {
                 const ourPrice = currentPrices.premium;
                 const savings = (station.gasPrice - ourPrice);
                 
                 const stationElement = document.createElement('div');
-                stationElement.className = `mobile-station ${index === 0 ? 'selected' : ''}`;
+                stationElement.style.cssText = `
+                    background: var(--glass); 
+                    border: 1px solid ${index === 0 ? 'var(--accent)' : 'var(--glass-border)'}; 
+                    border-radius: 12px; 
+                    padding: 1rem; 
+                    margin-bottom: 0.8rem;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                `;
+                
                 stationElement.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
@@ -2011,43 +1808,48 @@
                 `;
                 
                 stationElement.addEventListener('click', () => {
-                    document.querySelectorAll('.mobile-station').forEach(s => s.classList.remove('selected'));
-                    stationElement.classList.add('selected');
+                    document.querySelectorAll('#mobileStationsContainer > div').forEach(s => s.style.borderColor = 'var(--glass-border)');
+                    stationElement.style.borderColor = 'var(--accent)';
                 });
                 
                 container.appendChild(stationElement);
             });
         }
 
-        function updateAdminPrices() {
-            const premium = parseFloat(document.getElementById('premiumPriceInput').value);
-            const regular = parseFloat(document.getElementById('regularPriceInput').value);
-            const diesel = parseFloat(document.getElementById('dieselPriceInput').value);
-            const deliveryFee = parseFloat(document.getElementById('deliveryFeeInput').value);
-
-            // Validate inputs
-            if (isNaN(premium) || isNaN(regular) || isNaN(diesel) || isNaN(deliveryFee)) {
-                showToast('Please enter valid prices', 'error');
-                return;
-            }
-
-            currentPrices = { premium, regular, diesel, deliveryFee };
-            
-            // Update all displays immediately
-            updatePricing();
-            updatePriceSelectors();
-            populateGasStations();
-            populateAdminGasStations();
-            updateMobileView();
-            
-            showToast('Prices updated successfully! Changes reflected across all customer screens.', 'success');
+        // Other functions (login, navigation, etc.)
+        function setupNavigation() {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const section = link.dataset.section;
+                    switchSection(section);
+                });
+            });
         }
 
-        function saveAdminPrices() {
-            // Simulate saving to backend
-            setTimeout(() => {
-                showToast('Prices saved successfully! 💾', 'success');
-            }, 500);
+        function switchSection(section) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(section + 'Section').classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            document.querySelector(`[data-section="${section}"]`).classList.add('active');
+            
+            activeSection = section;
+        }
+
+        function setupPaymentMethods() {
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.addEventListener('click', () => {
+                    document.querySelectorAll('.payment-method').forEach(m => {
+                        m.style.borderColor = 'var(--glass-border)';
+                        m.classList.remove('selected');
+                    });
+                    method.style.borderColor = 'var(--accent)';
+                    method.classList.add('selected');
+                    selectedPayment = method.dataset.payment;
+                    showToast(`Selected ${method.querySelector('div:last-child').textContent}`, 'info');
+                });
+            });
         }
 
         function updatePricing() {
@@ -2059,7 +1861,6 @@
             const deliveryFee = currentPrices.deliveryFee;
             const total = fuelCost + deliveryFee;
             
-            // Calculate savings (assuming gas station price is 6% higher)
             const gasStationPrice = fuelPrice * 1.06;
             const savings = (gasStationPrice - fuelPrice) * amount;
 
@@ -2071,76 +1872,42 @@
             if (document.getElementById('savingsDisplay')) document.getElementById('savingsDisplay').textContent = `$${savings.toFixed(2)}`;
             if (document.getElementById('totalCostDisplay')) document.getElementById('totalCostDisplay').textContent = `$${total.toFixed(2)}`;
             
-            // Update mobile view
+            // Update mobile displays
             if (document.getElementById('mobileTotalDisplay')) document.getElementById('mobileTotalDisplay').textContent = total.toFixed(2);
             if (document.getElementById('mobileSavingsDisplay')) document.getElementById('mobileSavingsDisplay').textContent = savings.toFixed(2);
-        }
-
-        function updatePriceSelectors() {
-            // Update price selectors to show current prices
-            if (document.getElementById('premiumPrice')) document.getElementById('premiumPrice').textContent = currentPrices.premium.toFixed(2);
-            if (document.getElementById('regularPrice')) document.getElementById('regularPrice').textContent = currentPrices.regular.toFixed(2);
-            if (document.getElementById('dieselPrice')) document.getElementById('dieselPrice').textContent = currentPrices.diesel.toFixed(2);
-        }
-
-        function updateMobileView() {
-            // Update mobile pricing displays
+            
+            // Update price selectors
             document.querySelectorAll('.mobile-our-price').forEach(el => {
                 el.textContent = currentPrices.premium.toFixed(2);
             });
-            
-            // Update mobile price selectors
-            document.querySelectorAll('.mobile-premium-price').forEach(el => {
-                el.textContent = currentPrices.premium.toFixed(2);
-            });
-            document.querySelectorAll('.mobile-regular-price').forEach(el => {
-                el.textContent = currentPrices.regular.toFixed(2);
-            });
-            document.querySelectorAll('.mobile-diesel-price').forEach(el => {
-                el.textContent = currentPrices.diesel.toFixed(2);
-            });
-            
-            // Update mobile stations if we have current data
-            if (currentGasStations.length > 0) {
-                updateMobileStations();
-            }
-            
-            // Update mobile pricing calculation
-            const mobileFuelType = document.getElementById('mobileFuelTypeSelect')?.value || 'premium';
-            const mobileAmount = parseFloat(document.getElementById('mobileAmountSelect')?.value || 15);
-            
-            const fuelPrice = currentPrices[mobileFuelType];
-            const fuelCost = fuelPrice * mobileAmount;
-            const deliveryFee = currentPrices.deliveryFee;
-            const total = fuelCost + deliveryFee;
-            const gasStationPrice = fuelPrice * 1.06;
-            const savings = (gasStationPrice - fuelPrice) * mobileAmount;
-            
-            if (document.getElementById('mobileTotalDisplay')) {
-                document.getElementById('mobileTotalDisplay').textContent = total.toFixed(2);
-            }
-            if (document.getElementById('mobileSavingsDisplay')) {
-                document.getElementById('mobileSavingsDisplay').textContent = savings.toFixed(2);
-            }
         }
 
-        function setupPaymentMethods() {
-            document.querySelectorAll('.payment-method').forEach(method => {
-                method.addEventListener('click', () => {
-                    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-                    method.classList.add('selected');
-                    selectedPayment = method.dataset.payment;
-                    showToast(`Selected ${method.querySelector('.payment-name').textContent}`, 'info');
-                });
-            });
+        function updateAdminPrices() {
+            const premium = parseFloat(document.getElementById('premiumPriceInput').value);
+            const regular = parseFloat(document.getElementById('regularPriceInput').value);
+            const diesel = parseFloat(document.getElementById('dieselPriceInput').value);
+            const deliveryFee = parseFloat(document.getElementById('deliveryFeeInput').value);
+
+            if (isNaN(premium) || isNaN(regular) || isNaN(diesel) || isNaN(deliveryFee)) {
+                showToast('Please enter valid prices', 'error');
+                return;
+            }
+
+            currentPrices = { premium, regular, diesel, deliveryFee };
+            
+            updatePricing();
+            populateGasStations();
+            populateAdminGasStations();
+            updateMobileStations();
+            
+            showToast('Prices updated successfully! Changes reflected across all screens.', 'success');
         }
 
-        function setupPricingUpdates() {
-            // Update pricing when inputs change
-            document.getElementById('fuelTypeSelect').addEventListener('change', updatePricing);
-            document.getElementById('amountSelect').addEventListener('change', updatePricing);
+        function saveAdminPrices() {
+            showToast('Prices saved successfully! 💾', 'success');
         }
 
+        // Login functions
         function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('email').value;
@@ -2183,23 +1950,22 @@
         }
 
         function showLoginScreen() {
-            loginScreen.classList.remove('hidden');
-            signupScreen.classList.add('hidden');
-            appContainer.classList.remove('active');
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('signupScreen').classList.add('hidden');
+            document.getElementById('appContainer').classList.remove('active');
         }
 
         function showSignupScreen() {
-            loginScreen.classList.add('hidden');
-            signupScreen.classList.remove('hidden');
-            appContainer.classList.remove('active');
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('signupScreen').classList.remove('hidden');
+            document.getElementById('appContainer').classList.remove('active');
         }
 
         function showApp() {
-            loginScreen.classList.add('hidden');
-            signupScreen.classList.add('hidden');
-            appContainer.classList.add('active');
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('signupScreen').classList.add('hidden');
+            document.getElementById('appContainer').classList.add('active');
             
-            // Update welcome message
             const welcomeEl = document.getElementById('userWelcome');
             if (currentUser && currentUser.fullName) {
                 welcomeEl.textContent = `Welcome, ${currentUser.fullName}!`;
@@ -2208,36 +1974,6 @@
             }
             
             updatePricing();
-            updatePriceSelectors();
-        }
-
-        function setupNavigation() {
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const section = link.dataset.section;
-                    switchSection(section);
-                });
-            });
-        }
-
-        function switchSection(section) {
-            // Hide all sections
-            document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
-            
-            // Show selected section
-            document.getElementById(section + 'Section').classList.remove('hidden');
-            
-            // Update navigation
-            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-            document.querySelector(`[data-section="${section}"]`).classList.add('active');
-            
-            activeSection = section;
-            
-            // Refresh data for certain sections
-            if (section === 'admin') {
-                populateAdminGasStations();
-            }
         }
 
         function handleOrder() {
@@ -2270,24 +2006,11 @@
             setTimeout(() => {
                 toast.classList.remove('show');
                 setTimeout(() => document.body.removeChild(toast), 300);
-            }, 3000);
+            }, 4000);
         }
 
         // Initialize app when DOM is loaded
         document.addEventListener('DOMContentLoaded', init);
-
-        // Auto-refresh gas prices every 30 seconds
-        setInterval(() => {
-            if (lastSearchLocation && currentGasStations.length > 0) {
-                const zipCode = extractZipCode(lastSearchLocation);
-                fetchGasStations(zipCode).then(stations => {
-                    currentGasStations = stations;
-                    populateGasStations(zipCode);
-                    populateAdminGasStations(zipCode);
-                    updateMobileStations(zipCode);
-                });
-            }
-        }, 30000);
     </script>
 </body>
 </html>
