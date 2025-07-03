@@ -8,40 +8,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Psychologically soothing color palette */
-            --primary: #2563EB;           /* Calming blue - trust & reliability */
-            --primary-light: #3B82F6;     /* Lighter blue */
-            --secondary: #059669;         /* Soothing green - savings & nature */
-            --secondary-light: #10B981;   /* Lighter green */
-            --accent: #0EA5E9;           /* Sky blue - freedom & openness */
-            --accent-light: #38BDF8;     /* Light sky blue */
-            --success: #22C55E;          /* Fresh green - positive outcomes */
-            --warning: #F59E0B;          /* Warm amber - attention without alarm */
-            --error: #EF4444;           /* Soft red - gentle alerts */
-            --text-primary: #1F2937;     /* Soft dark gray - easy on eyes */
-            --text-secondary: #6B7280;   /* Medium gray - readable secondary */
-            --text-light: #9CA3AF;      /* Light gray */
-            --background: #F8FAFC;       /* Soft white - clean & spacious */
-            --surface: #FFFFFF;          /* Pure white - clarity */
-            --surface-soft: #F1F5F9;     /* Very soft blue-gray */
-            --border: #E5E7EB;           /* Gentle border */
-            --border-light: #F3F4F6;     /* Very light border */
+            /* iOS-inspired calm color palette */
+            --primary: #007AFF;           /* iOS blue - calm & trustworthy */
+            --primary-light: #4A90E2;     /* Light iOS blue */
+            --secondary: #34C759;         /* iOS green - success & growth */
+            --secondary-light: #5AC669;   /* Light iOS green */
+            --accent: #5856D6;           /* iOS purple - elegant accent */
+            --accent-light: #7B7AE8;     /* Light iOS purple */
+            --success: #30D158;          /* iOS success green */
+            --warning: #FF9500;          /* iOS orange - warm warning */
+            --error: #FF3B30;           /* iOS red - gentle alert */
+            --text-primary: #000000;     /* iOS black text */
+            --text-secondary: #8E8E93;   /* iOS secondary gray */
+            --text-light: #C7C7CC;      /* iOS light gray */
+            --background: #F2F2F7;       /* iOS background gray */
+            --surface: #FFFFFF;          /* Pure white surfaces */
+            --surface-soft: #F2F2F7;     /* iOS grouped background */
+            --border: #C6C6C8;           /* iOS separator gray */
+            --border-light: #F2F2F2;     /* Very light separator */
             
-            /* Soothing gradients */
-            --gradient-hero: linear-gradient(135deg, #3B82F6 0%, #10B981 100%);
-            --gradient-savings: linear-gradient(135deg, #059669 0%, #22C55E 100%);
-            --gradient-trust: linear-gradient(135deg, #0EA5E9 0%, #3B82F6 100%);
-            --gradient-soft: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+            /* Calm iOS-style gradients */
+            --gradient-hero: linear-gradient(135deg, #007AFF 0%, #34C759 100%);
+            --gradient-savings: linear-gradient(135deg, #34C759 0%, #30D158 100%);
+            --gradient-trust: linear-gradient(135deg, #5856D6 0%, #007AFF 100%);
+            --gradient-soft: linear-gradient(135deg, #F2F2F7 0%, #FFFFFF 100%);
             
-            /* Glass effects for mobile */
-            --glass: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            /* iOS glass effects */
+            --glass: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(0, 0, 0, 0.04);
             --glass-strong: rgba(255, 255, 255, 0.95);
             
-            /* Soft shadows */
-            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
-            --shadow-strong: 0 20px 40px rgba(0, 0, 0, 0.15);
+            /* iOS shadows */
+            --shadow-soft: 0 2px 10px rgba(0, 0, 0, 0.04);
+            --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --shadow-strong: 0 8px 30px rgba(0, 0, 0, 0.08);
         }
 
         * {
@@ -51,8 +51,8 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--gradient-soft);
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+            background: var(--background);
             color: var(--text-primary);
             min-height: 100vh;
             margin: 0;
@@ -60,7 +60,7 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            /* Mobile optimizations */
+            /* iOS touch optimizations */
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             -khtml-user-select: none;
@@ -70,27 +70,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Subtle animated background for mobile */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 80% 60%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 50% 80%, rgba(14, 165, 233, 0.06) 0%, transparent 30%);
-            pointer-events: none;
-            z-index: -1;
-            animation: gentleFloat 25s infinite ease-in-out;
-        }
-
-        @keyframes gentleFloat {
-            0%, 100% { transform: translateY(0px) scale(1); opacity: 0.8; }
-            50% { transform: translateY(-10px) scale(1.02); opacity: 1; }
-        }
+        /* Remove animated background for cleaner iOS look */
 
         /* Mobile App Container */
         .mobile-app {
@@ -104,21 +84,58 @@
             overflow: hidden;
         }
 
-        /* Mobile Glass Effects */
+        /* iOS-style cards */
         .glass {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
             box-shadow: var(--shadow-soft);
         }
 
         .glass-strong {
-            background: var(--glass-strong);
-            backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
             box-shadow: var(--shadow-medium);
+        }
+        
+        /* iOS button styles */
+        .ios-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 24px;
+            font-size: 17px;
+            font-weight: 600;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .ios-button:hover {
+            background: var(--primary-light);
+            transform: scale(0.98);
+        }
+        
+        .ios-button:active {
+            transform: scale(0.96);
+            background: var(--primary);
+        }
+        
+        .ios-button-secondary {
+            background: var(--surface);
+            color: var(--primary);
+            border: 1px solid var(--border);
+        }
+        
+        .ios-button-secondary:hover {
+            background: var(--surface-soft);
         }
 
         /* Improved Settings Panel */
@@ -1119,50 +1136,41 @@
         <!-- Landing/Welcome Screen -->
         <div class="landing-screen" id="landingScreen">
             <!-- Hero Section -->
-            <div style="background: var(--gradient-hero); padding: 2rem 1.5rem; text-align: center; color: white; position: relative; overflow: hidden;">
-                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"grain\" width=\"100\" height=\"100\" patternUnits=\"userSpaceOnUse\"><circle cx=\"50\" cy=\"50\" r=\"0.5\" fill=\"white\" opacity=\"0.1\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23grain)\"/></svg>'); opacity: 0.1;"></div>
+            <div style="background: var(--gradient-hero); padding: 3rem 1.5rem 2rem; text-align: center; color: white; position: relative; overflow: hidden;">
                 
                 <div style="position: relative; z-index: 1;">
                     <div style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.02em;">⛽ FuelFlow</div>
                     <div style="font-size: 1.1rem; font-weight: 500; opacity: 0.95; margin-bottom: 2rem;">Premium fuel delivery to your door</div>
                     
                     <!-- Value Proposition Cards -->
-                    <div style="display: grid; gap: 1rem; margin-bottom: 2rem;">
-                        <div class="glass" style="padding: 1.5rem; text-align: left;">
-                            <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                                <div style="background: var(--gradient-savings); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
-                                    <span style="font-size: 1.5rem;">💰</span>
+                    <div style="display: grid; gap: 0.8rem; margin-bottom: 2rem;">
+                        <div style="background: rgba(255, 255, 255, 0.15); border-radius: 16px; padding: 1.2rem; text-align: left; backdrop-filter: blur(10px);">
+                            <div style="display: flex; align-items: center; gap: 0.8rem;">
+                                <div style="background: rgba(52, 199, 89, 0.2); border-radius: 12px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">
+                                    <span style="font-size: 1.3rem;">💰</span>
                                 </div>
                                 <div>
-                                    <div style="font-size: 1.2rem; font-weight: 700; color: white;">Save Money Daily</div>
-                                    <div style="font-size: 0.9rem; opacity: 0.9;">Compare prices instantly</div>
+                                    <div style="font-size: 1.1rem; font-weight: 600; color: white; margin-bottom: 0.2rem;">Save Money</div>
+                                    <div style="font-size: 0.85rem; opacity: 0.8;">$0.25-$0.40 per gallon</div>
                                 </div>
-                            </div>
-                            <div style="background: rgba(34, 197, 94, 0.2); border-radius: 12px; padding: 1rem;">
-                                <div style="font-size: 2rem; font-weight: 800; color: #22C55E; margin-bottom: 0.5rem;">$0.25-$0.40</div>
-                                <div style="font-size: 0.9rem; opacity: 0.9;">Average savings per gallon in Miami</div>
                             </div>
                         </div>
                         
-                        <div class="glass" style="padding: 1.5rem; text-align: left;">
-                            <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-                                <div style="background: var(--gradient-trust); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
-                                    <span style="font-size: 1.5rem;">🚗</span>
+                        <div style="background: rgba(255, 255, 255, 0.15); border-radius: 16px; padding: 1.2rem; text-align: left; backdrop-filter: blur(10px);">
+                            <div style="display: flex; align-items: center; gap: 0.8rem;">
+                                <div style="background: rgba(0, 122, 255, 0.2); border-radius: 12px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">
+                                    <span style="font-size: 1.3rem;">🚗</span>
                                 </div>
                                 <div>
-                                    <div style="font-size: 1.2rem; font-weight: 700; color: white;">Never Leave Home</div>
-                                    <div style="font-size: 0.9rem; opacity: 0.9;">We come to you</div>
+                                    <div style="font-size: 1.1rem; font-weight: 600; color: white; margin-bottom: 0.2rem;">Home Delivery</div>
+                                    <div style="font-size: 0.85rem; opacity: 0.8;">$4.99 flat fee anywhere</div>
                                 </div>
-                            </div>
-                            <div style="background: rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 1rem;">
-                                <div style="font-size: 2rem; font-weight: 800; color: #0EA5E9; margin-bottom: 0.5rem;">$4.99</div>
-                                <div style="font-size: 0.9rem; opacity: 0.9;">Flat delivery fee anywhere in Miami</div>
                             </div>
                         </div>
                     </div>
                     
-                    <button id="startTrialBtn" style="background: white; color: var(--primary); border: none; padding: 1rem 2rem; border-radius: 16px; font-weight: 700; font-size: 1.1rem; width: 100%; box-shadow: var(--shadow-medium); transition: all 0.3s ease;">
-                        Start FREE 2-Week Trial 🎉
+                    <button id="startTrialBtn" class="ios-button" style="background: white; color: var(--primary); font-weight: 700; margin-bottom: 1rem;">
+                        Start FREE 2-Week Trial
                     </button>
                     
                     <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
@@ -1198,19 +1206,19 @@
                         </div>
                     </div>
                     
-                    <div style="text-align: center; margin-top: 1.5rem; padding: 1rem; background: var(--gradient-savings); border-radius: 16px; color: white;">
-                        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">You Save</div>
-                        <div style="font-size: 2.5rem; font-weight: 800;" id="savingsAmount">$0.30</div>
-                        <div style="font-size: 0.9rem; opacity: 0.9;">per gallon + time & convenience</div>
+                    <div id="savingsResults" style="text-align: center; margin-top: 1.2rem; padding: 1.2rem; background: var(--secondary); border-radius: 12px; color: white;">
+                        <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.4rem; opacity: 0.9;">You Save</div>
+                        <div style="font-size: 2.2rem; font-weight: 700;" id="savingsAmount">$0.30</div>
+                        <div style="font-size: 13px; opacity: 0.8;">per gallon + convenience</div>
                     </div>
                 </div>
                 
-                <button id="getStartedBtn" style="background: var(--gradient-hero); color: white; border: none; padding: 1.2rem 2rem; border-radius: 16px; font-weight: 700; font-size: 1.1rem; width: 100%; box-shadow: var(--shadow-medium); transition: all 0.3s ease;">
+                <button id="getStartedBtn" class="ios-button" style="margin-bottom: 1rem;">
                     Get Started - 14 Days FREE
                 </button>
                 
-                <div style="text-align: center; margin-top: 1rem;">
-                    <button id="loginExistingBtn" style="background: none; border: none; color: var(--primary); font-weight: 600; text-decoration: underline; cursor: pointer;">
+                <div style="text-align: center; margin-top: 0.5rem;">
+                    <button id="loginExistingBtn" class="ios-button-secondary" style="background: none; border: none; font-size: 16px; padding: 12px;">
                         Already have an account? Sign in
                     </button>
                 </div>
@@ -1218,24 +1226,114 @@
             
             <!-- Trust Indicators -->
             <div style="padding: 1.5rem; background: var(--surface-soft); text-align: center;">
-                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Trusted by Miami residents</div>
-                <div style="display: flex; justify-content: space-around; align-items: center;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">24/7</div>
-                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Service</div>
+                <div style="color: var(--text-secondary); font-size: 14px; margin-bottom: 1.2rem; font-weight: 500;">Trusted by Miami residents</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                    <div style="text-align: center; background: var(--surface); padding: 0.8rem; border-radius: 12px; border: 1px solid var(--border-light);">
+                        <div style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin-bottom: 0.2rem;">24/7</div>
+                        <div style="font-size: 12px; color: var(--text-secondary);">Service</div>
                     </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 1.5rem; font-weight: 800; color: var(--secondary);">4.9★</div>
-                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Rating</div>
+                    <div style="text-align: center; background: var(--surface); padding: 0.8rem; border-radius: 12px; border: 1px solid var(--border-light);">
+                        <div style="font-size: 1.3rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.2rem;">4.9★</div>
+                        <div style="font-size: 12px; color: var(--text-secondary);">Rating</div>
                     </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent);">Safe</div>
-                        <div style="font-size: 0.8rem; color: var(--text-secondary);">& Insured</div>
+                    <div style="text-align: center; background: var(--surface); padding: 0.8rem; border-radius: 12px; border: 1px solid var(--border-light);">
+                        <div style="font-size: 1.3rem; font-weight: 700; color: var(--accent); margin-bottom: 0.2rem;">Safe</div>
+                        <div style="font-size: 12px; color: var(--text-secondary);">& Insured</div>
                     </div>
                 </div>
             </div>
         </div>
-
+        
+        <!-- Login Screen -->
+        <div class="hidden" id="loginScreen" style="padding: 2rem 1.5rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; background: var(--background);">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <div style="font-size: 2.2rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem;">⛽ FuelFlow</div>
+                <div style="font-size: 16px; color: var(--text-secondary); font-weight: 500;">Welcome back</div>
+            </div>
+            
+            <form id="loginForm" style="margin-bottom: 2rem;">
+                <div style="margin-bottom: 1.5rem;">
+                    <input type="email" id="email" placeholder="Email" required style="width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: 12px; font-size: 17px; background: var(--surface); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+                </div>
+                <div style="margin-bottom: 2rem;">
+                    <input type="password" id="password" placeholder="Password" required style="width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: 12px; font-size: 17px; background: var(--surface); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+                </div>
+                <button type="submit" class="ios-button" style="margin-bottom: 1rem;">Sign In</button>
+            </form>
+            
+            <button class="ios-button-secondary" id="signupBtn" style="margin-bottom: 1rem;">Create Account</button>
+            <button class="ios-button-secondary" id="guestBtn">Browse as Guest</button>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <button onclick="showScreen('landing')" style="background: none; border: none; color: var(--text-secondary); font-size: 16px; cursor: pointer;">← Back to Welcome</button>
+            </div>
+        </div>
+        
+        <!-- Signup Screen -->
+        <div class="hidden" id="signupScreen" style="padding: 2rem 1.5rem; min-height: 100vh; background: var(--background); overflow-y: auto;">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <div style="font-size: 2.2rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem;">⛽ FuelFlow</div>
+                <div style="font-size: 16px; color: var(--text-secondary); font-weight: 500;">Start your free trial</div>
+            </div>
+            
+            <form id="signupForm">
+                <div style="margin-bottom: 1.2rem;">
+                    <input type="text" id="fullName" placeholder="Full Name" required style="width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: 12px; font-size: 17px; background: var(--surface); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+                </div>
+                <div style="margin-bottom: 1.2rem;">
+                    <input type="email" id="signupEmail" placeholder="Email" required style="width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: 12px; font-size: 17px; background: var(--surface); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+                </div>
+                <div style="margin-bottom: 1.2rem;">
+                    <input type="password" id="signupPassword" placeholder="Password" required style="width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: 12px; font-size: 17px; background: var(--surface); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+                </div>
+                <div style="margin-bottom: 2rem;">
+                    <input type="text" id="zipCode" placeholder="Miami ZIP code (33xxx)" pattern="33[0-9]{3}" required style="width: 100%; padding: 16px; border: 1px solid var(--border); border-radius: 12px; font-size: 17px; background: var(--surface); color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+                </div>
+                
+                <!-- Subscription Plans -->
+                <div style="margin-bottom: 2rem;">
+                    <div style="font-size: 18px; font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; text-align: center;">Choose Your Plan</div>
+                    
+                    <div style="background: var(--surface); border: 1px solid var(--border-light); border-radius: 16px; padding: 1rem; margin-bottom: 0.8rem; cursor: pointer;" onclick="selectPlan('trial')">
+                        <input type="radio" name="subscription" value="trial" id="trialPlan" checked style="display: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-size: 17px; font-weight: 600; color: var(--secondary); margin-bottom: 0.2rem;">🎉 Free Trial</div>
+                                <div style="font-size: 14px; color: var(--text-secondary);">14 days • Full access • Cancel anytime</div>
+                            </div>
+                            <div style="font-size: 20px; font-weight: 700; color: var(--secondary);">FREE</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: var(--surface); border: 1px solid var(--border-light); border-radius: 16px; padding: 1rem; margin-bottom: 0.8rem; cursor: pointer; opacity: 0.6;" onclick="selectPlan('monthly')">
+                        <input type="radio" name="subscription" value="monthly" id="monthlyPlan" style="display: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-size: 17px; font-weight: 600; color: var(--text-primary); margin-bottom: 0.2rem;">Monthly Plan</div>
+                                <div style="font-size: 14px; color: var(--text-secondary);">Unlimited deliveries • Premium support</div>
+                            </div>
+                            <div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">$29.99</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="ios-button" id="signupSubmitBtn" style="margin-bottom: 1rem;">Start Free Trial</button>
+            </form>
+            
+            <div style="text-align: center;">
+                <button id="backToLoginBtn" style="background: none; border: none; color: var(--text-secondary); font-size: 16px; cursor: pointer;">← Back to Sign In</button>
+            </div>
+        </div>
+        
+        <!-- App Content (placeholder for after login) -->
+        <div class="hidden" id="appContainer" style="padding: 2rem 1.5rem; min-height: 100vh; background: var(--background);">
+            <div style="text-align: center; padding: 3rem 1rem;">
+                <div style="font-size: 2rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">Welcome to FuelFlow!</div>
+                <div style="font-size: 16px; color: var(--text-secondary); margin-bottom: 2rem;" id="userWelcome">Your account is ready</div>
+                <button class="ios-button" onclick="logout()">Sign Out</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Global State
@@ -1307,18 +1405,33 @@
         }
 
         function setupEventListeners() {
-            // Login and navigation
-            document.getElementById('loginForm').addEventListener('submit', handleLogin);
-            document.getElementById('signupForm').addEventListener('submit', handleSignup);
+            // Login and navigation - with error handling
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) loginForm.addEventListener('submit', handleLogin);
+            
+            const signupForm = document.getElementById('signupForm');
+            if (signupForm) signupForm.addEventListener('submit', handleSignup);
+            
             setupSubscriptionPlanSelection();
-            document.getElementById('guestBtn').addEventListener('click', () => loginAsGuest());
-            document.getElementById('signupBtn').addEventListener('click', () => showSignupScreen());
-            document.getElementById('backToLoginBtn').addEventListener('click', () => showLoginScreen());
-            document.getElementById('logoutBtn').addEventListener('click', () => logout());
+            
+            const guestBtn = document.getElementById('guestBtn');
+            if (guestBtn) guestBtn.addEventListener('click', () => loginAsGuest());
+            
+            const signupBtn = document.getElementById('signupBtn');
+            if (signupBtn) signupBtn.addEventListener('click', () => showScreen('signup'));
+            
+            const backToLoginBtn = document.getElementById('backToLoginBtn');
+            if (backToLoginBtn) backToLoginBtn.addEventListener('click', () => showScreen('login'));
             
             // Landing page navigation
-            document.getElementById('loginExistingBtn').addEventListener('click', () => showScreen('login'));
-            document.getElementById('signInBtn').addEventListener('click', () => showScreen('login'));
+            const loginExistingBtn = document.getElementById('loginExistingBtn');
+            if (loginExistingBtn) loginExistingBtn.addEventListener('click', () => showScreen('login'));
+            
+            const startTrialBtn = document.getElementById('startTrialBtn');
+            if (startTrialBtn) startTrialBtn.addEventListener('click', () => showScreen('signup'));
+            
+            const getStartedBtn = document.getElementById('getStartedBtn');
+            if (getStartedBtn) getStartedBtn.addEventListener('click', () => showScreen('signup'));
             
             // Order functionality
             document.getElementById('orderBtn').addEventListener('click', handleOrder);
@@ -2041,22 +2154,23 @@
             }
         }
 
+        // Plan selection helper
+        function selectPlan(planType) {
+            const radioBtn = document.getElementById(planType + 'Plan');
+            if (radioBtn) radioBtn.checked = true;
+            
+            // Update visual selection
+            document.querySelectorAll('[onclick*="selectPlan"]').forEach(div => {
+                div.style.border = '1px solid var(--border-light)';
+                div.style.backgroundColor = 'var(--surface)';
+            });
+            
+            event.target.closest('div').style.border = '2px solid var(--primary)';
+            event.target.closest('div').style.backgroundColor = 'rgba(0, 122, 255, 0.05)';
+        }
+        
         // Landing page interactions
         function setupLandingPageInteractions() {
-            // Start Trial button
-            document.getElementById('startTrialBtn').addEventListener('click', () => {
-                showScreen('signup');
-            });
-            
-            // Get Started button
-            document.getElementById('getStartedBtn').addEventListener('click', () => {
-                showScreen('signup');
-            });
-            
-            // Sign In button
-            document.getElementById('signInBtn').addEventListener('click', () => {
-                showScreen('login');
-            });
             
             // Savings calculator
             const savingsZipInput = document.getElementById('savingsZipInput');
@@ -2463,7 +2577,9 @@
                 currentUser = { email, type: email.includes('admin') ? 'admin' : 'customer' };
                 isAdmin = currentUser.type === 'admin';
                 showApp();
-                showToast(`Welcome back, ${email}!`, 'success');
+                showToast(`Welcome back!`, 'success');
+            } else {
+                showToast('Please enter email and password', 'error');
             }
         }
 
@@ -2473,7 +2589,7 @@
             const email = document.getElementById('signupEmail').value;
             const password = document.getElementById('signupPassword').value;
             const zipCode = document.getElementById('zipCode').value;
-            const subscriptionPlan = document.querySelector('input[name="subscription"]:checked').value;
+            const subscriptionPlan = document.querySelector('input[name="subscription"]:checked')?.value || 'trial';
             
             // Validate Miami ZIP code
             if (!zipCode.match(/^33[0-9]{3}$/)) {
@@ -2483,7 +2599,7 @@
             
             if (fullName && email && password && zipCode) {
                 // Simulate subscription processing
-                showToast(subscriptionPlan === 'trial' ? 'Starting your free trial...' : 'Processing subscription...', 'info');
+                showToast('Creating your account...', 'info');
                 
                 setTimeout(() => {
                     const now = new Date();
@@ -2527,7 +2643,14 @@
             // Clear any previous subscription data
             localStorage.setItem('subscriptionActive', 'false');
             showApp();
-            showToast('Welcome! You can browse prices for free. Subscribe to place orders and access all features.', 'info');
+            showToast('Welcome! Browsing as guest.', 'info');
+        }
+        
+        function logout() {
+            currentUser = null;
+            isAdmin = false;
+            showScreen('landing');
+            showToast('Signed out successfully', 'info');
         }
 
         function logout() {
@@ -2620,21 +2743,91 @@
         }
 
         function showToast(message, type = 'info') {
+            // Create iOS-style toast
             const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-                <span>${message}</span>
+            toast.style.cssText = `
+                position: fixed;
+                top: 80px;
+                left: 50%;
+                transform: translateX(-50%) translateY(-100px);
+                background: var(--surface);
+                color: var(--text-primary);
+                padding: 12px 20px;
+                border-radius: 24px;
+                font-size: 15px;
+                font-weight: 500;
+                box-shadow: var(--shadow-medium);
+                z-index: 1000;
+                border: 1px solid var(--border-light);
+                font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+                transition: all 0.3s ease;
+                max-width: 300px;
+                text-align: center;
             `;
             
+            // Set color based on type
+            if (type === 'success') {
+                toast.style.backgroundColor = 'var(--secondary)';
+                toast.style.color = 'white';
+            } else if (type === 'error') {
+                toast.style.backgroundColor = 'var(--error)';
+                toast.style.color = 'white';
+            }
+            
+            toast.textContent = message;
             document.body.appendChild(toast);
             
-            setTimeout(() => toast.classList.add('show'), 100);
-            
+            // Animate in
             setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => document.body.removeChild(toast), 300);
-            }, 4000);
+                toast.style.transform = 'translateX(-50%) translateY(0)';
+            }, 100);
+            
+            // Animate out
+            setTimeout(() => {
+                toast.style.transform = 'translateX(-50%) translateY(-100px)';
+                setTimeout(() => {
+                    if (document.body.contains(toast)) {
+                        document.body.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Add missing utility functions
+        function setupNavigation() {
+            // Navigation setup placeholder
+        }
+        
+        function setupPaymentMethods() {
+            // Payment methods setup placeholder  
+        }
+        
+        function setupSettingsPanel() {
+            // Settings panel setup placeholder
+        }
+        
+        function setupPhotoUpload() {
+            // Photo upload setup placeholder
+        }
+        
+        function setupMobileNavigation() {
+            // Mobile navigation setup placeholder
+        }
+        
+        function updatePricing() {
+            // Pricing update placeholder
+        }
+        
+        function loadUserSettings() {
+            // User settings loader placeholder
+        }
+        
+        function loadDefaultGasStations() {
+            // Default gas stations loader placeholder
+        }
+        
+        function setupSubscriptionPlanSelection() {
+            // Already implemented above
         }
 
         // Initialize app when DOM is loaded
