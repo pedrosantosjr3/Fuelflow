@@ -770,6 +770,7 @@
             backdrop-filter: blur(30px);
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow-xl);
+            max-width: 400px;
         }
 
         .phone-screen {
@@ -777,8 +778,28 @@
             border-radius: 25px;
             padding: 1.5rem;
             min-height: 600px;
+            max-height: 700px;
             position: relative;
-            overflow: hidden;
+            overflow-y: auto;
+            /* iPhone-like styling */
+            border: 8px solid #1a1a1a;
+            box-shadow: 
+                0 0 0 2px #333,
+                0 0 20px rgba(0,0,0,0.4),
+                inset 0 0 0 1px rgba(255,255,255,0.1);
+        }
+        
+        .phone-screen::-webkit-scrollbar {
+            width: 3px;
+        }
+        
+        .phone-screen::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .phone-screen::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
         }
 
         .phone-header {
@@ -973,6 +994,47 @@
             .nav-tabs {
                 flex-direction: column;
                 gap: 0.5rem;
+            }
+            
+            .phone-demo {
+                max-width: 100%;
+                margin: 1rem 0;
+                padding: 1rem;
+            }
+            
+            .phone-screen {
+                padding: 1rem;
+                border: 4px solid #1a1a1a;
+                min-height: 500px;
+            }
+        }
+        
+        /* iPhone specific optimizations */
+        @media only screen and (max-width: 414px) and (-webkit-min-device-pixel-ratio: 2) {
+            .phone-demo {
+                padding: 0.5rem;
+                border-radius: 20px;
+            }
+            
+            .phone-screen {
+                border-radius: 15px;
+                padding: 1rem;
+                border: 2px solid #1a1a1a;
+                min-height: 400px;
+            }
+            
+            .mobile-section h3 {
+                font-size: 1rem;
+            }
+            
+            .mobile-input, .mobile-btn {
+                font-size: 16px; /* Prevents zoom on iOS */
+                padding: 0.75rem;
+            }
+            
+            .mobile-nav button {
+                padding: 0.4rem;
+                font-size: 0.75rem;
             }
         }
 
@@ -1297,65 +1359,128 @@
                         <div class="phone-status">📱 Live Demo</div>
                     </div>
 
-                    <div class="mobile-section">
-                        <h3>Find Gas Prices</h3>
-                        <input type="text" class="mobile-input" id="mobileLocationInput" placeholder="Enter ZIP code or address">
-                        <button class="mobile-btn" id="mobileSearchBtn">
-                            <span id="mobileSearchBtnText">Find Gas Prices</span>
-                        </button>
+                    <!-- Mobile Navigation -->
+                    <div class="mobile-nav" style="display: flex; gap: 0.5rem; margin-bottom: 1rem; padding: 0.5rem; background: var(--glass); border-radius: 10px;">
+                        <button class="mobile-nav-btn active" data-mobile-section="search" style="flex: 1; padding: 0.5rem; background: var(--accent); color: white; border: none; border-radius: 5px; font-size: 0.8rem; cursor: pointer;">Search</button>
+                        <button class="mobile-nav-btn" data-mobile-section="order" style="flex: 1; padding: 0.5rem; background: var(--glass); color: var(--text-primary); border: 1px solid var(--border); border-radius: 5px; font-size: 0.8rem; cursor: pointer;">Order</button>
+                        <button class="mobile-nav-btn" data-mobile-section="profile" style="flex: 1; padding: 0.5rem; background: var(--glass); color: var(--text-primary); border: 1px solid var(--border); border-radius: 5px; font-size: 0.8rem; cursor: pointer;">Profile</button>
                     </div>
 
-                    <div class="mobile-section">
-                        <h3>Price Comparison</h3>
-                        <div class="mobile-pricing">
-                            <div class="mobile-price-card">
-                                <div class="mobile-price-value">$<span id="mobileTotalDisplay">61.84</span></div>
-                                <div class="mobile-price-label">Total Cost</div>
+                    <!-- Mobile Search Section -->
+                    <div class="mobile-section-content" id="mobileSearchSection">
+                        <div class="mobile-section">
+                            <h3>Find Gas Prices</h3>
+                            <input type="text" class="mobile-input" id="mobileLocationInput" placeholder="Enter ZIP code or address (e.g., 10001, Beverly Hills)">
+                            <button class="mobile-btn" id="mobileSearchBtn">
+                                <span id="mobileSearchBtnText">Find Gas Prices</span>
+                            </button>
+                        </div>
+
+                        <div class="mobile-section">
+                            <h3>Price Comparison</h3>
+                            <div class="mobile-pricing">
+                                <div class="mobile-price-card">
+                                    <div class="mobile-price-value">$<span id="mobileTotalDisplay">61.84</span></div>
+                                    <div class="mobile-price-label">Total Cost</div>
+                                </div>
+                                <div class="mobile-price-card">
+                                    <div class="mobile-price-value" style="color: var(--success);">$<span id="mobileSavingsDisplay">3.42</span></div>
+                                    <div class="mobile-price-label">You Save</div>
+                                </div>
                             </div>
-                            <div class="mobile-price-card">
-                                <div class="mobile-price-value" style="color: var(--success);">$<span id="mobileSavingsDisplay">3.42</span></div>
-                                <div class="mobile-price-label">You Save</div>
+                        </div>
+
+                        <div class="mobile-section">
+                            <h3>Nearby Stations</h3>
+                            <div id="mobileStationsContainer">
+                                <div class="mobile-station selected">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.3rem;">🛡️ Shell</div>
+                                            <div style="font-size: 0.8rem; color: var(--text-secondary);">0.5 mi • Biscayne Blvd</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <div style="color: var(--error); font-weight: 600;">$4.04</div>
+                                            <div style="color: var(--success); font-size: 0.8rem;">Save $0.25</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mobile-station">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.3rem;">🟢 BP</div>
+                                            <div style="font-size: 0.8rem; color: var(--text-secondary);">1.2 mi • Flagler Street</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <div style="color: var(--error); font-weight: 600;">$3.98</div>
+                                            <div style="color: var(--success); font-size: 0.8rem;">Save $0.19</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="mobile-section">
-                        <h3>Nearby Stations</h3>
-                        <div id="mobileStationsContainer">
-                            <div class="mobile-station selected">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <div>
-                                        <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.3rem;">🛡️ Shell</div>
-                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">0.5 mi • Biscayne Blvd</div>
-                                    </div>
-                                    <div style="text-align: right;">
-                                        <div style="color: var(--error); font-weight: 600;">$4.04</div>
-                                        <div style="color: var(--success); font-size: 0.8rem;">Save $0.25</div>
-                                    </div>
-                                </div>
+                    <!-- Mobile Order Section -->
+                    <div class="mobile-section-content hidden" id="mobileOrderSection">
+                        <div class="mobile-section">
+                            <h3>Order Fuel</h3>
+                            <select class="mobile-input" id="mobileFuelTypeSelect">
+                                <option value="premium">Premium ($<span class="mobile-premium-price">3.79</span>/gal)</option>
+                                <option value="regular">Regular ($<span class="mobile-regular-price">3.59</span>/gal)</option>
+                                <option value="diesel">Diesel ($<span class="mobile-diesel-price">4.12</span>/gal)</option>
+                            </select>
+                            <select class="mobile-input" id="mobileAmountSelect">
+                                <option value="10">10 gallons</option>
+                                <option value="15" selected>15 gallons</option>
+                                <option value="20">20 gallons</option>
+                                <option value="25">25 gallons</option>
+                            </select>
+                        </div>
+
+                        <div class="mobile-section">
+                            <h3>Payment Method</h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1rem;">
+                                <button class="mobile-payment-btn selected" data-mobile-payment="stripe" style="padding: 0.8rem; background: var(--accent); color: white; border: none; border-radius: 8px; font-size: 0.9rem;">💳 Stripe</button>
+                                <button class="mobile-payment-btn" data-mobile-payment="zelle" style="padding: 0.8rem; background: var(--glass); color: var(--text-primary); border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem;">💸 Zelle</button>
                             </div>
-                            <div class="mobile-station">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <div>
-                                        <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.3rem;">🟢 BP</div>
-                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">1.2 mi • Flagler Street</div>
-                                    </div>
-                                    <div style="text-align: right;">
-                                        <div style="color: var(--error); font-weight: 600;">$3.98</div>
-                                        <div style="color: var(--success); font-size: 0.8rem;">Save $0.19</div>
-                                    </div>
-                                </div>
-                            </div>
+                        </div>
+
+                        <div class="mobile-section">
+                            <button class="mobile-btn" id="mobileOrderBtn">
+                                <i class="fas fa-shopping-cart"></i> Order Now
+                            </button>
                         </div>
                     </div>
 
-                    <div class="mobile-section">
-                        <button class="mobile-btn" id="mobileOrderBtn">
-                            <i class="fas fa-shopping-cart"></i> Order Now
-                        </button>
+                    <!-- Mobile Profile Section -->
+                    <div class="mobile-section-content hidden" id="mobileProfileSection">
+                        <div class="mobile-section">
+                            <h3>Your Stats</h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1rem;">
+                                <div style="background: var(--glass); padding: 1rem; border-radius: 8px; text-align: center;">
+                                    <div style="font-size: 1.2rem; font-weight: bold; color: var(--accent);">127</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Orders</div>
+                                </div>
+                                <div style="background: var(--glass); padding: 1rem; border-radius: 8px; text-align: center;">
+                                    <div style="font-size: 1.2rem; font-weight: bold; color: var(--success);">$847</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Saved</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mobile-section">
+                            <h3>Quick Actions</h3>
+                            <button class="mobile-btn" id="mobileSubscribeBtn" style="margin-bottom: 0.5rem; background: var(--success);">
+                                <i class="fas fa-star"></i> Subscribe Monthly ($29.99)
+                            </button>
+                            <button class="mobile-btn" id="mobileSettingsBtn" style="margin-bottom: 0.5rem; background: var(--warning);">
+                                <i class="fas fa-cog"></i> Settings
+                            </button>
+                        </div>
                     </div>
 
-                    <div style="background: var(--glass); border-radius: 15px; padding: 1.5rem; text-align: center;">
+                    <div style="background: var(--glass); border-radius: 15px; padding: 1.5rem; text-align: center; margin-top: 1rem;">
                         <div style="color: var(--success); font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem;">$<span class="mobile-our-price">3.79</span></div>
                         <div style="color: var(--text-secondary); font-size: 0.9rem;">Our Price/Gallon</div>
                     </div>
@@ -1396,7 +1521,7 @@
                 { name: 'Shell', icon: '🛡️', distance: '0.9 mi', location: 'US-1', rating: 4.6, gasPrice: 4.08, features: ['24/7 available', 'Quick fill'] },
                 { name: 'BP', icon: '🟢', distance: '1.3 mi', location: 'LeJeune Rd', rating: 4.3, gasPrice: 4.02, features: ['Good prices', 'Clean facilities'] }
             ],
-            '10001': [ // New York
+            '10001': [ // New York Manhattan
                 { name: 'Shell', icon: '🛡️', distance: '0.6 mi', location: 'Broadway', rating: 4.7, gasPrice: 4.25, features: ['City location', '24/7 available'] },
                 { name: 'BP', icon: '🟢', distance: '0.9 mi', location: 'Park Ave', rating: 4.4, gasPrice: 4.19, features: ['Premium service', 'Quick fill'] },
                 { name: 'Exxon', icon: '🔴', distance: '1.2 mi', location: 'Madison Ave', rating: 4.3, gasPrice: 4.28, features: ['Full service', 'Car wash'] }
@@ -1405,6 +1530,21 @@
                 { name: 'Chevron', icon: '⚡', distance: '0.3 mi', location: 'Rodeo Drive', rating: 4.9, gasPrice: 4.89, features: ['Premium location', 'Valet service'] },
                 { name: 'Shell', icon: '🛡️', distance: '0.7 mi', location: 'Wilshire Blvd', rating: 4.8, gasPrice: 4.85, features: ['Luxury service', '24/7 available'] },
                 { name: 'BP', icon: '🟢', distance: '1.1 mi', location: 'Santa Monica Blvd', rating: 4.6, gasPrice: 4.82, features: ['High-end service', 'Premium quality'] }
+            ],
+            '60601': [ // Chicago
+                { name: 'Shell', icon: '🛡️', distance: '0.4 mi', location: 'Michigan Ave', rating: 4.6, gasPrice: 3.89, features: ['Downtown', 'Quick service'] },
+                { name: 'BP', icon: '🟢', distance: '0.8 mi', location: 'State Street', rating: 4.3, gasPrice: 3.84, features: ['City center', 'Fast fill'] },
+                { name: 'Mobil', icon: '🔴', distance: '1.0 mi', location: 'Lake Shore Dr', rating: 4.5, gasPrice: 3.91, features: ['Lakefront', '24/7 service'] }
+            ],
+            '77001': [ // Houston
+                { name: 'Exxon', icon: '🔴', distance: '0.5 mi', location: 'Main Street', rating: 4.7, gasPrice: 3.65, features: ['Texas headquarters', 'Premium service'] },
+                { name: 'Shell', icon: '🛡️', distance: '0.9 mi', location: 'Fannin St', rating: 4.4, gasPrice: 3.59, features: ['Medical center', 'Quick stop'] },
+                { name: 'Chevron', icon: '⚡', distance: '1.2 mi', location: 'Travis St', rating: 4.2, gasPrice: 3.62, features: ['Downtown', 'Full service'] }
+            ],
+            '85001': [ // Phoenix
+                { name: 'Circle K', icon: '🟠', distance: '0.3 mi', location: 'Central Ave', rating: 4.4, gasPrice: 3.72, features: ['Desert pricing', 'Convenience store'] },
+                { name: 'Shell', icon: '🛡️', distance: '0.7 mi', location: 'Jefferson St', rating: 4.3, gasPrice: 3.78, features: ['City center', '24/7 available'] },
+                { name: 'Chevron', icon: '⚡', distance: '1.1 mi', location: 'Van Buren St', rating: 4.1, gasPrice: 3.75, features: ['Valley location', 'Quick fill'] }
             ]
         };
 
@@ -1427,6 +1567,100 @@
             setupPricingUpdates();
             setupSettingsPanel();
             updatePricing();
+        }
+        
+        function setupMobileNavigation() {
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const section = btn.dataset.mobileSection;
+                    
+                    // Update button states
+                    document.querySelectorAll('.mobile-nav-btn').forEach(b => {
+                        b.style.background = 'var(--glass)';
+                        b.style.color = 'var(--text-primary)';
+                        b.style.border = '1px solid var(--border)';
+                        b.classList.remove('active');
+                    });
+                    
+                    btn.style.background = 'var(--accent)';
+                    btn.style.color = 'white';
+                    btn.style.border = 'none';
+                    btn.classList.add('active');
+                    
+                    // Show selected section
+                    document.querySelectorAll('.mobile-section-content').forEach(content => {
+                        content.classList.add('hidden');
+                    });
+                    
+                    const targetSection = document.getElementById(`mobile${section.charAt(0).toUpperCase() + section.slice(1)}Section`);
+                    if (targetSection) {
+                        targetSection.classList.remove('hidden');
+                    }
+                });
+            });
+        }
+        
+        function setupMobilePaymentMethods() {
+            document.querySelectorAll('.mobile-payment-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const payment = btn.dataset.mobilePayment;
+                    
+                    // Update button states
+                    document.querySelectorAll('.mobile-payment-btn').forEach(b => {
+                        b.style.background = 'var(--glass)';
+                        b.style.color = 'var(--text-primary)';
+                        b.style.border = '1px solid var(--border)';
+                        b.classList.remove('selected');
+                    });
+                    
+                    btn.style.background = 'var(--accent)';
+                    btn.style.color = 'white';
+                    btn.style.border = 'none';
+                    btn.classList.add('selected');
+                    
+                    selectedPayment = payment;
+                    showToast(`Selected ${payment === 'stripe' ? 'Stripe' : 'Zelle'} for mobile payment`, 'info');
+                });
+            });
+        }
+        
+        function setupMobileFuelSelectors() {
+            // Mobile fuel type selector
+            const mobileFuelSelect = document.getElementById('mobileFuelTypeSelect');
+            const mobileAmountSelect = document.getElementById('mobileAmountSelect');
+            
+            if (mobileFuelSelect) {
+                mobileFuelSelect.addEventListener('change', () => {
+                    updatePricing();
+                    updateMobileView();
+                });
+            }
+            
+            if (mobileAmountSelect) {
+                mobileAmountSelect.addEventListener('change', () => {
+                    updatePricing();
+                    updateMobileView();
+                });
+            }
+        }
+        
+        function setupMobileQuickActions() {
+            // Mobile subscribe button
+            const mobileSubscribeBtn = document.getElementById('mobileSubscribeBtn');
+            if (mobileSubscribeBtn) {
+                mobileSubscribeBtn.addEventListener('click', () => {
+                    showToast('Mobile subscription activated! 🎉', 'success');
+                });
+            }
+            
+            // Mobile settings button
+            const mobileSettingsBtn = document.getElementById('mobileSettingsBtn');
+            if (mobileSettingsBtn) {
+                mobileSettingsBtn.addEventListener('click', () => {
+                    settingsPanel.classList.add('active');
+                    settingsOverlay.classList.add('active');
+                });
+            }
         }
 
         function setupEventListeners() {
@@ -1458,6 +1692,18 @@
             // Admin price updates
             document.getElementById('updatePricesBtn').addEventListener('click', updateAdminPrices);
             document.getElementById('savePricesBtn').addEventListener('click', saveAdminPrices);
+            
+            // Mobile navigation
+            setupMobileNavigation();
+            
+            // Mobile payment methods
+            setupMobilePaymentMethods();
+            
+            // Mobile fuel type and amount selectors
+            setupMobileFuelSelectors();
+            
+            // Mobile quick action buttons
+            setupMobileQuickActions();
         }
 
         function setupSettingsPanel() {
@@ -1529,13 +1775,16 @@
                 await new Promise(resolve => setTimeout(resolve, 2000));
                 
                 const zipCode = extractZipCode(location);
+                console.log('Searching for ZIP code:', zipCode); // Debug log
                 const stations = await fetchGasStations(zipCode);
                 
                 if (stations.length > 0) {
                     currentGasStations = stations;
                     lastSearchLocation = location;
+                    // Update ALL views
                     populateGasStations(zipCode);
                     populateAdminGasStations(zipCode);
+                    updateMobileStations(zipCode);
                     showToast(`Found ${stations.length} stations near ${location}`, 'success');
                 } else {
                     showToast('No gas stations found in this area', 'error');
@@ -1563,12 +1812,16 @@
                 await new Promise(resolve => setTimeout(resolve, 2000));
                 
                 const zipCode = extractZipCode(location);
+                console.log('Mobile search for ZIP code:', zipCode); // Debug log
                 const stations = await fetchGasStations(zipCode);
                 
                 if (stations.length > 0) {
                     currentGasStations = stations;
                     lastSearchLocation = location;
+                    // Update ALL views
                     updateMobileStations(zipCode);
+                    populateGasStations(zipCode);
+                    populateAdminGasStations(zipCode);
                     showToast(`Found ${stations.length} stations near ${location}`, 'success');
                 } else {
                     showToast('No gas stations found in this area', 'error');
@@ -1582,8 +1835,24 @@
 
         // Simulate real-time gas price API
         async function fetchGasStations(zipCode) {
+            console.log('Fetching stations for ZIP code:', zipCode);
+            console.log('Available ZIP codes:', Object.keys(gasStationsByZip));
+            
+            // Get base stations for the ZIP code
+            const baseStations = gasStationsByZip[zipCode];
+            
+            if (!baseStations) {
+                console.log('No stations found for ZIP code:', zipCode, 'using default Miami');
+                const defaultStations = gasStationsByZip['33139'];
+                return defaultStations.map(station => ({
+                    ...station,
+                    gasPrice: station.gasPrice + (Math.random() - 0.5) * 0.1 // ±5 cents variation
+                }));
+            }
+            
+            console.log('Found', baseStations.length, 'stations for ZIP code:', zipCode);
+            
             // Add some price variation to simulate real-time updates
-            const baseStations = gasStationsByZip[zipCode] || gasStationsByZip['33139'];
             return baseStations.map(station => ({
                 ...station,
                 gasPrice: station.gasPrice + (Math.random() - 0.5) * 0.1 // ±5 cents variation
@@ -1629,7 +1898,9 @@
             
             container.innerHTML = '';
             
-            const stations = currentGasStations.length > 0 ? currentGasStations : gasStationsByZip[zipCode] || gasStationsByZip['33139'];
+            // Force fresh data from the specified ZIP code
+            const stations = gasStationsByZip[zipCode] || gasStationsByZip['33139'];
+            console.log('Populating stations for ZIP:', zipCode, 'Found stations:', stations.length);
             
             stations.forEach((station, index) => {
                 const ourPrice = currentPrices.premium;
@@ -1677,7 +1948,9 @@
             
             container.innerHTML = '';
             
-            const stations = currentGasStations.length > 0 ? currentGasStations : gasStationsByZip[zipCode] || gasStationsByZip['33139'];
+            // Force fresh data from the specified ZIP code
+            const stations = gasStationsByZip[zipCode] || gasStationsByZip['33139'];
+            console.log('Populating admin stations for ZIP:', zipCode, 'Found stations:', stations.length);
             
             stations.forEach((station, index) => {
                 const ourPrice = currentPrices.premium;
@@ -1712,7 +1985,9 @@
             const container = document.getElementById('mobileStationsContainer');
             if (!container) return;
             
-            const stations = currentGasStations.length > 0 ? currentGasStations : gasStationsByZip[zipCode] || gasStationsByZip['33139'];
+            // Force fresh data from the specified ZIP code
+            const stations = gasStationsByZip[zipCode] || gasStationsByZip['33139'];
+            console.log('Updating mobile stations for ZIP:', zipCode, 'Found stations:', stations.length);
             
             container.innerHTML = '';
             
@@ -1814,9 +2089,38 @@
                 el.textContent = currentPrices.premium.toFixed(2);
             });
             
+            // Update mobile price selectors
+            document.querySelectorAll('.mobile-premium-price').forEach(el => {
+                el.textContent = currentPrices.premium.toFixed(2);
+            });
+            document.querySelectorAll('.mobile-regular-price').forEach(el => {
+                el.textContent = currentPrices.regular.toFixed(2);
+            });
+            document.querySelectorAll('.mobile-diesel-price').forEach(el => {
+                el.textContent = currentPrices.diesel.toFixed(2);
+            });
+            
             // Update mobile stations if we have current data
             if (currentGasStations.length > 0) {
                 updateMobileStations();
+            }
+            
+            // Update mobile pricing calculation
+            const mobileFuelType = document.getElementById('mobileFuelTypeSelect')?.value || 'premium';
+            const mobileAmount = parseFloat(document.getElementById('mobileAmountSelect')?.value || 15);
+            
+            const fuelPrice = currentPrices[mobileFuelType];
+            const fuelCost = fuelPrice * mobileAmount;
+            const deliveryFee = currentPrices.deliveryFee;
+            const total = fuelCost + deliveryFee;
+            const gasStationPrice = fuelPrice * 1.06;
+            const savings = (gasStationPrice - fuelPrice) * mobileAmount;
+            
+            if (document.getElementById('mobileTotalDisplay')) {
+                document.getElementById('mobileTotalDisplay').textContent = total.toFixed(2);
+            }
+            if (document.getElementById('mobileSavingsDisplay')) {
+                document.getElementById('mobileSavingsDisplay').textContent = savings.toFixed(2);
             }
         }
 
