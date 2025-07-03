@@ -325,6 +325,122 @@
             color: white;
         }
 
+        /* Subscription Plans */
+        .subscription-plans {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .plan-option {
+            position: relative;
+        }
+
+        .plan-option input[type="radio"] {
+            opacity: 0;
+            position: absolute;
+        }
+
+        .plan-label {
+            display: block;
+            background: var(--glass);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .plan-option input[type="radio"]:checked + .plan-label {
+            border-color: var(--accent);
+            background: var(--glass-strong);
+            box-shadow: 0 0 0 4px rgba(0, 217, 255, 0.1);
+        }
+
+        .plan-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .save-badge {
+            background: var(--success);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .plan-features {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* Photo Upload Areas */
+        .photo-upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--glass);
+        }
+
+        .photo-upload-area:hover {
+            border-color: var(--accent);
+            background: var(--glass-strong);
+        }
+
+        .photo-upload-area.dragover {
+            border-color: var(--accent);
+            background: rgba(0, 217, 255, 0.1);
+        }
+
+        .upload-content {
+            pointer-events: none;
+        }
+
+        .photo-preview {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .photo-preview img {
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .photo-preview .remove-photo {
+            background: var(--error);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .photo-preview .remove-photo:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+        }
+
         /* Enhanced App Layout */
         .app-container {
             display: none;
@@ -936,6 +1052,40 @@
             <button id="closeSettingsBtn" style="background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; padding: 0.5rem;">×</button>
         </div>
 
+        <!-- User Location Settings -->
+        <div style="margin-bottom: 2rem;">
+            <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 600;">Your Location</h3>
+            <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.5rem;">
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="userZipCode" style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.5rem; display: block;">Default ZIP Code</label>
+                    <input type="text" id="userZipCode" class="form-input" placeholder="Enter your Miami ZIP code (33xxx)" pattern="33[0-9]{3}">
+                </div>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="userAddress" style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.5rem; display: block;">Default Address</label>
+                    <input type="text" id="userAddress" class="form-input" placeholder="Enter your delivery address">
+                </div>
+                <button id="saveLocationBtn" style="background: var(--gradient-primary); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%;">
+                    Save Location
+                </button>
+            </div>
+        </div>
+
+        <!-- Subscription Info -->
+        <div style="margin-bottom: 2rem;">
+            <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 600;">Subscription</h3>
+            <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.5rem;">
+                <div id="subscriptionStatus">
+                    <div style="color: var(--success); font-weight: 600; margin-bottom: 0.5rem;">✓ Active Subscription</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Monthly Plan - $29.99/month</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Next billing: March 15, 2024</div>
+                </div>
+                <button id="manageSubscriptionBtn" style="background: transparent; border: 2px solid var(--accent); color: var(--accent); padding: 0.8rem 1.5rem; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; margin-top: 1rem;">
+                    Manage Subscription
+                </button>
+            </div>
+        </div>
+
+        <!-- Appearance Settings -->
         <div style="margin-bottom: 2rem;">
             <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 600;">Appearance</h3>
             <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 16px;">
@@ -975,7 +1125,7 @@
     <div class="signup-screen hidden" id="signupScreen">
         <div class="login-box">
             <div class="logo">FuelFlow</div>
-            <div class="subtitle">Create your account</div>
+            <div class="subtitle">Create your account and subscribe to FuelFlow</div>
             <form id="signupForm">
                 <div class="form-group">
                     <label for="fullName">Full Name</label>
@@ -989,9 +1139,40 @@
                     <label for="signupPassword">Password</label>
                     <input type="password" id="signupPassword" class="form-input" placeholder="Create a password" required>
                 </div>
-                <button type="submit" class="btn">Create Account</button>
+                <div class="form-group">
+                    <label for="zipCode">Your Miami ZIP Code</label>
+                    <input type="text" id="zipCode" class="form-input" placeholder="Enter your ZIP code (33xxx)" pattern="33[0-9]{3}" required>
+                </div>
+                
+                <!-- Subscription Plans -->
+                <div class="form-group" style="margin-top: 2rem;">
+                    <label style="font-size: 1.1rem; font-weight: 700; color: var(--accent);">Choose Your Subscription Plan</label>
+                    <div class="subscription-plans" style="margin-top: 1rem;">
+                        <div class="plan-option">
+                            <input type="radio" name="subscription" value="monthly" id="monthlyPlan" checked>
+                            <label for="monthlyPlan" class="plan-label">
+                                <div class="plan-name">Monthly Plan</div>
+                                <div class="plan-price">$29.99/month</div>
+                                <div class="plan-features">• Unlimited deliveries • Premium support • Same-day delivery</div>
+                            </label>
+                        </div>
+                        <div class="plan-option">
+                            <input type="radio" name="subscription" value="annual" id="annualPlan">
+                            <label for="annualPlan" class="plan-label">
+                                <div class="plan-name">Annual Plan</div>
+                                <div class="plan-price">$299.99/year <span class="save-badge">Save $60!</span></div>
+                                <div class="plan-features">• Everything in Monthly • 15% fuel discount • Priority scheduling</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">Subscribe & Create Account</button>
             </form>
             <button class="btn btn-outline" id="backToLoginBtn">Back to Login</button>
+            <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary); text-align: center;">
+                FuelFlow is currently available only in Miami-Dade County, FL
+            </div>
         </div>
     </div>
 
@@ -1047,7 +1228,7 @@
 
                     <div class="location-search">
                         <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Find Gas Prices Near You</h3>
-                        <input type="text" class="search-input" id="priceLocationInput" placeholder="Enter any US ZIP code (e.g., 90210, 10001, 33139, 60601)">
+                        <input type="text" class="search-input" id="priceLocationInput" placeholder="Enter Miami ZIP code (e.g., 33139, 33143, 33101, 33180)">
                         <div style="display: grid; grid-template-columns: 1fr auto; gap: 0.5rem;">
                             <button class="search-btn" id="searchPricesBtn">
                                 <span id="searchBtnText">🔍 Search Gas Stations</span>
@@ -1057,15 +1238,15 @@
                             </button>
                         </div>
                         <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary);">
-                            <strong>Quick Tests:</strong> Try any US ZIP code to see real gas stations near that location!
+                            <strong>Quick Miami Tests:</strong> Try different Miami areas to see gas stations!
                         </div>
                         <div class="quick-test-buttons">
-                            <button class="quick-test-btn" onclick="testZipCode('90210')">Beverly Hills</button>
-                            <button class="quick-test-btn" onclick="testZipCode('10001')">NYC</button>
-                            <button class="quick-test-btn" onclick="testZipCode('60601')">Chicago</button>
-                            <button class="quick-test-btn" onclick="testZipCode('77001')">Houston</button>
-                            <button class="quick-test-btn" onclick="testZipCode('85001')">Phoenix</button>
-                            <button class="quick-test-btn" onclick="testZipCode('33139')">Miami</button>
+                            <button class="quick-test-btn" onclick="testZipCode('33139')">Miami Beach</button>
+                            <button class="quick-test-btn" onclick="testZipCode('33143')">Coral Gables</button>
+                            <button class="quick-test-btn" onclick="testZipCode('33101')">Downtown</button>
+                            <button class="quick-test-btn" onclick="testZipCode('33180')">Aventura</button>
+                            <button class="quick-test-btn" onclick="testZipCode('33010')">Hialeah</button>
+                            <button class="quick-test-btn" onclick="testZipCode('33157')">Kendall</button>
                         </div>
                     </div>
 
@@ -1123,19 +1304,101 @@
                         </div>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
-                        <div style="background: var(--glass); border: 2px solid var(--glass-border); border-radius: 20px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s ease;" class="payment-method selected" data-payment="stripe">
-                            <div style="font-size: 2rem; margin-bottom: 1rem;">💳</div>
-                            <div style="font-weight: 600; color: var(--text-primary);">Stripe</div>
+                    <!-- Vehicle Selection -->
+                    <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Vehicle Information</h3>
+                        <div class="form-group">
+                            <label for="vehicleSelect">Select Your Vehicle</label>
+                            <select id="vehicleSelect" class="form-input">
+                                <option value="">Choose your vehicle...</option>
+                                <option value="sedan">🚗 Sedan (13-16 gallon tank)</option>
+                                <option value="suv">🚙 SUV/Crossover (16-22 gallon tank)</option>
+                                <option value="truck">🛻 Pickup Truck (20-30 gallon tank)</option>
+                                <option value="luxury">🏎️ Luxury Car (16-20 gallon tank)</option>
+                                <option value="sports">🏁 Sports Car (12-18 gallon tank)</option>
+                                <option value="van">🚐 Van/Minivan (18-25 gallon tank)</option>
+                                <option value="other">🚘 Other</option>
+                            </select>
                         </div>
-                        <div style="background: var(--glass); border: 2px solid var(--glass-border); border-radius: 20px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s ease;" class="payment-method" data-payment="zelle">
-                            <div style="font-size: 2rem; margin-bottom: 1rem;">💸</div>
-                            <div style="font-weight: 600; color: var(--text-primary);">Zelle</div>
+                        <div class="form-group">
+                            <label for="vehicleDetails">Vehicle Details (Make, Model, Year, Color)</label>
+                            <input type="text" id="vehicleDetails" class="form-input" placeholder="e.g., 2020 Honda Accord White">
+                        </div>
+                        <div class="form-group">
+                            <label for="licensePlate">License Plate (Optional)</label>
+                            <input type="text" id="licensePlate" class="form-input" placeholder="ABC-1234">
+                        </div>
+                    </div>
+
+                    <!-- Photo Upload & Instructions -->
+                    <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Vehicle Photos & Instructions</h3>
+                        <div class="form-group">
+                            <label for="vehiclePhoto">Upload Vehicle Photo</label>
+                            <div class="photo-upload-area" id="vehiclePhotoArea">
+                                <input type="file" id="vehiclePhoto" accept="image/*" capture="camera" style="display: none;">
+                                <div class="upload-content">
+                                    <i class="fas fa-camera" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
+                                    <div style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.5rem;">Take Photo of Your Vehicle</div>
+                                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Help our driver identify your car</div>
+                                </div>
+                            </div>
+                            <div id="vehiclePhotoPreview" class="photo-preview hidden"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fuelCapPhoto">Upload Fuel Cap Photo (Optional)</label>
+                            <div class="photo-upload-area" id="fuelCapPhotoArea">
+                                <input type="file" id="fuelCapPhoto" accept="image/*" capture="camera" style="display: none;">
+                                <div class="upload-content">
+                                    <i class="fas fa-gas-pump" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
+                                    <div style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.5rem;">Photo of Fuel Cap</div>
+                                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Show how to open your fuel door</div>
+                                </div>
+                            </div>
+                            <div id="fuelCapPhotoPreview" class="photo-preview hidden"></div>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Instructions -->
+                    <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Delivery Instructions</h3>
+                        <div class="form-group">
+                            <label for="fuelTankInstructions">Fuel Tank Opening Instructions</label>
+                            <textarea id="fuelTankInstructions" class="form-input" rows="3" placeholder="e.g., Push button inside driver door, or pull lever next to driver seat, or press directly on fuel door"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="deliveryNotes">Special Delivery Notes</label>
+                            <textarea id="deliveryNotes" class="form-input" rows="3" placeholder="e.g., Gate code, parking location, security instructions, preferred contact method"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactPreference">Preferred Contact Method</label>
+                            <select id="contactPreference" class="form-input">
+                                <option value="text">📱 Text Message</option>
+                                <option value="call">📞 Phone Call</option>
+                                <option value="app">📲 App Notification</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Payment Method</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div style="background: var(--glass); border: 2px solid var(--glass-border); border-radius: 20px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s ease;" class="payment-method selected" data-payment="stripe">
+                                <div style="font-size: 2rem; margin-bottom: 1rem;">💳</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Stripe</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">Credit/Debit Cards</div>
+                            </div>
+                            <div style="background: var(--glass); border: 2px solid var(--glass-border); border-radius: 20px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s ease;" class="payment-method" data-payment="zelle">
+                                <div style="font-size: 2rem; margin-bottom: 1rem;">💸</div>
+                                <div style="font-weight: 600; color: var(--text-primary);">Zelle</div>
+                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">Bank Transfer</div>
+                            </div>
                         </div>
                     </div>
 
                     <button class="btn" id="orderBtn">
-                        <i class="fas fa-shopping-cart"></i> Place Order
+                        <i class="fas fa-shopping-cart"></i> Complete Order
                     </button>
                 </div>
 
@@ -1255,9 +1518,26 @@
             setupNavigation();
             setupPaymentMethods();
             setupSettingsPanel();
+            setupPhotoUpload();
             updatePricing();
+            loadUserSettings();
             // Load default gas stations for Miami Beach
             loadDefaultGasStations();
+        }
+
+        // Load user settings from localStorage
+        function loadUserSettings() {
+            const savedZipCode = localStorage.getItem('userZipCode');
+            const savedAddress = localStorage.getItem('userAddress');
+            
+            if (savedZipCode) {
+                document.getElementById('userZipCode').value = savedZipCode;
+                document.getElementById('locationInput').value = savedAddress || savedZipCode;
+            }
+            
+            if (savedAddress) {
+                document.getElementById('userAddress').value = savedAddress;
+            }
         }
 
         function setupEventListeners() {
@@ -1317,10 +1597,122 @@
                 showToast(`Switched to ${newTheme} mode`, 'success');
             });
 
+            // Location settings
+            document.getElementById('saveLocationBtn').addEventListener('click', saveUserLocation);
+            
+            // Subscription management
+            document.getElementById('manageSubscriptionBtn').addEventListener('click', () => {
+                showToast('Subscription management will open in a new window', 'info');
+            });
+
             function closeSettings() {
                 settingsPanel.classList.remove('active');
                 settingsOverlay.classList.remove('active');
             }
+        }
+
+        // Save user location settings
+        function saveUserLocation() {
+            const zipCode = document.getElementById('userZipCode').value.trim();
+            const address = document.getElementById('userAddress').value.trim();
+            
+            if (!zipCode.match(/^33[0-9]{3}$/)) {
+                showToast('Please enter a valid Miami ZIP code (33xxx)', 'error');
+                return;
+            }
+            
+            // Save to localStorage (in real app, would save to server)
+            localStorage.setItem('userZipCode', zipCode);
+            localStorage.setItem('userAddress', address);
+            
+            // Auto-fill order form
+            document.getElementById('locationInput').value = address || zipCode;
+            
+            showToast('Location saved successfully!', 'success');
+        }
+
+        // Photo upload functionality
+        function setupPhotoUpload() {
+            setupPhotoUploadArea('vehiclePhotoArea', 'vehiclePhoto', 'vehiclePhotoPreview');
+            setupPhotoUploadArea('fuelCapPhotoArea', 'fuelCapPhoto', 'fuelCapPhotoPreview');
+        }
+
+        function setupPhotoUploadArea(areaId, inputId, previewId) {
+            const area = document.getElementById(areaId);
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            
+            area.addEventListener('click', () => input.click());
+            
+            area.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                area.classList.add('dragover');
+            });
+            
+            area.addEventListener('dragleave', () => {
+                area.classList.remove('dragover');
+            });
+            
+            area.addEventListener('drop', (e) => {
+                e.preventDefault();
+                area.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handlePhotoUpload(files[0], preview);
+                }
+            });
+            
+            input.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handlePhotoUpload(e.target.files[0], preview);
+                }
+            });
+        }
+
+        function handlePhotoUpload(file, preview) {
+            if (!file.type.startsWith('image/')) {
+                showToast('Please select an image file', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.innerHTML = `
+                    <img src="${e.target.result}" alt="Uploaded photo">
+                    <button class="remove-photo" onclick="removePhoto('${preview.id}')">Remove Photo</button>
+                `;
+                preview.classList.remove('hidden');
+                showToast('Photo uploaded successfully!', 'success');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removePhoto(previewId) {
+            const preview = document.getElementById(previewId);
+            preview.innerHTML = '';
+            preview.classList.add('hidden');
+            
+            // Clear the input
+            const inputId = previewId.replace('Preview', '');
+            document.getElementById(inputId).value = '';
+            
+            showToast('Photo removed', 'info');
+        }
+
+        // Check subscription status (demo function)
+        function checkSubscriptionStatus() {
+            // In real app, would check with server
+            return localStorage.getItem('subscriptionActive') === 'true';
+        }
+
+        // Validate subscription before allowing certain actions
+        function requireSubscription(action) {
+            if (!checkSubscriptionStatus()) {
+                showToast('This feature requires an active subscription. Please sign up!', 'error');
+                document.getElementById('signupBtn').click();
+                return false;
+            }
+            return true;
         }
 
         // Universal Gas Station Finder - Works with ANY US ZIP Code
@@ -1353,102 +1745,157 @@
             // Simulate API call delay
             await new Promise(resolve => setTimeout(resolve, 800));
             
-            // Use a comprehensive ZIP code database with actual coordinates
-            const zipCodeDatabase = {
-                // Major cities
-                '10001': { lat: 40.7505, lng: -73.9934, city: 'New York, NY' },
-                '90210': { lat: 34.0901, lng: -118.4065, city: 'Beverly Hills, CA' },
-                '60601': { lat: 41.8847, lng: -87.6369, city: 'Chicago, IL' },
-                '77001': { lat: 29.7633, lng: -95.3633, city: 'Houston, TX' },
-                '85001': { lat: 33.4484, lng: -112.0740, city: 'Phoenix, AZ' },
+            // Comprehensive Miami-Dade County ZIP code database
+            const miamiZipCodeDatabase = {
+                // Miami-Dade County ZIP codes with precise coordinates
+                '33101': { lat: 25.7617, lng: -80.1918, city: 'Miami Beach, FL' },
+                '33102': { lat: 25.7753, lng: -80.1947, city: 'Miami Beach, FL' },
+                '33109': { lat: 25.8756, lng: -80.1253, city: 'Bay Harbor Islands, FL' },
+                '33114': { lat: 25.8443, lng: -80.1430, city: 'Surfside, FL' },
+                '33119': { lat: 25.8398, lng: -80.1253, city: 'Bal Harbour, FL' },
+                '33122': { lat: 25.7923, lng: -80.3115, city: 'Miami, FL' },
+                '33125': { lat: 25.7676, lng: -80.2429, city: 'Miami, FL' },
+                '33126': { lat: 25.7843, lng: -80.2382, city: 'Miami, FL' },
+                '33127': { lat: 25.7825, lng: -80.2178, city: 'Miami, FL' },
+                '33128': { lat: 25.7814, lng: -80.1945, city: 'Miami, FL' },
+                '33129': { lat: 25.7334, lng: -80.2456, city: 'Miami, FL' },
+                '33130': { lat: 25.7814, lng: -80.1945, city: 'Miami, FL' },
+                '33131': { lat: 25.7617, lng: -80.1918, city: 'Miami, FL' },
+                '33132': { lat: 25.7814, lng: -80.1945, city: 'Miami, FL' },
+                '33133': { lat: 25.7334, lng: -80.2456, city: 'Miami, FL' },
+                '33134': { lat: 25.7334, lng: -80.2456, city: 'Miami, FL' },
+                '33135': { lat: 25.7334, lng: -80.2456, city: 'Miami, FL' },
+                '33136': { lat: 25.7814, lng: -80.1945, city: 'Miami, FL' },
+                '33137': { lat: 25.8398, lng: -80.1253, city: 'Miami Beach, FL' },
+                '33138': { lat: 25.8756, lng: -80.1253, city: 'Miami Beach, FL' },
                 '33139': { lat: 25.7907, lng: -80.1300, city: 'Miami Beach, FL' },
+                '33140': { lat: 25.7907, lng: -80.1300, city: 'Miami Beach, FL' },
+                '33141': { lat: 25.8756, lng: -80.1253, city: 'Miami Beach, FL' },
+                '33142': { lat: 25.8138, lng: -80.2310, city: 'Miami, FL' },
                 '33143': { lat: 25.6716, lng: -80.3014, city: 'Miami, FL' },
-                '94102': { lat: 37.7849, lng: -122.4094, city: 'San Francisco, CA' },
-                '19102': { lat: 39.9526, lng: -75.1652, city: 'Philadelphia, PA' },
-                '98101': { lat: 47.6097, lng: -122.3331, city: 'Seattle, WA' },
-                '30309': { lat: 33.7490, lng: -84.3880, city: 'Atlanta, GA' },
-                '02101': { lat: 42.3601, lng: -71.0589, city: 'Boston, MA' },
-                '80202': { lat: 39.7392, lng: -104.9903, city: 'Denver, CO' },
-                '89101': { lat: 36.1699, lng: -115.1398, city: 'Las Vegas, NV' },
-                '75201': { lat: 32.7767, lng: -96.7970, city: 'Dallas, TX' },
-                '55401': { lat: 44.9778, lng: -93.2650, city: 'Minneapolis, MN' },
-                '63101': { lat: 38.6270, lng: -90.1994, city: 'St. Louis, MO' },
-                '21201': { lat: 39.2904, lng: -76.6122, city: 'Baltimore, MD' },
-                '97201': { lat: 45.5152, lng: -122.6784, city: 'Portland, OR' },
-                '84101': { lat: 40.7608, lng: -111.8910, city: 'Salt Lake City, UT' },
-                '73101': { lat: 35.4676, lng: -97.5164, city: 'Oklahoma City, OK' },
+                '33144': { lat: 25.7334, lng: -80.2456, city: 'Miami, FL' },
+                '33145': { lat: 25.7334, lng: -80.2456, city: 'Miami, FL' },
+                '33146': { lat: 25.7334, lng: -80.2456, city: 'Miami, FL' },
+                '33147': { lat: 25.8426, lng: -80.2130, city: 'Miami, FL' },
+                '33149': { lat: 25.7907, lng: -80.1300, city: 'Miami Beach, FL' },
+                '33150': { lat: 25.8756, lng: -80.1253, city: 'Sunny Isles Beach, FL' },
+                '33154': { lat: 25.8756, lng: -80.1253, city: 'Bal Harbour, FL' },
+                '33155': { lat: 25.6716, lng: -80.3014, city: 'Miami, FL' },
+                '33156': { lat: 25.6716, lng: -80.3014, city: 'Miami, FL' },
+                '33157': { lat: 25.6100, lng: -80.3566, city: 'Miami, FL' },
+                '33158': { lat: 25.9398, lng: -80.1253, city: 'Sunny Isles Beach, FL' },
+                '33160': { lat: 25.9398, lng: -80.1253, city: 'Sunny Isles Beach, FL' },
+                '33161': { lat: 25.9398, lng: -80.1253, city: 'North Miami Beach, FL' },
+                '33162': { lat: 25.9398, lng: -80.1253, city: 'North Miami Beach, FL' },
+                '33163': { lat: 25.9398, lng: -80.1253, city: 'North Miami Beach, FL' },
+                '33164': { lat: 25.9398, lng: -80.1253, city: 'North Miami Beach, FL' },
+                '33165': { lat: 25.7334, lng: -80.2456, city: 'Miami, FL' },
+                '33166': { lat: 25.8138, lng: -80.2310, city: 'Miami Lakes, FL' },
+                '33167': { lat: 25.9334, lng: -80.2456, city: 'Miami Gardens, FL' },
+                '33168': { lat: 25.9334, lng: -80.2456, city: 'Miami Gardens, FL' },
+                '33169': { lat: 25.9334, lng: -80.2456, city: 'Miami Gardens, FL' },
+                '33170': { lat: 25.9334, lng: -80.2456, city: 'Miami Gardens, FL' },
+                '33172': { lat: 25.7923, lng: -80.3115, city: 'Miami, FL' },
+                '33173': { lat: 25.6716, lng: -80.3014, city: 'Miami, FL' },
+                '33174': { lat: 25.6716, lng: -80.3014, city: 'Miami, FL' },
+                '33175': { lat: 25.6716, lng: -80.3014, city: 'Miami, FL' },
+                '33176': { lat: 25.6716, lng: -80.3014, city: 'Miami, FL' },
+                '33177': { lat: 25.6100, lng: -80.3566, city: 'Miami, FL' },
+                '33178': { lat: 25.6100, lng: -80.3566, city: 'Miami, FL' },
+                '33179': { lat: 25.9398, lng: -80.1253, city: 'Sunny Isles Beach, FL' },
+                '33180': { lat: 25.9398, lng: -80.1253, city: 'Aventura, FL' },
+                '33181': { lat: 25.9398, lng: -80.1253, city: 'Aventura, FL' },
+                '33182': { lat: 25.7923, lng: -80.3115, city: 'Miami, FL' },
+                '33183': { lat: 25.6716, lng: -80.3014, city: 'Miami, FL' },
+                '33184': { lat: 25.7923, lng: -80.3115, city: 'Miami, FL' },
+                '33185': { lat: 25.6716, lng: -80.3014, city: 'Miami, FL' },
+                '33186': { lat: 25.6716, lng: -80.3014, city: 'Miami, FL' },
+                '33187': { lat: 25.6100, lng: -80.3566, city: 'Miami, FL' },
+                '33188': { lat: 25.6100, lng: -80.3566, city: 'Miami, FL' },
+                '33189': { lat: 25.6100, lng: -80.3566, city: 'Miami, FL' },
+                '33190': { lat: 25.6100, lng: -80.3566, city: 'Miami, FL' },
+                '33193': { lat: 25.5516, lng: -80.3566, city: 'Miami, FL' },
+                '33194': { lat: 25.5516, lng: -80.3566, city: 'Miami, FL' },
+                '33195': { lat: 25.5516, lng: -80.3566, city: 'Miami, FL' },
+                '33196': { lat: 25.5516, lng: -80.3566, city: 'Miami, FL' },
+                '33197': { lat: 25.5516, lng: -80.3566, city: 'Miami, FL' },
+                '33199': { lat: 25.7617, lng: -80.1918, city: 'Miami, FL' },
+                '33231': { lat: 25.7617, lng: -80.1918, city: 'Miami, FL' },
+                '33233': { lat: 25.7617, lng: -80.1918, city: 'Miami, FL' },
+                '33234': { lat: 25.7617, lng: -80.1918, city: 'Miami, FL' },
+                '33238': { lat: 25.7617, lng: -80.1918, city: 'Miami, FL' },
+                '33239': { lat: 25.7617, lng: -80.1918, city: 'Miami, FL' },
+                '33242': { lat: 25.7617, lng: -80.1918, city: 'Miami, FL' },
+                '33243': { lat: 25.7617, lng: -80.1918, city: 'Miami, FL' },
+                '33245': { lat: 25.7617, lng: -80.1918, city: 'Miami, FL' },
+                '33247': { lat: 25.7617, lng: -80.1918, city: 'Miami, FL' },
+                '33283': { lat: 25.7617, lng: -80.1918, city: 'Miami, FL' },
+                '33296': { lat: 25.7617, lng: -80.1918, city: 'Miami, FL' },
+                // Homestead and South Miami-Dade
+                '33030': { lat: 25.4687, lng: -80.4776, city: 'Homestead, FL' },
+                '33031': { lat: 25.4687, lng: -80.4776, city: 'Homestead, FL' },
+                '33032': { lat: 25.4687, lng: -80.4776, city: 'Homestead, FL' },
+                '33033': { lat: 25.4687, lng: -80.4776, city: 'Homestead, FL' },
+                '33034': { lat: 25.4687, lng: -80.4776, city: 'Homestead, FL' },
+                '33035': { lat: 25.4687, lng: -80.4776, city: 'Homestead, FL' },
+                // Coral Gables
+                '33124': { lat: 25.7334, lng: -80.2456, city: 'Coral Gables, FL' },
+                '33134': { lat: 25.7334, lng: -80.2456, city: 'Coral Gables, FL' },
+                '33146': { lat: 25.7334, lng: -80.2456, city: 'Coral Gables, FL' },
+                '33156': { lat: 25.7334, lng: -80.2456, city: 'Coral Gables, FL' },
+                // Hialeah
+                '33010': { lat: 25.8576, lng: -80.2781, city: 'Hialeah, FL' },
+                '33011': { lat: 25.8576, lng: -80.2781, city: 'Hialeah, FL' },
+                '33012': { lat: 25.8576, lng: -80.2781, city: 'Hialeah, FL' },
+                '33013': { lat: 25.8576, lng: -80.2781, city: 'Hialeah, FL' },
+                '33014': { lat: 25.8576, lng: -80.2781, city: 'Hialeah, FL' },
+                '33015': { lat: 25.8576, lng: -80.2781, city: 'Hialeah, FL' },
+                '33016': { lat: 25.8576, lng: -80.2781, city: 'Hialeah, FL' },
+                '33017': { lat: 25.8576, lng: -80.2781, city: 'Hialeah, FL' },
+                '33018': { lat: 25.8576, lng: -80.2781, city: 'Hialeah, FL' },
+                // Key Biscayne
+                '33149': { lat: 25.6919, lng: -80.1619, city: 'Key Biscayne, FL' },
+                // North Miami
+                '33161': { lat: 25.8901, lng: -80.1868, city: 'North Miami, FL' },
+                '33162': { lat: 25.8901, lng: -80.1868, city: 'North Miami, FL' },
+                '33181': { lat: 25.8901, lng: -80.1868, city: 'North Miami, FL' },
             };
             
-            // If ZIP code is in our database, return it
-            if (zipCodeDatabase[zipCode]) {
-                return zipCodeDatabase[zipCode];
+            // Check if ZIP code is in Miami-Dade County
+            if (miamiZipCodeDatabase[zipCode]) {
+                return miamiZipCodeDatabase[zipCode];
             }
             
-            // For unknown ZIP codes, generate realistic coordinates based on the ZIP code pattern
-            return generateCoordinatesFromZipPattern(zipCode);
+            // If ZIP code is not in Miami-Dade County, show error
+            const firstTwoDigits = parseInt(zipCode.substring(0, 2));
+            if (firstTwoDigits !== 33) {
+                throw new Error('FuelFlow is currently only available in Miami-Dade County, FL. Please enter a Miami ZIP code (33xxx).');
+            }
+            
+            // For unknown Miami ZIP codes, generate realistic coordinates in Miami area
+            return generateMiamiCoordinatesFromZipPattern(zipCode);
         }
 
-        // Generate realistic coordinates for unknown ZIP codes
-        function generateCoordinatesFromZipPattern(zipCode) {
-            const firstDigit = parseInt(zipCode.charAt(0));
-            const firstTwoDigits = parseInt(zipCode.substring(0, 2));
+        // Generate realistic coordinates for unknown Miami ZIP codes
+        function generateMiamiCoordinatesFromZipPattern(zipCode) {
+            // Miami-Dade County boundaries
+            const miamiLatMin = 25.4500;  // South (Homestead area)
+            const miamiLatMax = 25.9500;  // North (Aventura/North Miami Beach)
+            const miamiLngMin = -80.5000; // West
+            const miamiLngMax = -80.1200; // East (coastline)
             
-            // More precise mapping using first two digits for better accuracy
-            const regionMap = {
-                // 0xxxx - Connecticut, Massachusetts, Maine, New Hampshire, New Jersey, Rhode Island, Vermont
-                0: { lat: 42.0, lng: -71.5, region: 'New England' },
-                // 1xxxx - Delaware, New York, Pennsylvania  
-                1: { lat: 40.5, lng: -75.0, region: 'Mid-Atlantic' },
-                // 2xxxx - District of Columbia, Maryland, North Carolina, South Carolina, Virginia, West Virginia
-                2: { lat: 37.5, lng: -78.5, region: 'Southeast' },
-                // 3xxxx - Alabama, Florida, Georgia, Mississippi, Tennessee, with Florida refinement
-                3: { lat: 32.0, lng: -84.0, region: 'Southeast' },
-                // 4xxxx - Indiana, Kentucky, Michigan, Ohio
-                4: { lat: 39.0, lng: -84.5, region: 'Great Lakes' },
-                // 5xxxx - Iowa, Minnesota, Montana, North Dakota, South Dakota, Wisconsin
-                5: { lat: 44.5, lng: -94.0, region: 'Upper Midwest' },
-                // 6xxxx - Illinois, Kansas, Missouri, Nebraska
-                6: { lat: 40.0, lng: -89.0, region: 'Central' },
-                // 7xxxx - Arkansas, Louisiana, Oklahoma, Texas
-                7: { lat: 32.0, lng: -96.0, region: 'South Central' },
-                // 8xxxx - Arizona, Colorado, Idaho, Montana, Nevada, New Mexico, Utah, Wyoming
-                8: { lat: 39.0, lng: -106.0, region: 'Mountain West' },
-                // 9xxxx - Alaska, California, Hawaii, Oregon, Washington
-                9: { lat: 37.0, lng: -120.0, region: 'Pacific' }
-            };
-            
-            let baseRegion = regionMap[firstDigit] || regionMap[3];
-            
-            // Special handling for Florida ZIP codes (330xx-349xx)
-            if (firstTwoDigits >= 33 && firstTwoDigits <= 34) {
-                baseRegion = { lat: 27.0, lng: -81.0, region: 'Florida' };
-            }
-            // Special handling for California ZIP codes (900xx-966xx)
-            else if (firstTwoDigits >= 90 && firstTwoDigits <= 96) {
-                baseRegion = { lat: 36.0, lng: -119.0, region: 'California' };
-            }
-            // Special handling for Texas ZIP codes (750xx-799xx)
-            else if (firstTwoDigits >= 75 && firstTwoDigits <= 79) {
-                baseRegion = { lat: 31.0, lng: -99.0, region: 'Texas' };
-            }
-            // Special handling for New York ZIP codes (100xx-149xx)
-            else if (firstTwoDigits >= 10 && firstTwoDigits <= 14) {
-                baseRegion = { lat: 43.0, lng: -75.0, region: 'New York' };
-            }
-            
-            // Add realistic variation based on ZIP code digits for more accuracy
-            const variation = 1.5; // degrees of variation
+            // Generate coordinates based on ZIP code pattern within Miami bounds
             const zipSeed = zipCode.split('').reduce((sum, digit) => sum + parseInt(digit), 0);
             const pseudoRandom1 = (zipSeed * 0.1) % 1;
             const pseudoRandom2 = (zipSeed * 0.13) % 1;
             
-            const lat = baseRegion.lat + (pseudoRandom1 - 0.5) * variation;
-            const lng = baseRegion.lng + (pseudoRandom2 - 0.5) * variation;
+            const lat = miamiLatMin + pseudoRandom1 * (miamiLatMax - miamiLatMin);
+            const lng = miamiLngMin + pseudoRandom2 * (miamiLngMax - miamiLngMin);
             
             return {
                 lat: lat,
                 lng: lng,
-                city: `${zipCode}, ${baseRegion.region}`
+                city: `${zipCode}, Miami-Dade County, FL`
             };
         }
 
@@ -1530,38 +1977,51 @@
             return 1.0 + Math.random() * 0.1;
         }
 
-        // Generate realistic street names based on location
+        // Generate realistic Miami street names based on location
         function generateNearbyStreets(lat, lng) {
-            const commonStreetNames = ['Main St', 'Oak Ave', 'Park Blvd', 'First St', 'Elm St', 'Washington Ave'];
-            const regionalStreets = [];
+            const miamiStreets = [
+                // Major Miami streets and avenues
+                'Biscayne Blvd', 'Collins Ave', 'Ocean Drive', 'Lincoln Rd', 'Washington Ave',
+                'Alton Rd', 'Coral Way', 'Flagler St', 'Calle Ocho', 'Bird Rd',
+                'Kendall Dr', 'Sunset Dr', 'Miller Dr', 'Palmetto Expy', 'US Highway 1',
+                'Miracle Mile', 'Le Jeune Rd', 'Douglas Rd', 'Red Rd', 'Ludlam Rd',
+                'Krome Ave', 'NW 7th St', 'SW 8th St', 'NE 2nd Ave', 'SW 1st St',
+                'Aventura Blvd', 'Harding Ave', 'Bay Harbor Dr', 'Kane Concourse',
+                'NW 36th St', 'SW 88th St', 'NW 103rd St', 'SW 152nd St',
+                'Homestead Ave', 'Quail Roost Dr', 'SW 136th St', 'NW 199th St'
+            ];
             
-            // Add region-specific street names based on more precise location
-            if (lng < -115) { // West Coast
-                regionalStreets.push('Pacific Ave', 'Sunset Blvd', 'Coast Highway', 'Ocean Drive');
-            } else if (lng > -80) { // East Coast
-                regionalStreets.push('Atlantic Ave', 'Colonial Hwy', 'Independence Blvd', 'Liberty St');
-            } else if (lat > 40) { // North
-                regionalStreets.push('Maple St', 'Pine Ave', 'Lake Shore Dr', 'Mill Rd');
-            } else { // South
-                regionalStreets.push('Peachtree St', 'Magnolia Ave', 'Cotton Rd', 'River Dr');
+            // Area-specific streets based on coordinates
+            const areaSpecificStreets = [];
+            
+            // Miami Beach area (higher longitude, closer to coast)
+            if (lng > -80.2) {
+                areaSpecificStreets.push('Collins Ave', 'Ocean Drive', 'Washington Ave', 'Lincoln Rd', 'Alton Rd');
             }
             
-            // Florida-specific streets
-            if (lat > 24 && lat < 31 && lng > -88 && lng < -79) {
-                regionalStreets.push('Coral Way', 'Biscayne Blvd', 'Collins Ave', 'Flagler St', 'Palmetto Expy');
+            // Downtown Miami area
+            if (lat > 25.7 && lat < 25.8 && lng > -80.2 && lng < -80.1) {
+                areaSpecificStreets.push('Biscayne Blvd', 'Flagler St', 'NE 2nd Ave', 'SE 1st St');
             }
             
-            // California-specific streets
-            if (lat > 32 && lat < 42 && lng < -115) {
-                regionalStreets.push('Ventura Blvd', 'Wilshire Blvd', 'Hollywood Blvd', 'Rodeo Drive');
+            // Coral Gables area
+            if (lat > 25.7 && lat < 25.8 && lng > -80.3 && lng < -80.2) {
+                areaSpecificStreets.push('Miracle Mile', 'Coral Way', 'Le Jeune Rd', 'Douglas Rd');
             }
             
-            // Texas-specific streets
-            if (lat > 25 && lat < 37 && lng > -107 && lng < -93) {
-                regionalStreets.push('Interstate 35', 'Ranch Rd', 'Farm Rd', 'Guadalupe St');
+            // South Miami/Homestead area
+            if (lat < 25.6) {
+                areaSpecificStreets.push('Homestead Ave', 'Krome Ave', 'SW 152nd St', 'SW 136th St');
             }
             
-            return [...commonStreetNames, ...regionalStreets];
+            // North Miami area
+            if (lat > 25.85) {
+                areaSpecificStreets.push('Aventura Blvd', 'NW 199th St', 'Biscayne Blvd', 'NE 163rd St');
+            }
+            
+            // Combine all streets and return random selection
+            const allStreets = [...miamiStreets, ...areaSpecificStreets];
+            return allStreets.sort(() => 0.5 - Math.random()).slice(0, 8);
         }
 
         // Enhanced search function
@@ -1973,12 +2433,38 @@
             const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('signupEmail').value;
             const password = document.getElementById('signupPassword').value;
+            const zipCode = document.getElementById('zipCode').value;
+            const subscriptionPlan = document.querySelector('input[name="subscription"]:checked').value;
             
-            if (fullName && email && password) {
-                currentUser = { email, fullName, type: 'customer' };
-                isAdmin = false;
-                showApp();
-                showToast(`Welcome to FuelFlow, ${fullName}!`, 'success');
+            // Validate Miami ZIP code
+            if (!zipCode.match(/^33[0-9]{3}$/)) {
+                showToast('Please enter a valid Miami ZIP code (33xxx)', 'error');
+                return;
+            }
+            
+            if (fullName && email && password && zipCode) {
+                // Simulate subscription processing
+                showToast('Processing subscription...', 'info');
+                
+                setTimeout(() => {
+                    currentUser = { 
+                        email, 
+                        fullName, 
+                        type: 'customer',
+                        zipCode,
+                        subscriptionPlan,
+                        subscriptionActive: true
+                    };
+                    
+                    // Save subscription status
+                    localStorage.setItem('subscriptionActive', 'true');
+                    localStorage.setItem('subscriptionPlan', subscriptionPlan);
+                    localStorage.setItem('userZipCode', zipCode);
+                    
+                    isAdmin = false;
+                    showApp();
+                    showToast(`Welcome to FuelFlow, ${fullName}! Your ${subscriptionPlan} subscription is now active.`, 'success');
+                }, 2000);
             }
         }
 
@@ -2024,17 +2510,63 @@
         }
 
         function handleOrder() {
+            // Check subscription status first
+            if (!requireSubscription('place order')) {
+                return;
+            }
+            
             const button = event.target;
             const originalText = button.innerHTML;
             const paymentMethod = selectedPayment === 'stripe' ? 'Credit Card' : 'Zelle';
             
-            button.innerHTML = '<i class="fas fa-check"></i> Order Placed!';
+            // Validate required fields
+            const location = document.getElementById('locationInput').value.trim();
+            const vehicleType = document.getElementById('vehicleSelect').value;
+            const vehicleDetails = document.getElementById('vehicleDetails').value.trim();
+            const fuelTankInstructions = document.getElementById('fuelTankInstructions').value.trim();
+            
+            if (!location) {
+                showToast('Please enter a delivery location', 'error');
+                return;
+            }
+            
+            if (!vehicleType) {
+                showToast('Please select your vehicle type', 'error');
+                return;
+            }
+            
+            if (!vehicleDetails) {
+                showToast('Please enter your vehicle details', 'error');
+                return;
+            }
+            
+            if (!fuelTankInstructions) {
+                showToast('Please provide fuel tank opening instructions', 'error');
+                return;
+            }
+            
+            // Check if location is in Miami
+            if (!location.match(/33[0-9]{3}/) && !location.toLowerCase().includes('miami')) {
+                showToast('Delivery is only available in Miami-Dade County', 'error');
+                return;
+            }
+            
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing Order...';
             button.disabled = true;
             
+            // Simulate order processing
             setTimeout(() => {
-                button.innerHTML = originalText;
-                button.disabled = false;
-                showToast(`Order placed successfully! Payment via ${paymentMethod}`, 'success');
+                button.innerHTML = '<i class="fas fa-check"></i> Order Placed!';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    
+                    const deliveryNotes = document.getElementById('deliveryNotes').value.trim();
+                    const contactPreference = document.getElementById('contactPreference').value;
+                    
+                    showToast(`Order placed successfully! Payment via ${paymentMethod}. You'll be contacted via ${contactPreference.replace('text', 'text message').replace('call', 'phone call').replace('app', 'app notification')}.`, 'success');
+                }, 1000);
             }, 2000);
         }
 
