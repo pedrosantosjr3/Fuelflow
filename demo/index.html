@@ -1353,7 +1353,7 @@
             // Simulate API call delay
             await new Promise(resolve => setTimeout(resolve, 800));
             
-            // Use a comprehensive ZIP code database
+            // Use a comprehensive ZIP code database with actual coordinates
             const zipCodeDatabase = {
                 // Major cities
                 '10001': { lat: 40.7505, lng: -73.9934, city: 'New York, NY' },
@@ -1362,6 +1362,7 @@
                 '77001': { lat: 29.7633, lng: -95.3633, city: 'Houston, TX' },
                 '85001': { lat: 33.4484, lng: -112.0740, city: 'Phoenix, AZ' },
                 '33139': { lat: 25.7907, lng: -80.1300, city: 'Miami Beach, FL' },
+                '33143': { lat: 25.6716, lng: -80.3014, city: 'Miami, FL' },
                 '94102': { lat: 37.7849, lng: -122.4094, city: 'San Francisco, CA' },
                 '19102': { lat: 39.9526, lng: -75.1652, city: 'Philadelphia, PA' },
                 '98101': { lat: 47.6097, lng: -122.3331, city: 'Seattle, WA' },
@@ -1376,7 +1377,6 @@
                 '97201': { lat: 45.5152, lng: -122.6784, city: 'Portland, OR' },
                 '84101': { lat: 40.7608, lng: -111.8910, city: 'Salt Lake City, UT' },
                 '73101': { lat: 35.4676, lng: -97.5164, city: 'Oklahoma City, OK' },
-                // More ZIP codes can be added
             };
             
             // If ZIP code is in our database, return it
@@ -1391,32 +1391,64 @@
         // Generate realistic coordinates for unknown ZIP codes
         function generateCoordinatesFromZipPattern(zipCode) {
             const firstDigit = parseInt(zipCode.charAt(0));
+            const firstTwoDigits = parseInt(zipCode.substring(0, 2));
             
-            // Map first digit to general US regions
+            // More precise mapping using first two digits for better accuracy
             const regionMap = {
-                0: { lat: 42.0, lng: -70.0, region: 'Northeast' },  // New England
-                1: { lat: 40.5, lng: -74.0, region: 'Northeast' },  // NY, NJ, PA
-                2: { lat: 38.5, lng: -77.0, region: 'Southeast' },  // DC, MD, VA
-                3: { lat: 33.5, lng: -84.0, region: 'Southeast' },  // GA, FL, AL
-                4: { lat: 36.0, lng: -86.0, region: 'Southeast' },  // KY, TN, MS
-                5: { lat: 44.0, lng: -93.0, region: 'Midwest' },    // MN, WI, IA
-                6: { lat: 41.5, lng: -87.5, region: 'Midwest' },    // IL, IN, MI
-                7: { lat: 39.0, lng: -98.0, region: 'Central' },    // KS, NE, MO
-                8: { lat: 39.5, lng: -105.0, region: 'Mountain' },  // CO, WY, MT
-                9: { lat: 37.0, lng: -119.0, region: 'Pacific' }    // CA, NV, AZ
+                // 0xxxx - Connecticut, Massachusetts, Maine, New Hampshire, New Jersey, Rhode Island, Vermont
+                0: { lat: 42.0, lng: -71.5, region: 'New England' },
+                // 1xxxx - Delaware, New York, Pennsylvania  
+                1: { lat: 40.5, lng: -75.0, region: 'Mid-Atlantic' },
+                // 2xxxx - District of Columbia, Maryland, North Carolina, South Carolina, Virginia, West Virginia
+                2: { lat: 37.5, lng: -78.5, region: 'Southeast' },
+                // 3xxxx - Alabama, Florida, Georgia, Mississippi, Tennessee, with Florida refinement
+                3: { lat: 32.0, lng: -84.0, region: 'Southeast' },
+                // 4xxxx - Indiana, Kentucky, Michigan, Ohio
+                4: { lat: 39.0, lng: -84.5, region: 'Great Lakes' },
+                // 5xxxx - Iowa, Minnesota, Montana, North Dakota, South Dakota, Wisconsin
+                5: { lat: 44.5, lng: -94.0, region: 'Upper Midwest' },
+                // 6xxxx - Illinois, Kansas, Missouri, Nebraska
+                6: { lat: 40.0, lng: -89.0, region: 'Central' },
+                // 7xxxx - Arkansas, Louisiana, Oklahoma, Texas
+                7: { lat: 32.0, lng: -96.0, region: 'South Central' },
+                // 8xxxx - Arizona, Colorado, Idaho, Montana, Nevada, New Mexico, Utah, Wyoming
+                8: { lat: 39.0, lng: -106.0, region: 'Mountain West' },
+                // 9xxxx - Alaska, California, Hawaii, Oregon, Washington
+                9: { lat: 37.0, lng: -120.0, region: 'Pacific' }
             };
             
-            const baseRegion = regionMap[firstDigit] || regionMap[3];
+            let baseRegion = regionMap[firstDigit] || regionMap[3];
             
-            // Add some random variation to make it more realistic
-            const variation = 2.0; // degrees of variation
-            const lat = baseRegion.lat + (Math.random() - 0.5) * variation;
-            const lng = baseRegion.lng + (Math.random() - 0.5) * variation;
+            // Special handling for Florida ZIP codes (330xx-349xx)
+            if (firstTwoDigits >= 33 && firstTwoDigits <= 34) {
+                baseRegion = { lat: 27.0, lng: -81.0, region: 'Florida' };
+            }
+            // Special handling for California ZIP codes (900xx-966xx)
+            else if (firstTwoDigits >= 90 && firstTwoDigits <= 96) {
+                baseRegion = { lat: 36.0, lng: -119.0, region: 'California' };
+            }
+            // Special handling for Texas ZIP codes (750xx-799xx)
+            else if (firstTwoDigits >= 75 && firstTwoDigits <= 79) {
+                baseRegion = { lat: 31.0, lng: -99.0, region: 'Texas' };
+            }
+            // Special handling for New York ZIP codes (100xx-149xx)
+            else if (firstTwoDigits >= 10 && firstTwoDigits <= 14) {
+                baseRegion = { lat: 43.0, lng: -75.0, region: 'New York' };
+            }
+            
+            // Add realistic variation based on ZIP code digits for more accuracy
+            const variation = 1.5; // degrees of variation
+            const zipSeed = zipCode.split('').reduce((sum, digit) => sum + parseInt(digit), 0);
+            const pseudoRandom1 = (zipSeed * 0.1) % 1;
+            const pseudoRandom2 = (zipSeed * 0.13) % 1;
+            
+            const lat = baseRegion.lat + (pseudoRandom1 - 0.5) * variation;
+            const lng = baseRegion.lng + (pseudoRandom2 - 0.5) * variation;
             
             return {
                 lat: lat,
                 lng: lng,
-                city: `Location ${zipCode}, ${baseRegion.region}`
+                city: `${zipCode}, ${baseRegion.region}`
             };
         }
 
@@ -1503,7 +1535,7 @@
             const commonStreetNames = ['Main St', 'Oak Ave', 'Park Blvd', 'First St', 'Elm St', 'Washington Ave'];
             const regionalStreets = [];
             
-            // Add region-specific street names
+            // Add region-specific street names based on more precise location
             if (lng < -115) { // West Coast
                 regionalStreets.push('Pacific Ave', 'Sunset Blvd', 'Coast Highway', 'Ocean Drive');
             } else if (lng > -80) { // East Coast
@@ -1512,6 +1544,21 @@
                 regionalStreets.push('Maple St', 'Pine Ave', 'Lake Shore Dr', 'Mill Rd');
             } else { // South
                 regionalStreets.push('Peachtree St', 'Magnolia Ave', 'Cotton Rd', 'River Dr');
+            }
+            
+            // Florida-specific streets
+            if (lat > 24 && lat < 31 && lng > -88 && lng < -79) {
+                regionalStreets.push('Coral Way', 'Biscayne Blvd', 'Collins Ave', 'Flagler St', 'Palmetto Expy');
+            }
+            
+            // California-specific streets
+            if (lat > 32 && lat < 42 && lng < -115) {
+                regionalStreets.push('Ventura Blvd', 'Wilshire Blvd', 'Hollywood Blvd', 'Rodeo Drive');
+            }
+            
+            // Texas-specific streets
+            if (lat > 25 && lat < 37 && lng > -107 && lng < -93) {
+                regionalStreets.push('Interstate 35', 'Ranch Rd', 'Farm Rd', 'Guadalupe St');
             }
             
             return [...commonStreetNames, ...regionalStreets];
