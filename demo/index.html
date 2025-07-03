@@ -993,6 +993,19 @@
             display: none !important;
         }
 
+        /* Mobile Section Styles */
+        .mobile-section {
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-nav-btn {
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-btn:hover {
+            background: var(--glass) !important;
+        }
+
         /* Special loading state for gas stations */
         .loading-stations {
             display: flex;
@@ -1075,9 +1088,7 @@
             <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 600;">Subscription</h3>
             <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.5rem;">
                 <div id="subscriptionStatus">
-                    <div style="color: var(--success); font-weight: 600; margin-bottom: 0.5rem;">✓ Active Subscription</div>
-                    <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Monthly Plan - $29.99/month</div>
-                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Next billing: March 15, 2024</div>
+                    <!-- This will be populated dynamically -->
                 </div>
                 <button id="manageSubscriptionBtn" style="background: transparent; border: 2px solid var(--accent); color: var(--accent); padding: 0.8rem 1.5rem; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; margin-top: 1rem;">
                     Manage Subscription
@@ -1149,7 +1160,15 @@
                     <label style="font-size: 1.1rem; font-weight: 700; color: var(--accent);">Choose Your Subscription Plan</label>
                     <div class="subscription-plans" style="margin-top: 1rem;">
                         <div class="plan-option">
-                            <input type="radio" name="subscription" value="monthly" id="monthlyPlan" checked>
+                            <input type="radio" name="subscription" value="trial" id="trialPlan" checked>
+                            <label for="trialPlan" class="plan-label" style="border-color: var(--success);">
+                                <div class="plan-name" style="color: var(--success);">🎉 Free Trial</div>
+                                <div class="plan-price" style="color: var(--success);">FREE for 14 days</div>
+                                <div class="plan-features">• Full access • Unlimited deliveries • Cancel anytime</div>
+                            </label>
+                        </div>
+                        <div class="plan-option">
+                            <input type="radio" name="subscription" value="monthly" id="monthlyPlan">
                             <label for="monthlyPlan" class="plan-label">
                                 <div class="plan-name">Monthly Plan</div>
                                 <div class="plan-price">$29.99/month</div>
@@ -1167,7 +1186,7 @@
                     </div>
                 </div>
                 
-                <button type="submit" class="btn">Subscribe & Create Account</button>
+                <button type="submit" class="btn" id="signupSubmitBtn">Start Free Trial & Create Account</button>
             </form>
             <button class="btn btn-outline" id="backToLoginBtn">Back to Login</button>
             <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary); text-align: center;">
@@ -1442,54 +1461,147 @@
             <!-- Phone Demo -->
             <div class="phone-demo">
                 <div class="phone-screen">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
-                        <div style="font-size: 1.5rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">FuelFlow</div>
-                        <div style="color: var(--text-secondary); font-size: 0.9rem;">📱 Live Demo</div>
+                    <!-- Mobile Header -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+                        <div style="font-size: 1.3rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">FuelFlow</div>
+                        <div style="color: var(--text-secondary); font-size: 0.8rem;">📱 Mobile App</div>
                     </div>
 
-                    <div style="margin-bottom: 1.5rem;">
-                        <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">Find Gas Prices</h3>
-                        <input type="text" id="mobileLocationInput" placeholder="Enter any ZIP code" style="width: 100%; padding: 0.8rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-primary); font-size: 0.9rem; margin-bottom: 1rem;">
-                        <button id="mobileSearchBtn" style="background: var(--gradient-primary); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%;">
-                            <span id="mobileSearchBtnText">Find Gas Prices</span>
-                        </button>
+                    <!-- Mobile Navigation -->
+                    <div style="display: flex; margin-bottom: 1.5rem; background: var(--glass); border-radius: 16px; padding: 0.5rem;">
+                        <button class="mobile-nav-btn active" data-mobile-section="dashboard" style="flex: 1; background: var(--gradient-primary); color: white; border: none; padding: 0.6rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">📊 Dashboard</button>
+                        <button class="mobile-nav-btn" data-mobile-section="order" style="flex: 1; background: transparent; color: var(--text-secondary); border: none; padding: 0.6rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; margin-left: 0.5rem;">🛒 Order</button>
+                        <button class="mobile-nav-btn" data-mobile-section="settings" style="flex: 1; background: transparent; color: var(--text-secondary); border: none; padding: 0.6rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; margin-left: 0.5rem;">⚙️ Settings</button>
                     </div>
 
-                    <div style="margin-bottom: 1.5rem;">
-                        <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">Price Comparison</h3>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; text-align: center;">
-                                <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem;">$<span id="mobileTotalDisplay">61.84</span></div>
-                                <div style="color: var(--text-secondary); font-size: 0.8rem;">Total Cost</div>
-                            </div>
-                            <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; text-align: center;">
-                                <div style="font-size: 1.5rem; font-weight: 800; color: var(--success); margin-bottom: 0.5rem;">$<span id="mobileSavingsDisplay">3.42</span></div>
-                                <div style="color: var(--text-secondary); font-size: 0.8rem;">You Save</div>
+                    <!-- Mobile Dashboard Section -->
+                    <div id="mobileDashboardSection" class="mobile-section">
+                        <div style="margin-bottom: 1.5rem;">
+                            <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1rem; font-weight: 700;">Find Gas Prices</h3>
+                            <input type="text" id="mobileLocationInput" placeholder="Enter Miami ZIP code (e.g., 33139)" style="width: 100%; padding: 0.8rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-primary); font-size: 0.9rem; margin-bottom: 1rem;">
+                            <button id="mobileSearchBtn" style="background: var(--gradient-primary); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%;">
+                                <span id="mobileSearchBtnText">Find Gas Prices</span>
+                            </button>
+                        </div>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1rem; font-weight: 700;">Price Comparison</h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; text-align: center;">
+                                    <div style="font-size: 1.3rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem;">$<span id="mobileTotalDisplay">61.84</span></div>
+                                    <div style="color: var(--text-secondary); font-size: 0.7rem;">Total Cost</div>
+                                </div>
+                                <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; text-align: center;">
+                                    <div style="font-size: 1.3rem; font-weight: 800; color: var(--success); margin-bottom: 0.5rem;">$<span id="mobileSavingsDisplay">3.42</span></div>
+                                    <div style="color: var(--text-secondary); font-size: 0.7rem;">You Save</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div style="margin-bottom: 1.5rem;">
-                        <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">Nearby Stations</h3>
-                        <div id="mobileStationsContainer">
-                            <div style="background: var(--glass); border: 1px solid var(--accent); border-radius: 12px; padding: 1rem; margin-bottom: 0.8rem;">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <div>
-                                        <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.3rem;">🛡️ Shell</div>
-                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">0.5 mi • Biscayne Blvd</div>
-                                    </div>
-                                    <div style="text-align: right;">
-                                        <div style="color: var(--error); font-weight: 600;">$4.04</div>
-                                        <div style="color: var(--success); font-size: 0.8rem;">Save $0.25</div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1rem; font-weight: 700;">Nearby Stations</h3>
+                            <div id="mobileStationsContainer">
+                                <!-- Default station -->
+                                <div style="background: var(--glass); border: 1px solid var(--accent); border-radius: 12px; padding: 1rem; margin-bottom: 0.8rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.3rem;">🛡️ Shell</div>
+                                            <div style="font-size: 0.7rem; color: var(--text-secondary);">0.5 mi • Coral Way</div>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <div style="color: var(--error); font-weight: 600; font-size: 0.9rem;">$4.04</div>
+                                            <div style="color: var(--success); font-size: 0.7rem;">Save $0.25</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <div style="background: var(--glass); border-radius: 16px; padding: 1.5rem; text-align: center;">
+                            <div style="color: var(--success); font-size: 1.8rem; font-weight: bold; margin-bottom: 0.5rem;">$<span class="mobile-our-price">3.79</span></div>
+                            <div style="color: var(--text-secondary); font-size: 0.8rem;">Our Price/Gallon</div>
+                        </div>
                     </div>
 
-                    <div style="background: var(--glass); border-radius: 16px; padding: 1.5rem; text-align: center; margin-top: 1rem;">
-                        <div style="color: var(--success); font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem;">$<span class="mobile-our-price">3.79</span></div>
-                        <div style="color: var(--text-secondary); font-size: 0.9rem;">Our Price/Gallon</div>
+                    <!-- Mobile Order Section -->
+                    <div id="mobileOrderSection" class="mobile-section hidden">
+                        <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1rem; font-weight: 700;">Place Order</h3>
+                        
+                        <!-- Quick Order Form -->
+                        <div style="background: var(--glass); border-radius: 16px; padding: 1rem; margin-bottom: 1rem;">
+                            <div style="margin-bottom: 1rem;">
+                                <label style="color: var(--text-primary); font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 0.5rem;">Location</label>
+                                <input type="text" id="mobileLocationOrder" placeholder="Your address or ZIP" style="width: 100%; padding: 0.8rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); font-size: 0.8rem;">
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <label style="color: var(--text-primary); font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 0.5rem;">Vehicle</label>
+                                <select id="mobileVehicleType" style="width: 100%; padding: 0.8rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); font-size: 0.8rem;">
+                                    <option value="">Select vehicle...</option>
+                                    <option value="sedan">🚗 Sedan</option>
+                                    <option value="suv">🚙 SUV</option>
+                                    <option value="truck">🛻 Truck</option>
+                                    <option value="luxury">🏎️ Luxury</option>
+                                </select>
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <label style="color: var(--text-primary); font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 0.5rem;">Fuel Tank Instructions</label>
+                                <textarea id="mobileFuelInstructions" placeholder="How to open your fuel tank..." style="width: 100%; padding: 0.8rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); font-size: 0.8rem; rows: 2; resize: vertical;"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Order Total -->
+                        <div style="background: var(--glass); border-radius: 16px; padding: 1rem; margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span style="color: var(--text-secondary); font-size: 0.8rem;">15 gallons @ $3.79:</span>
+                                <span style="color: var(--text-primary); font-size: 0.8rem; font-weight: 600;">$56.85</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span style="color: var(--text-secondary); font-size: 0.8rem;">Delivery Fee:</span>
+                                <span style="color: var(--text-primary); font-size: 0.8rem; font-weight: 600;">$4.99</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding-top: 0.5rem; border-top: 1px solid var(--border);">
+                                <span style="color: var(--text-primary); font-size: 0.9rem; font-weight: 700;">Total:</span>
+                                <span style="color: var(--accent); font-size: 0.9rem; font-weight: 700;">$61.84</span>
+                            </div>
+                        </div>
+
+                        <button id="mobileOrderBtn" style="background: var(--gradient-primary); color: white; border: none; padding: 1rem; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; font-size: 0.9rem;">
+                            🛒 Place Order
+                        </button>
+                    </div>
+
+                    <!-- Mobile Settings Section -->
+                    <div id="mobileSettingsSection" class="mobile-section hidden">
+                        <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1rem; font-weight: 700;">Settings</h3>
+                        
+                        <!-- Subscription Status -->
+                        <div style="background: var(--glass); border-radius: 16px; padding: 1rem; margin-bottom: 1rem;">
+                            <div style="color: var(--text-primary); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Subscription</div>
+                            <div id="mobileSubscriptionStatus" style="color: var(--success); font-size: 0.8rem; margin-bottom: 0.5rem;">🎉 Free Trial Active</div>
+                            <div style="color: var(--text-secondary); font-size: 0.7rem;">Full access until trial expires</div>
+                        </div>
+
+                        <!-- Location Settings -->
+                        <div style="background: var(--glass); border-radius: 16px; padding: 1rem; margin-bottom: 1rem;">
+                            <div style="color: var(--text-primary); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Default Location</div>
+                            <input type="text" id="mobileDefaultZip" placeholder="Miami ZIP code (33xxx)" style="width: 100%; padding: 0.7rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); font-size: 0.8rem; margin-bottom: 0.5rem;">
+                            <button id="mobileSaveLocation" style="background: var(--accent); color: white; border: none; padding: 0.7rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.8rem; width: 100%;">
+                                Save Location
+                            </button>
+                        </div>
+
+                        <!-- Theme Toggle -->
+                        <div style="background: var(--glass); border-radius: 16px; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="color: var(--text-primary); font-size: 0.9rem; font-weight: 600;">Dark Mode</div>
+                                    <div style="color: var(--text-secondary); font-size: 0.7rem;">Toggle theme</div>
+                                </div>
+                                <div style="position: relative; width: 40px; height: 20px; background: var(--border); border-radius: 20px; cursor: pointer;" id="mobileThemeToggle">
+                                    <div style="position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: white; border-radius: 50%; transition: all 0.3s ease;" id="mobileThemeToggleThumb"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1519,6 +1631,7 @@
             setupPaymentMethods();
             setupSettingsPanel();
             setupPhotoUpload();
+            setupMobileNavigation();
             updatePricing();
             loadUserSettings();
             // Load default gas stations for Miami Beach
@@ -1540,10 +1653,34 @@
             }
         }
 
+        // Setup subscription plan selection functionality
+        function setupSubscriptionPlanSelection() {
+            const subscriptionInputs = document.querySelectorAll('input[name="subscription"]');
+            const submitBtn = document.getElementById('signupSubmitBtn');
+            
+            subscriptionInputs.forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const selectedPlan = e.target.value;
+                    switch(selectedPlan) {
+                        case 'trial':
+                            submitBtn.textContent = 'Start Free Trial & Create Account';
+                            break;
+                        case 'monthly':
+                            submitBtn.textContent = 'Subscribe Monthly & Create Account';
+                            break;
+                        case 'annual':
+                            submitBtn.textContent = 'Subscribe Annually & Create Account';
+                            break;
+                    }
+                });
+            });
+        }
+
         function setupEventListeners() {
             // Login and navigation
             document.getElementById('loginForm').addEventListener('submit', handleLogin);
             document.getElementById('signupForm').addEventListener('submit', handleSignup);
+            setupSubscriptionPlanSelection();
             document.getElementById('guestBtn').addEventListener('click', () => loginAsGuest());
             document.getElementById('signupBtn').addEventListener('click', () => showSignupScreen());
             document.getElementById('backToLoginBtn').addEventListener('click', () => showLoginScreen());
@@ -1575,6 +1712,7 @@
             settingsBtn.addEventListener('click', () => {
                 settingsPanel.classList.add('active');
                 settingsOverlay.classList.add('active');
+                updateSubscriptionDisplay();
             });
 
             document.getElementById('closeSettingsBtn').addEventListener('click', closeSettings);
@@ -1608,6 +1746,38 @@
             function closeSettings() {
                 settingsPanel.classList.remove('active');
                 settingsOverlay.classList.remove('active');
+            }
+        }
+
+        // Update subscription display in settings
+        function updateSubscriptionDisplay() {
+            const statusDiv = document.getElementById('subscriptionStatus');
+            const isActive = checkSubscriptionStatus();
+            const isTrialUser = localStorage.getItem('isTrialUser') === 'true';
+            const plan = localStorage.getItem('subscriptionPlan');
+            const remainingDays = getRemainingTrialDays();
+            
+            if (!isActive) {
+                statusDiv.innerHTML = `
+                    <div style="color: var(--error); font-weight: 600; margin-bottom: 0.5rem;">⚠ No Active Subscription</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Subscribe to access all features</div>
+                `;
+            } else if (isTrialUser && remainingDays !== null) {
+                statusDiv.innerHTML = `
+                    <div style="color: var(--success); font-weight: 600; margin-bottom: 0.5rem;">🎉 Free Trial Active</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">${remainingDays} days remaining</div>
+                    <div style="color: var(--warning); font-size: 0.9rem;">Trial expires: ${new Date(localStorage.getItem('trialEndDate')).toLocaleDateString()}</div>
+                `;
+            } else {
+                const planNames = {
+                    'monthly': 'Monthly Plan - $29.99/month',
+                    'annual': 'Annual Plan - $299.99/year'
+                };
+                statusDiv.innerHTML = `
+                    <div style="color: var(--success); font-weight: 600; margin-bottom: 0.5rem;">✓ Active Subscription</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">${planNames[plan] || 'Premium Plan'}</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Next billing: ${new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()}</div>
+                `;
             }
         }
 
@@ -1699,20 +1869,164 @@
             showToast('Photo removed', 'info');
         }
 
-        // Check subscription status (demo function)
+        // Check subscription status with trial support
         function checkSubscriptionStatus() {
-            // In real app, would check with server
-            return localStorage.getItem('subscriptionActive') === 'true';
+            const isActive = localStorage.getItem('subscriptionActive') === 'true';
+            const isTrialUser = localStorage.getItem('isTrialUser') === 'true';
+            const trialEndDate = localStorage.getItem('trialEndDate');
+            
+            if (!isActive) return false;
+            
+            // Check if trial has expired
+            if (isTrialUser && trialEndDate) {
+                const now = new Date();
+                const endDate = new Date(trialEndDate);
+                if (now > endDate) {
+                    // Trial expired
+                    localStorage.setItem('subscriptionActive', 'false');
+                    showToast('Your free trial has expired. Please subscribe to continue using FuelFlow.', 'error');
+                    return false;
+                }
+            }
+            
+            return true;
         }
 
-        // Validate subscription before allowing certain actions
+        // Get remaining trial days
+        function getRemainingTrialDays() {
+            const isTrialUser = localStorage.getItem('isTrialUser') === 'true';
+            const trialEndDate = localStorage.getItem('trialEndDate');
+            
+            if (!isTrialUser || !trialEndDate) return null;
+            
+            const now = new Date();
+            const endDate = new Date(trialEndDate);
+            const diffTime = endDate - now;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            return Math.max(0, diffDays);
+        }
+
+        // Allow browsing but require subscription for actions
         function requireSubscription(action) {
             if (!checkSubscriptionStatus()) {
-                showToast('This feature requires an active subscription. Please sign up!', 'error');
+                showToast(`${action} requires an active subscription. You can browse for free, but need to subscribe to place orders!`, 'error');
                 document.getElementById('signupBtn').click();
                 return false;
             }
+            
+            // Show trial reminder if user is in trial
+            const remainingDays = getRemainingTrialDays();
+            if (remainingDays !== null && remainingDays <= 3) {
+                showToast(`Trial expires in ${remainingDays} days. Subscribe to continue using FuelFlow!`, 'info');
+            }
+            
             return true;
+        }
+
+        // Setup mobile navigation functionality
+        function setupMobileNavigation() {
+            const mobileNavButtons = document.querySelectorAll('.mobile-nav-btn');
+            const mobileSections = document.querySelectorAll('.mobile-section');
+            
+            mobileNavButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const targetSection = e.target.getAttribute('data-mobile-section');
+                    
+                    // Update button states
+                    mobileNavButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.style.background = 'transparent';
+                        btn.style.color = 'var(--text-secondary)';
+                    });
+                    
+                    e.target.classList.add('active');
+                    e.target.style.background = 'var(--gradient-primary)';
+                    e.target.style.color = 'white';
+                    
+                    // Show/hide sections
+                    mobileSections.forEach(section => {
+                        section.classList.add('hidden');
+                    });
+                    
+                    document.getElementById(`mobile${targetSection.charAt(0).toUpperCase() + targetSection.slice(1)}Section`).classList.remove('hidden');
+                    
+                    // Update subscription status when settings is opened
+                    if (targetSection === 'settings') {
+                        updateMobileSubscriptionStatus();
+                    }
+                });
+            });
+            
+            // Setup mobile search functionality
+            document.getElementById('mobileSearchBtn').addEventListener('click', () => {
+                const zipCode = document.getElementById('mobileLocationInput').value.trim();
+                if (zipCode) {
+                    // Sync with desktop search
+                    document.getElementById('priceLocationInput').value = zipCode;
+                    searchPrices();
+                }
+            });
+            
+            // Setup mobile order functionality
+            document.getElementById('mobileOrderBtn').addEventListener('click', () => {
+                if (!requireSubscription('Place order')) return;
+                
+                const location = document.getElementById('mobileLocationOrder').value.trim();
+                const vehicleType = document.getElementById('mobileVehicleType').value;
+                const fuelInstructions = document.getElementById('mobileFuelInstructions').value.trim();
+                
+                if (!location || !vehicleType || !fuelInstructions) {
+                    showToast('Please fill in all required fields', 'error');
+                    return;
+                }
+                
+                showToast('Order placed successfully from mobile!', 'success');
+            });
+            
+            // Setup mobile location save
+            document.getElementById('mobileSaveLocation').addEventListener('click', () => {
+                const zipCode = document.getElementById('mobileDefaultZip').value.trim();
+                if (!zipCode.match(/^33[0-9]{3}$/)) {
+                    showToast('Please enter a valid Miami ZIP code (33xxx)', 'error');
+                    return;
+                }
+                
+                localStorage.setItem('userZipCode', zipCode);
+                document.getElementById('userZipCode').value = zipCode;
+                document.getElementById('locationInput').value = zipCode;
+                document.getElementById('mobileLocationOrder').value = zipCode;
+                
+                showToast('Location saved!', 'success');
+            });
+            
+            // Setup mobile theme toggle
+            const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+            const mobileThemeToggleThumb = document.getElementById('mobileThemeToggleThumb');
+            
+            mobileThemeToggle.addEventListener('click', () => {
+                // Sync with desktop theme toggle
+                document.getElementById('themeToggle').click();
+            });
+        }
+
+        // Update mobile subscription status
+        function updateMobileSubscriptionStatus() {
+            const statusDiv = document.getElementById('mobileSubscriptionStatus');
+            const isActive = checkSubscriptionStatus();
+            const isTrialUser = localStorage.getItem('isTrialUser') === 'true';
+            const remainingDays = getRemainingTrialDays();
+            
+            if (!isActive) {
+                statusDiv.innerHTML = '⚠ No Subscription';
+                statusDiv.style.color = 'var(--error)';
+            } else if (isTrialUser && remainingDays !== null) {
+                statusDiv.innerHTML = `🎉 Trial: ${remainingDays} days left`;
+                statusDiv.style.color = 'var(--success)';
+            } else {
+                statusDiv.innerHTML = '✓ Active Subscription';
+                statusDiv.style.color = 'var(--success)';
+            }
         }
 
         // Universal Gas Station Finder - Works with ANY US ZIP Code
@@ -1772,7 +2086,7 @@
                 '33140': { lat: 25.7907, lng: -80.1300, city: 'Miami Beach, FL' },
                 '33141': { lat: 25.8756, lng: -80.1253, city: 'Miami Beach, FL' },
                 '33142': { lat: 25.8138, lng: -80.2310, city: 'Miami, FL' },
-                '33143': { lat: 25.6716, lng: -80.3014, city: 'Miami, FL' },
+                '33143': { lat: 25.6760, lng: -80.3025, city: 'Coral Gables, FL' },
                 '33144': { lat: 25.7334, lng: -80.2456, city: 'Miami, FL' },
                 '33145': { lat: 25.7334, lng: -80.2456, city: 'Miami, FL' },
                 '33146': { lat: 25.7334, lng: -80.2456, city: 'Miami, FL' },
@@ -1979,48 +2293,50 @@
 
         // Generate realistic Miami street names based on location
         function generateNearbyStreets(lat, lng) {
-            const miamiStreets = [
-                // Major Miami streets and avenues
-                'Biscayne Blvd', 'Collins Ave', 'Ocean Drive', 'Lincoln Rd', 'Washington Ave',
-                'Alton Rd', 'Coral Way', 'Flagler St', 'Calle Ocho', 'Bird Rd',
+            const generalMiamiStreets = [
+                // Major Miami mainland streets (NOT Miami Beach)
+                'Biscayne Blvd', 'Coral Way', 'Flagler St', 'Calle Ocho', 'Bird Rd',
                 'Kendall Dr', 'Sunset Dr', 'Miller Dr', 'Palmetto Expy', 'US Highway 1',
-                'Miracle Mile', 'Le Jeune Rd', 'Douglas Rd', 'Red Rd', 'Ludlam Rd',
-                'Krome Ave', 'NW 7th St', 'SW 8th St', 'NE 2nd Ave', 'SW 1st St',
-                'Aventura Blvd', 'Harding Ave', 'Bay Harbor Dr', 'Kane Concourse',
-                'NW 36th St', 'SW 88th St', 'NW 103rd St', 'SW 152nd St',
-                'Homestead Ave', 'Quail Roost Dr', 'SW 136th St', 'NW 199th St'
+                'NW 7th St', 'SW 8th St', 'NE 2nd Ave', 'SW 1st St',
+                'NW 36th St', 'SW 88th St', 'NW 103rd St', 'SW 152nd St'
             ];
             
             // Area-specific streets based on coordinates
             const areaSpecificStreets = [];
             
-            // Miami Beach area (higher longitude, closer to coast)
+            // Miami Beach area (higher longitude, closer to coast) - ONLY for beach areas
             if (lng > -80.2) {
-                areaSpecificStreets.push('Collins Ave', 'Ocean Drive', 'Washington Ave', 'Lincoln Rd', 'Alton Rd');
+                areaSpecificStreets.push('Collins Ave', 'Ocean Drive', 'Washington Ave', 'Lincoln Rd', 'Alton Rd', 'Harding Ave');
+                return [...areaSpecificStreets].sort(() => 0.5 - Math.random()).slice(0, 8);
             }
             
             // Downtown Miami area
             if (lat > 25.7 && lat < 25.8 && lng > -80.2 && lng < -80.1) {
-                areaSpecificStreets.push('Biscayne Blvd', 'Flagler St', 'NE 2nd Ave', 'SE 1st St');
+                areaSpecificStreets.push('Biscayne Blvd', 'Flagler St', 'NE 2nd Ave', 'SE 1st St', 'NW 1st Ave', 'SE 2nd Ave');
             }
             
-            // Coral Gables area
-            if (lat > 25.7 && lat < 25.8 && lng > -80.3 && lng < -80.2) {
-                areaSpecificStreets.push('Miracle Mile', 'Coral Way', 'Le Jeune Rd', 'Douglas Rd');
+            // Coral Gables area (33143 and similar)
+            if (lat > 25.65 && lat < 25.75 && lng < -80.25) {
+                areaSpecificStreets.push('Miracle Mile', 'Coral Way', 'Le Jeune Rd', 'Douglas Rd', 'Ponce de Leon Blvd', 'Alhambra Circle');
             }
             
-            // South Miami/Homestead area
+            // South Miami/Kendall area
+            if (lat < 25.7 && lng < -80.25) {
+                areaSpecificStreets.push('Kendall Dr', 'Sunset Dr', 'Miller Dr', 'Red Rd', 'Ludlam Rd', 'SW 88th St', 'SW 137th Ave');
+            }
+            
+            // Homestead area
             if (lat < 25.6) {
-                areaSpecificStreets.push('Homestead Ave', 'Krome Ave', 'SW 152nd St', 'SW 136th St');
+                areaSpecificStreets.push('Homestead Ave', 'Krome Ave', 'SW 152nd St', 'SW 136th St', 'Campbell Dr');
             }
             
             // North Miami area
             if (lat > 25.85) {
-                areaSpecificStreets.push('Aventura Blvd', 'NW 199th St', 'Biscayne Blvd', 'NE 163rd St');
+                areaSpecificStreets.push('Aventura Blvd', 'NW 199th St', 'Biscayne Blvd', 'NE 163rd St', 'Bay Harbor Dr', 'Kane Concourse');
             }
             
-            // Combine all streets and return random selection
-            const allStreets = [...miamiStreets, ...areaSpecificStreets];
+            // Combine general Miami streets with area-specific ones
+            const allStreets = [...generalMiamiStreets, ...areaSpecificStreets];
             return allStreets.sort(() => 0.5 - Math.random()).slice(0, 8);
         }
 
@@ -2444,26 +2760,40 @@
             
             if (fullName && email && password && zipCode) {
                 // Simulate subscription processing
-                showToast('Processing subscription...', 'info');
+                showToast(subscriptionPlan === 'trial' ? 'Starting your free trial...' : 'Processing subscription...', 'info');
                 
                 setTimeout(() => {
+                    const now = new Date();
+                    const trialEndDate = new Date(now.getTime() + (14 * 24 * 60 * 60 * 1000)); // 14 days from now
+                    
                     currentUser = { 
                         email, 
                         fullName, 
                         type: 'customer',
                         zipCode,
                         subscriptionPlan,
-                        subscriptionActive: true
+                        subscriptionActive: true,
+                        isTrialUser: subscriptionPlan === 'trial',
+                        trialEndDate: subscriptionPlan === 'trial' ? trialEndDate.toISOString() : null
                     };
                     
                     // Save subscription status
                     localStorage.setItem('subscriptionActive', 'true');
                     localStorage.setItem('subscriptionPlan', subscriptionPlan);
                     localStorage.setItem('userZipCode', zipCode);
+                    localStorage.setItem('isTrialUser', subscriptionPlan === 'trial');
+                    if (subscriptionPlan === 'trial') {
+                        localStorage.setItem('trialEndDate', trialEndDate.toISOString());
+                    }
                     
                     isAdmin = false;
                     showApp();
-                    showToast(`Welcome to FuelFlow, ${fullName}! Your ${subscriptionPlan} subscription is now active.`, 'success');
+                    
+                    const welcomeMessage = subscriptionPlan === 'trial' 
+                        ? `Welcome to FuelFlow, ${fullName}! Your 14-day free trial has started. Enjoy full access until ${trialEndDate.toLocaleDateString()}.`
+                        : `Welcome to FuelFlow, ${fullName}! Your ${subscriptionPlan} subscription is now active.`;
+                    
+                    showToast(welcomeMessage, 'success');
                 }, 2000);
             }
         }
@@ -2471,8 +2801,10 @@
         function loginAsGuest() {
             currentUser = { email: 'guest@fuelflow.com', type: 'guest' };
             isAdmin = false;
+            // Clear any previous subscription data
+            localStorage.setItem('subscriptionActive', 'false');
             showApp();
-            showToast('Welcome! You are browsing as a guest.', 'info');
+            showToast('Welcome! You can browse prices for free. Subscribe to place orders and access all features.', 'info');
         }
 
         function logout() {
