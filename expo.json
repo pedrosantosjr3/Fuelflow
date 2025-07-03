@@ -1,0 +1,101 @@
+{
+  "expo": {
+    "name": "FuelFlow",
+    "slug": "fuelflow",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#1E3A8A"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fuelflow.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "FuelFlow needs access to your location to provide accurate fuel delivery services.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "FuelFlow needs access to your location to provide accurate fuel delivery services.",
+        "NSCameraUsageDescription": "FuelFlow needs access to your camera to take photos of vehicles and delivery locations.",
+        "NSPhotoLibraryUsageDescription": "FuelFlow needs access to your photo library to select vehicle photos."
+      },
+      "config": {
+        "googleMapsApiKey": "YOUR_GOOGLE_MAPS_IOS_API_KEY"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#1E3A8A"
+      },
+      "package": "com.fuelflow.app",
+      "versionCode": 1,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "YOUR_GOOGLE_MAPS_ANDROID_API_KEY"
+        }
+      }
+    },
+    "web": {
+      "favicon": "./assets/images/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow FuelFlow to use your location for accurate fuel delivery services."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow FuelFlow to access your camera to take photos of vehicles and delivery locations."
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow FuelFlow to access your photos to select vehicle images.",
+          "savePhotosPermission": "Allow FuelFlow to save photos to your library."
+        }
+      ],
+      [
+        "@react-native-firebase/app"
+      ],
+      [
+        "@react-native-firebase/auth"
+      ],
+      [
+        "@react-native-firebase/firestore"
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "your-eas-project-id"
+      }
+    },
+    "owner": "fuelflow",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/your-eas-project-id"
+    }
+  }
+}

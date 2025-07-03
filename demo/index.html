@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FuelFlow - On-Demand Fuel Delivery</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #0F172A;
+            background: linear-gradient(135deg, #1E3A8A 0%, #F97316 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #1E3A8A;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #1E3A8A;
+        }
+
+        .features {
+            background: white;
+            padding: 80px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #F97316;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1E3A8A;
+        }
+
+        .demo-section {
+            background: #f1f5f9;
+            padding: 80px 0;
+        }
+
+        .phone-mockup {
+            max-width: 300px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .phone-frame {
+            background: #000;
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .phone-screen {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .quick-order {
+            background: linear-gradient(135deg, #1E3A8A, #3B82F6);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .pricing-card {
+            background: #10B981;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .stats {
+            background: #1E3A8A;
+            color: white;
+            padding: 60px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #F97316;
+        }
+
+        .footer {
+            background: #0F172A;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #F97316;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <i class="fas fa-gas-pump"></i>
+                FuelFlow
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Fuel Delivered to Your Door</h1>
+                <p>Skip the gas station. Get premium fuel delivered anywhere, anytime with competitive pricing and convenient scheduling.</p>
+                <div class="cta-buttons">
+                    <a href="#demo" class="btn btn-primary">
+                        <i class="fas fa-mobile-alt"></i>
+                        Try Demo
+                    </a>
+                    <a href="#features" class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i>
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 1rem; color: #1E3A8A;">Why Choose FuelFlow?</h2>
+                <p style="text-align: center; font-size: 1.2rem; color: #64748B; max-width: 600px; margin: 0 auto;">Transform your fueling experience with our innovative on-demand delivery service</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <h3>Save Money</h3>
+                        <p>Compare prices with nearby gas stations and save up to $0.25 per gallon with our competitive pricing.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⏰</div>
+                        <h3>Save Time</h3>
+                        <p>No more waiting in lines or detours to gas stations. Fuel delivered while you work, relax, or sleep.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Easy Ordering</h3>
+                        <p>Simple 3-tap ordering process. Schedule deliveries, track in real-time, and manage multiple vehicles.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚛</div>
+                        <h3>Real-Time Tracking</h3>
+                        <p>Follow your delivery driver in real-time with live GPS tracking and instant notifications.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Secure Payments</h3>
+                        <p>Safe and secure payment processing with support for cards, Apple Pay, and Google Pay.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌍</div>
+                        <h3>Eco-Friendly</h3>
+                        <p>Reduce emissions with optimized delivery routes and help create a more sustainable future.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo-section" id="demo">
+            <div class="container">
+                <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #1E3A8A;">Interactive Demo</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
+                    <div class="phone-mockup">
+                        <div class="phone-frame">
+                            <div class="phone-screen">
+                                <div class="app-header">
+                                    <div>
+                                        <h4>Good morning, John! 👋</h4>
+                                        <p style="color: #64748B; font-size: 0.9rem;">Your fuel is cheaper today</p>
+                                    </div>
+                                    <i class="fas fa-bell" style="color: #F97316;"></i>
+                                </div>
+
+                                <div class="quick-order">
+                                    <h4 style="margin-bottom: 10px;">Quick Order</h4>
+                                    <div style="display: flex; align-items: center; gap: 10px; margin: 5px 0;">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span style="font-size: 0.9rem;">Home - 123 Main St</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px; margin: 5px 0;">
+                                        <i class="fas fa-car"></i>
+                                        <span style="font-size: 0.9rem;">Honda Civic 2020</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px; margin: 5px 0;">
+                                        <i class="fas fa-gas-pump"></i>
+                                        <span style="font-size: 0.9rem;">Premium Gas - $3.89/gal</span>
+                                    </div>
+                                    <button style="background: white; color: #1E3A8A; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin-top: 10px; width: 100%;">
+                                        Order Now
+                                    </button>
+                                </div>
+
+                                <div style="margin: 20px 0;">
+                                    <h4 style="margin-bottom: 10px;">Current Delivery</h4>
+                                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <span style="font-weight: bold;">Order #1234</span>
+                                            <span class="pulse" style="background: #F97316; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">En Route</span>
+                                        </div>
+                                        <div style="margin: 10px 0; font-size: 0.9rem; color: #64748B;">
+                                            <div>🚛 Driver: Mike</div>
+                                            <div>📍 5 mins away</div>
+                                        </div>
+                                        <button style="background: transparent; color: #1E3A8A; border: 2px solid #1E3A8A; padding: 8px 16px; border-radius: 6px; font-weight: bold; width: 100%;">
+                                            Track Order
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-card">
+                                    <div style="font-size: 1.2rem; font-weight: bold;">Savings This Month</div>
+                                    <div style="font-size: 2rem; font-weight: bold;">$127.50 💰</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="color: #1E3A8A; font-size: 2rem; margin-bottom: 1rem;">Experience the Future of Fuel Delivery</h3>
+                        <div style="margin: 2rem 0;">
+                            <h4 style="color: #F97316; margin-bottom: 0.5rem;">✨ Key Demo Features:</h4>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="margin: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #10B981;">✓</span>
+                                    One-tap fuel ordering
+                                </li>
+                                <li style="margin: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #10B981;">✓</span>
+                                    Real-time price comparison
+                                </li>
+                                <li style="margin: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #10B981;">✓</span>
+                                    Live delivery tracking
+                                </li>
+                                <li style="margin: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #10B981;">✓</span>
+                                    Savings calculator
+                                </li>
+                                <li style="margin: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #10B981;">✓</span>
+                                    Multiple vehicle management
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div style="background: #f1f5f9; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #F97316;">
+                            <h4 style="color: #1E3A8A; margin-bottom: 0.5rem;">🚀 Ready for Partnership?</h4>
+                            <p style="color: #64748B; margin-bottom: 1rem;">This demo showcases our production-ready mobile app. Available for iOS and Android with full backend infrastructure.</p>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <a href="mailto:partnerships@fuelflow.com" class="btn btn-primary" style="text-decoration: none;">
+                                    <i class="fas fa-handshake"></i>
+                                    Partner With Us
+                                </a>
+                                <a href="#contact" class="btn btn-secondary" style="text-decoration: none; color: #1E3A8A; border-color: #1E3A8A;">
+                                    <i class="fas fa-calendar"></i>
+                                    Schedule Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container">
+                <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem;">Proven Market Impact</h2>
+                <div class="stats-grid">
+                    <div>
+                        <div class="stat-number">$127</div>
+                        <p>Average Monthly Savings per User</p>
+                    </div>
+                    <div>
+                        <div class="stat-number">15min</div>
+                        <p>Average Delivery Time</p>
+                    </div>
+                    <div>
+                        <div class="stat-number">98%</div>
+                        <p>Customer Satisfaction Rate</p>
+                    </div>
+                    <div>
+                        <div class="stat-number">$2.8B</div>
+                        <p>Addressable Market Size</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="logo" style="justify-content: center; margin-bottom: 20px;">
+                <i class="fas fa-gas-pump"></i>
+                FuelFlow
+            </div>
+            <p style="margin-bottom: 20px;">Revolutionizing fuel delivery, one drop at a time.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: left; margin: 2rem 0;">
+                <div>
+                    <h4 style="color: #F97316; margin-bottom: 1rem;">Contact</h4>
+                    <p><i class="fas fa-envelope"></i> partnerships@fuelflow.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-FUEL</p>
+                    <p><i class="fas fa-map-marker-alt"></i> San Francisco, CA</p>
+                </div>
+                <div>
+                    <h4 style="color: #F97316; margin-bottom: 1rem;">Demo Options</h4>
+                    <p>📱 Expo Go QR Code Demo</p>
+                    <p>🌐 Web Demo (This Page)</p>
+                    <p>📋 TestFlight Beta Access</p>
+                    <p>🤝 Live Partnership Presentation</p>
+                </div>
+                <div>
+                    <h4 style="color: #F97316; margin-bottom: 1rem;">Technology</h4>
+                    <p>⚛️ React Native + TypeScript</p>
+                    <p>🔥 Firebase Backend</p>
+                    <p>💳 Stripe Payments</p>
+                    <p>🗺️ Google Maps Integration</p>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="mailto:partnerships@fuelflow.com"><i class="fas fa-envelope"></i></a>
+            </div>
+            
+            <p style="border-top: 1px solid #334155; padding-top: 20px; margin-top: 20px; opacity: 0.7;">
+                © 2024 FuelFlow. Built with React Native • Firebase • Stripe • Google Maps
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add some interactivity to the demo
+        document.querySelector('.quick-order button').addEventListener('click', function() {
+            this.innerHTML = '<i class="fas fa-check"></i> Order Placed!';
+            this.style.background = '#10B981';
+            this.style.color = 'white';
+            setTimeout(() => {
+                this.innerHTML = 'Order Now';
+                this.style.background = 'white';
+                this.style.color = '#1E3A8A';
+            }, 2000);
+        });
+
+        // Add click tracking for partnership buttons
+        document.querySelectorAll('a[href*="partnership"], a[href*="demo"]').forEach(button => {
+            button.addEventListener('click', function() {
+                console.log('Partnership interest:', this.textContent);
+                // In a real deployment, this would trigger analytics
+            });
+        });
+
+        // Animate stats when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transform = 'scale(1.05)';
+                    entry.target.style.transition = 'transform 0.5s ease';
+                    setTimeout(() => {
+                        entry.target.style.transform = 'scale(1)';
+                    }, 500);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-number').forEach(stat => {
+            observer.observe(stat);
+        });
+    </script>
+</body>
+</html>

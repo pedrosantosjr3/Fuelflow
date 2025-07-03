@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(chmod:*)",
+      "Bash(./scripts/deploy.sh:*)",
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Bash(npm start)",
+      "Bash(npx vercel:*)",
+      "Bash(sudo apt:*)",
+      "Bash(git --version)"
+    ],
+    "deny": []
+  }
+}

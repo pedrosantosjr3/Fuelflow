@@ -1,0 +1,9 @@
+{
+  "name": "FuelFlow",
+  "displayName": "FuelFlow - Fuel Delivery",
+  "version": "1.0.0",
+  "description": "On-demand fuel delivery mobile application",
+  "main": "index.js",
+  "author": "FuelFlow Team",
+  "license": "MIT"
+}

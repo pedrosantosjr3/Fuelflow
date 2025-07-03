@@ -1,0 +1,20 @@
+{
+  "name": "fuelflow-demo",
+  "version": "1.0.0",
+  "description": "FuelFlow Demo - Web version for stakeholder presentations",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server . -p 3000 -o",
+    "build": "echo 'Demo build complete'",
+    "dev": "http-server . -p 3000",
+    "deploy:vercel": "npx vercel --prod --yes",
+    "deploy:netlify": "npx netlify deploy --prod --dir=.",
+    "deploy:firebase": "npx firebase deploy"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
+  },
+  "keywords": ["fuel-delivery", "demo", "react-native-web"],
+  "author": "FuelFlow Team",
+  "license": "MIT"
+}
