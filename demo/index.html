@@ -100,377 +100,476 @@
             background: var(--glass-strong);
             backdrop-filter: blur(30px);
             border: 1px solid var(--glass-border);
+            border-radius: 20px;
         }
 
-        /* Theme Toggle */
-        .theme-toggle {
+        /* Settings Panel */
+        .settings-btn {
             position: fixed;
             top: 20px;
             right: 20px;
-            z-index: 1000;
             background: var(--glass);
-            backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
+            border-radius: 50px;
+            padding: 12px 16px;
             color: var(--text-primary);
-            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 1000;
             transition: all 0.3s ease;
+            backdrop-filter: blur(20px);
         }
 
-        .theme-toggle:hover {
-            transform: scale(1.1);
+        .settings-btn:hover {
             background: var(--accent);
-            color: white;
+            transform: translateY(-2px);
         }
 
-        /* Login Screen */
-        .login-container {
-            display: flex;
-            min-height: 100vh;
-            align-items: center;
-            justify-content: center;
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: var(--glass-strong);
+            backdrop-filter: blur(30px);
+            border-left: 1px solid var(--glass-border);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            overflow-y: auto;
             padding: 2rem;
         }
 
-        .login-box {
-            background: var(--glass);
-            backdrop-filter: blur(30px);
-            padding: 3rem;
-            border-radius: 30px;
-            border: 1px solid var(--glass-border);
-            max-width: 450px;
-            width: 100%;
-            text-align: center;
-            box-shadow: var(--shadow-xl);
-            position: relative;
-            overflow: hidden;
+        .settings-panel.active {
+            right: 0;
         }
 
-        .login-box::before {
-            content: '';
-            position: absolute;
+        .settings-overlay {
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
 
-        .login-logo {
-            font-size: 3rem;
+        .settings-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .settings-section {
+            margin-bottom: 2rem;
+        }
+
+        .settings-section h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .settings-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .settings-option:hover {
+            background: var(--surface-light);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 25px;
+            background: var(--border);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: var(--accent);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 21px;
+            height: 21px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(25px);
+        }
+
+        /* Save Button */
+        .save-btn {
+            background: linear-gradient(135deg, var(--success), var(--accent));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 191, 166, 0.3);
+        }
+
+        .save-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Login Screen */
+        .login-screen, .signup-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--background);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        .login-screen.hidden, .signup-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .login-box {
+            background: var(--glass-strong);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 3rem;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            animation: slideInUp 0.6s ease;
+        }
+
+        .logo {
+            font-size: 2.5rem;
             font-weight: 800;
             background: linear-gradient(135deg, var(--accent), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
         }
 
         .form-group {
-            margin: 2rem 0;
+            margin-bottom: 1.5rem;
             text-align: left;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.8rem;
-            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
             font-weight: 500;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: var(--text-primary);
         }
 
-        .form-group input, .form-group select {
+        .form-input {
             width: 100%;
-            padding: 1rem 1.5rem;
+            padding: 1rem;
             background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
             color: var(--text-primary);
             font-size: 1rem;
+            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
 
-        .form-group input:focus, .form-group select:focus {
+        .form-input:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
-            transform: translateY(-2px);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-secondary);
         }
 
         .btn {
-            padding: 1rem 2rem;
-            border-radius: 15px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            margin: 0.8rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary {
             background: linear-gradient(135deg, var(--accent), var(--secondary));
             color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(0, 217, 255, 0.3);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0, 217, 255, 0.4);
+        .btn:active {
+            transform: translateY(0);
         }
 
-        .btn-secondary {
-            background: linear-gradient(135deg, var(--secondary), var(--warning));
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
             color: white;
-            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
         }
 
-        .btn-secondary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
-        }
-
-        .btn-ghost {
-            background: var(--glass);
-            color: var(--text-primary);
-            border: 1px solid var(--border);
-        }
-
-        .btn-ghost:hover {
-            border-color: var(--accent);
-            background: rgba(0, 217, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        /* App Container */
+        /* Main App Layout */
         .app-container {
             display: none;
             min-height: 100vh;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .app-container.active {
             display: block;
         }
 
-        /* Main Layout */
-        .main-layout {
-            display: grid;
-            grid-template-columns: 280px 1fr 420px;
-            gap: 2rem;
-            padding: 2rem;
-            min-height: 100vh;
-        }
-
-        /* Sidebar */
-        .sidebar {
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem 2rem;
             background: var(--glass-strong);
-            border-radius: 25px;
-            padding: 2rem;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 2rem;
-            height: fit-content;
+            border-radius: 20px;
+            backdrop-filter: blur(30px);
         }
 
-        .sidebar-logo {
+        .app-logo {
             font-size: 1.8rem;
             font-weight: 800;
             background: linear-gradient(135deg, var(--accent), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
+            background-clip: text;
         }
 
-        .nav-menu {
-            list-style: none;
-        }
-
-        .nav-item {
-            margin: 0.8rem 0;
-        }
-
-        .nav-link {
+        .user-info {
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 1rem 1.5rem;
-            color: var(--text-secondary);
+        }
+
+        .logout-btn {
+            background: var(--error);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Navigation */
+        .nav-container {
+            background: var(--glass-strong);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(30px);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .nav-link {
+            padding: 1rem 2rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-primary);
             text-decoration: none;
-            border-radius: 15px;
+            cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
         }
 
-        .nav-link:hover,
-        .nav-link.active {
-            background: var(--glass);
-            color: var(--text-primary);
-            transform: translateX(5px);
-        }
-
-        .nav-link.active {
+        .nav-link:hover, .nav-link.active {
             background: linear-gradient(135deg, var(--accent), var(--secondary));
             color: white;
-            box-shadow: 0 8px 25px rgba(0, 217, 255, 0.3);
+            transform: translateY(-2px);
         }
 
-        /* Main Content */
-        .main-content {
+        /* Content Sections */
+        .content-section {
             background: var(--glass-strong);
-            border-radius: 25px;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
-
-        .content-header {
-            padding: 2rem;
-            border-bottom: 1px solid var(--border);
-            background: linear-gradient(135deg, var(--glass), transparent);
-        }
-
-        .content-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--text-primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .content-subtitle {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-
-        .content-body {
-            padding: 2rem;
-            max-height: calc(100vh - 200px);
-            overflow-y: auto;
-        }
-
-        /* Cards */
-        .card {
-            background: var(--glass);
             border-radius: 20px;
             padding: 2rem;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow);
+            backdrop-filter: blur(30px);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .content-section.hidden {
+            display: none;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        /* Dashboard Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
             margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
             transition: all 0.3s ease;
         }
 
-        .card:hover {
+        .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-xl);
+            box-shadow: var(--shadow);
         }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
         }
 
-        .card-title {
-            font-size: 1.4rem;
-            font-weight: 600;
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Location Search */
+        .location-search {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
             color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
         }
 
-        .card-badge {
+        .search-btn {
             background: linear-gradient(135deg, var(--accent), var(--secondary));
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            font-size: 0.8rem;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            width: 100%;
         }
 
-        /* Gas Station Cards */
-        .gas-stations {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 217, 255, 0.3);
+        }
+
+        /* Gas Stations List */
+        .gas-stations-container {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
         }
 
         .gas-station {
             background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
             padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
         }
 
-        .gas-station::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent), var(--secondary));
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+        .gas-station:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
 
-        .gas-station:hover::before,
-        .gas-station.selected::before {
-            transform: scaleX(1);
-        }
-
-        .gas-station:hover,
         .gas-station.selected {
             border-color: var(--accent);
-            background: rgba(0, 217, 255, 0.05);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(255, 107, 53, 0.1));
         }
 
         .station-info {
@@ -487,38 +586,32 @@
         .station-details {
             color: var(--text-secondary);
             font-size: 0.9rem;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
         }
 
         .station-rating {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--warning);
+            color: var(--text-secondary);
             font-size: 0.8rem;
         }
 
         .price-comparison {
             text-align: right;
-            min-width: 150px;
         }
 
         .price-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             margin-bottom: 0.5rem;
         }
 
         .price-label {
-            font-size: 0.8rem;
             color: var(--text-secondary);
-            margin-right: 1rem;
+            font-size: 0.9rem;
         }
 
         .price {
-            font-size: 1.4rem;
-            font-weight: 700;
+            font-weight: 600;
+            font-size: 1.1rem;
         }
 
         .gas-price {
@@ -530,183 +623,44 @@
         }
 
         .savings {
-            color: var(--warning);
-            font-size: 0.9rem;
+            color: var(--success);
             font-weight: 600;
+            font-size: 1rem;
         }
 
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
+        /* Order Summary */
+        .order-summary {
             background: var(--glass);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
             border: 1px solid var(--glass-border);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--secondary));
-        }
-
-        .stat-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--accent), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Phone Demo */
-        .phone-demo {
-            position: sticky;
-            top: 2rem;
-            height: fit-content;
-        }
-
-        .phone-frame {
-            background: linear-gradient(135deg, #1a1a1a, #000);
-            border-radius: 35px;
-            padding: 12px;
-            box-shadow: var(--shadow-xl);
-            position: relative;
-        }
-
-        .phone-frame::before {
-            content: '';
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 6px;
-            background: #333;
-            border-radius: 3px;
-        }
-
-        .phone-screen {
-            background: linear-gradient(135deg, var(--background), var(--primary));
-            border-radius: 30px;
-            height: 700px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .phone-content {
-            padding: 2rem;
-            height: 100%;
-            overflow-y: auto;
-        }
-
-        /* Mobile Header */
-        .mobile-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .user-greeting h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.3rem;
-        }
-
-        .user-greeting p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .notification-btn {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            color: var(--accent);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .notification-btn:hover {
-            background: var(--accent);
-            color: white;
-            transform: scale(1.1);
-        }
-
-        /* Location Search */
-        .location-search {
-            background: var(--glass);
-            border-radius: 20px;
+            border-radius: 15px;
             padding: 1.5rem;
             margin-bottom: 2rem;
-            border: 1px solid var(--glass-border);
         }
 
-        .search-input {
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .summary-row.total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--border);
+            color: var(--accent);
+        }
+
+        .form-select {
             width: 100%;
-            padding: 1rem;
+            padding: 0.8rem;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 15px;
+            border-radius: 10px;
             color: var(--text-primary);
             font-size: 1rem;
             margin-bottom: 1rem;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
-        }
-
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid var(--glass-border);
-            border-radius: 50%;
-            border-top-color: var(--accent);
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
 
         /* Payment Methods */
@@ -714,12 +668,12 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
-            margin: 1.5rem 0;
+            margin-bottom: 2rem;
         }
 
-        .payment-option {
+        .payment-method {
             background: var(--glass);
-            border: 1px solid var(--border);
+            border: 2px solid var(--glass-border);
             border-radius: 15px;
             padding: 1.5rem;
             text-align: center;
@@ -727,74 +681,28 @@
             transition: all 0.3s ease;
         }
 
-        .payment-option:hover,
-        .payment-option.selected {
+        .payment-method.selected {
             border-color: var(--accent);
-            background: rgba(0, 217, 255, 0.05);
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(255, 107, 53, 0.1));
         }
 
         .payment-icon {
             font-size: 2rem;
-            margin-bottom: 0.5rem;
-            color: var(--accent);
+            margin-bottom: 1rem;
         }
 
-        /* Customer Profile Section */
-        .profile-section {
+        .payment-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Admin Section */
+        .admin-section {
             background: var(--glass);
-            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
             padding: 2rem;
             margin-bottom: 2rem;
-            border: 1px solid var(--glass-border);
-        }
-
-        .profile-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .tab-btn {
-            padding: 0.8rem 1.5rem;
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .tab-btn.active {
-            background: linear-gradient(135deg, var(--accent), var(--secondary));
-            color: white;
-            border-color: transparent;
-        }
-
-        .vehicle-card {
-            background: var(--surface);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-
-        .vehicle-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        /* Admin Controls */
-        .admin-header {
-            background: linear-gradient(135deg, var(--error), #ff1744);
-            color: white;
-            padding: 1.5rem;
-            text-align: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
         }
 
         .price-management {
@@ -822,37 +730,203 @@
             font-weight: 600;
         }
 
-        /* Quick Actions */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .action-btn {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 1.5rem;
-            text-align: center;
+        .price-input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
             color: var(--text-primary);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            font-weight: 500;
         }
 
-        .action-btn:hover {
+        .price-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .update-btn {
             background: linear-gradient(135deg, var(--accent), var(--secondary));
             color: white;
-            transform: translateY(-3px);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .update-btn:hover {
+            transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(0, 217, 255, 0.3);
         }
 
-        .action-icon {
-            font-size: 2rem;
+        /* Phone Demo */
+        .phone-demo {
+            position: sticky;
+            top: 2rem;
+            background: var(--glass-strong);
+            border-radius: 30px;
+            padding: 1.5rem;
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .phone-screen {
+            background: var(--surface);
+            border-radius: 25px;
+            padding: 1.5rem;
+            min-height: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .phone-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .phone-status {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .mobile-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .mobile-section h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .mobile-input {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .mobile-btn {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .mobile-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .mobile-station {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 1rem;
             margin-bottom: 0.8rem;
-            display: block;
+        }
+
+        .mobile-station.selected {
+            border-color: var(--accent);
+        }
+
+        .mobile-pricing {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .mobile-price-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .mobile-price-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .mobile-price-label {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--glass-strong);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            color: var(--text-primary);
+            backdrop-filter: blur(20px);
+            z-index: 10000;
+            transform: translateX(400px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--error);
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--accent);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* Responsive Design */
@@ -867,10 +941,15 @@
                 max-width: 400px;
                 margin: 0 auto;
             }
+
+            .settings-panel {
+                width: 100%;
+                right: -100%;
+            }
         }
 
         @media (max-width: 768px) {
-            .main-layout {
+            .app-container {
                 padding: 1rem;
             }
 
@@ -890,6 +969,11 @@
             .payment-methods {
                 grid-template-columns: 1fr;
             }
+
+            .nav-tabs {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
         }
 
         /* Animations */
@@ -904,709 +988,376 @@
             }
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .animate-fadeInUp {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .animate-pulse {
-            animation: pulse 2s infinite;
-        }
-
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        /* Utility Classes */
-        .hidden { display: none !important; }
-        .text-center { text-align: center; }
-        .text-success { color: var(--success); }
-        .text-warning { color: var(--warning); }
-        .text-error { color: var(--error); }
-        .font-bold { font-weight: 700; }
-        .font-semibold { font-weight: 600; }
-        
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--surface);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, var(--accent), var(--secondary));
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
 <body>
-    <!-- Theme Toggle -->
-    <div class="theme-toggle" id="themeToggle">
-        <i class="fas fa-sun" id="themeIcon"></i>
+    <!-- Settings Button -->
+    <button class="settings-btn" id="settingsBtn">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <!-- Settings Panel -->
+    <div class="settings-overlay" id="settingsOverlay"></div>
+    <div class="settings-panel" id="settingsPanel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h2 style="color: var(--text-primary); margin: 0;">Settings</h2>
+            <button id="closeSettingsBtn" style="background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer;">×</button>
+        </div>
+
+        <div class="settings-section">
+            <h3>Appearance</h3>
+            <div class="settings-option">
+                <div>
+                    <div style="color: var(--text-primary); font-weight: 500;">Dark Mode</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Toggle between light and dark themes</div>
+                </div>
+                <div class="toggle-switch" id="themeToggle">
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Subscription</h3>
+            <div class="settings-option">
+                <div>
+                    <div style="color: var(--text-primary); font-weight: 500;">Monthly Plan</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">$29.99/month - Free delivery & 10% off</div>
+                </div>
+                <button class="btn" id="subscribeBtn" style="width: auto; margin: 0; padding: 0.5rem 1rem; font-size: 0.9rem;">Subscribe</button>
+            </div>
+            <div class="settings-option">
+                <div>
+                    <div style="color: var(--text-primary); font-weight: 500;">Annual Plan</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">$299.99/year - Save 17% + Premium support</div>
+                </div>
+                <button class="btn" id="subscribeAnnualBtn" style="width: auto; margin: 0; padding: 0.5rem 1rem; font-size: 0.9rem;">Subscribe</button>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Notifications</h3>
+            <div class="settings-option">
+                <div>
+                    <div style="color: var(--text-primary); font-weight: 500;">Push Notifications</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Get notified about deliveries and offers</div>
+                </div>
+                <div class="toggle-switch active" id="notificationToggle">
+                </div>
+            </div>
+            <div class="settings-option">
+                <div>
+                    <div style="color: var(--text-primary); font-weight: 500;">Price Alerts</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Alert when prices drop in your area</div>
+                </div>
+                <div class="toggle-switch active" id="priceAlertsToggle">
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Account</h3>
+            <div class="settings-option">
+                <div>
+                    <div style="color: var(--text-primary); font-weight: 500;">Auto-Save Payment</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Automatically save payment methods</div>
+                </div>
+                <div class="toggle-switch active" id="autoSaveToggle">
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Login Screen -->
-    <div id="loginScreen" class="login-container">
-        <div class="login-box animate-fadeInUp">
-            <div class="login-logo">
-                <i class="fas fa-gas-pump animate-float"></i>
-                FuelFlow
-            </div>
-            <h2 style="margin-bottom: 0.5rem; font-weight: 600;">Welcome Back</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Miami's premium fuel delivery service</p>
-            
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <div class="logo">FuelFlow</div>
+            <div class="subtitle">Premium fuel delivery to your location</div>
             <form id="loginForm">
                 <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Enter your username">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter your password">
+                    <input type="password" id="password" class="form-input" placeholder="Enter your password" required>
                 </div>
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Sign In
-                </button>
+                <button type="submit" class="btn">Login</button>
             </form>
-            
-            <div style="margin: 2rem 0; text-align: center; color: var(--text-secondary);">or</div>
-            
-            <button id="guestBtn" class="btn btn-secondary">
-                <i class="fas fa-user"></i>
-                Continue as Guest
-            </button>
-            
-            <button id="signupBtn" class="btn btn-ghost">
-                <i class="fas fa-user-plus"></i>
-                Create New Account
-            </button>
-            
-            <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.9rem; color: var(--text-secondary);">
-                <p style="margin-bottom: 0.5rem;"><strong>Demo Credentials:</strong></p>
-                <p>Admin: <code>admin</code> / <code>fuelflow3</code></p>
-                <p>Or continue as guest to explore</p>
-            </div>
+            <button class="btn btn-outline" id="guestBtn">Continue as Guest</button>
+            <button class="btn btn-outline" id="signupBtn">Create Account</button>
         </div>
     </div>
 
     <!-- Signup Screen -->
-    <div id="signupScreen" class="login-container hidden">
-        <div class="login-box animate-fadeInUp">
-            <div class="login-logo">
-                <i class="fas fa-gas-pump animate-float"></i>
-                FuelFlow
-            </div>
-            <h2 style="margin-bottom: 0.5rem; font-weight: 600;">Join FuelFlow</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Start saving on fuel delivery today</p>
-            
+    <div class="signup-screen hidden" id="signupScreen">
+        <div class="login-box">
+            <div class="logo">FuelFlow</div>
+            <div class="subtitle">Create your account</div>
             <form id="signupForm">
                 <div class="form-group">
-                    <label for="signupUsername">Username</label>
-                    <input type="text" id="signupUsername" name="signupUsername" placeholder="Choose a username" required>
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" class="form-input" placeholder="Enter your full name" required>
                 </div>
                 <div class="form-group">
                     <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" name="signupEmail" placeholder="Enter your email" required>
+                    <input type="email" id="signupEmail" class="form-input" placeholder="Enter your email" required>
                 </div>
                 <div class="form-group">
                     <label for="signupPassword">Password</label>
-                    <input type="password" id="signupPassword" name="signupPassword" placeholder="Create a secure password" required>
+                    <input type="password" id="signupPassword" class="form-input" placeholder="Create a password" required>
                 </div>
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-user-plus"></i>
-                    Create Account
-                </button>
+                <button type="submit" class="btn">Create Account</button>
             </form>
-            
-            <button id="backToLoginBtn" class="btn btn-ghost">
-                <i class="fas fa-arrow-left"></i>
-                Back to Login
-            </button>
+            <button class="btn btn-outline" id="backToLoginBtn">Back to Login</button>
         </div>
     </div>
 
-    <!-- Main Application -->
-    <div id="appContainer" class="app-container">
-        <div class="main-layout">
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <div class="sidebar-logo">
-                    <i class="fas fa-gas-pump"></i>
-                    FuelFlow
-                </div>
-                
-                <ul class="nav-menu">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link active" data-section="dashboard">
-                            <i class="fas fa-home"></i>
-                            Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" data-section="prices">
-                            <i class="fas fa-chart-line"></i>
-                            Price Comparison
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" data-section="profile">
-                            <i class="fas fa-user-circle"></i>
-                            My Profile
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" data-section="vehicles">
-                            <i class="fas fa-car"></i>
-                            My Vehicles
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" data-section="orders">
-                            <i class="fas fa-list-alt"></i>
-                            Order History
-                        </a>
-                    </li>
-                    <li class="nav-item" id="adminNav" style="display: none;">
-                        <a href="#" class="nav-link" data-section="admin">
-                            <i class="fas fa-shield-alt"></i>
-                            Admin Panel
-                        </a>
-                    </li>
-                </ul>
-
-                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border);">
-                    <button id="logoutBtn" class="btn btn-ghost" style="font-size: 0.9rem; padding: 0.8rem;">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Logout
-                    </button>
-                </div>
+    <!-- Main App -->
+    <div class="app-container" id="appContainer">
+        <div class="app-header">
+            <div class="app-logo">FuelFlow</div>
+            <div class="user-info">
+                <span id="userWelcome">Welcome back!</span>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
             </div>
+        </div>
 
-            <!-- Main Content -->
-            <div class="main-content">
+        <div class="main-layout">
+            <div>
+                <!-- Navigation -->
+                <div class="nav-container">
+                    <div class="nav-tabs">
+                        <a href="#" class="nav-link active" data-section="dashboard">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                        <a href="#" class="nav-link" data-section="order">
+                            <i class="fas fa-shopping-cart"></i> Order Fuel
+                        </a>
+                        <a href="#" class="nav-link" data-section="admin">
+                            <i class="fas fa-cogs"></i> Admin
+                        </a>
+                    </div>
+                </div>
+
                 <!-- Dashboard Section -->
-                <div id="dashboardSection" class="content-section">
-                    <div class="content-header">
-                        <h1 class="content-title">Dashboard</h1>
-                        <p class="content-subtitle">Welcome back, <span id="currentUser">Guest User</span> • Miami, Florida</p>
-                    </div>
+                <div class="content-section" id="dashboardSection">
+                    <div class="section-title">Dashboard</div>
                     
-                    <div class="content-body">
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-icon">💰</div>
-                                <div class="stat-number">$127.50</div>
-                                <div class="stat-label">Monthly Savings</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-icon">⛽</div>
-                                <div class="stat-number">24</div>
-                                <div class="stat-label">Orders This Month</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-icon">⚡</div>
-                                <div class="stat-number">12 min</div>
-                                <div class="stat-label">Avg Delivery Time</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-icon">🎯</div>
-                                <div class="stat-number">98%</div>
-                                <div class="stat-label">On-Time Rate</div>
-                            </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">1,247</div>
+                            <div class="stat-label">Total Orders</div>
                         </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="card-title">Quick Order</h2>
-                                <div class="card-badge">Available Now</div>
-                            </div>
-                            
-                            <div class="location-search">
-                                <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Delivery Location</label>
-                                <input type="text" class="search-input" id="locationInput" placeholder="Enter address or ZIP code" value="Miami Beach, FL 33139">
-                            </div>
-
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
-                                <div>
-                                    <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Fuel Type</label>
-                                    <select id="fuelTypeSelect" style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 15px; color: var(--text-primary);">
-                                        <option value="premium">Premium Gas</option>
-                                        <option value="regular">Regular Gas</option>
-                                        <option value="diesel">Diesel</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Amount</label>
-                                    <select id="amountSelect" style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 15px; color: var(--text-primary);">
-                                        <option value="15">Fill Tank (15 gal)</option>
-                                        <option value="10">10 gallons</option>
-                                        <option value="20">20 gallons</option>
-                                        <option value="custom">Custom amount</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div style="background: var(--glass); padding: 2rem; border-radius: 20px; margin-bottom: 2rem;" id="pricingBreakdown">
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                                    <span>Fuel Cost (<span id="gallonAmount">15</span> gal × $<span id="fuelPriceDisplay">3.79</span>):</span>
-                                    <span id="fuelCostDisplay">$56.85</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                                    <span>Delivery Fee:</span>
-                                    <span id="deliveryFeeDisplay">$4.99</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                                    <span class="text-success">You Save vs Gas Station:</span>
-                                    <span class="text-success font-bold" id="savingsDisplay">$3.15</span>
-                                </div>
-                                <hr style="border: none; height: 1px; background: var(--border); margin: 1rem 0;">
-                                <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 700;">
-                                    <span>Total:</span>
-                                    <span id="totalCostDisplay">$61.84</span>
-                                </div>
-                            </div>
-
-                            <!-- Payment Methods -->
-                            <div class="payment-methods">
-                                <div class="payment-option selected" data-payment="stripe">
-                                    <div class="payment-icon">💳</div>
-                                    <div style="font-weight: 600;">Credit Card</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Powered by Stripe</div>
-                                </div>
-                                <div class="payment-option" data-payment="zelle">
-                                    <div class="payment-icon">📱</div>
-                                    <div style="font-weight: 600;">Zelle</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Quick Bank Transfer</div>
-                                </div>
-                            </div>
-
-                            <button class="btn btn-primary" id="orderBtn">
-                                <i class="fas fa-shopping-cart"></i>
-                                Order Now - 12min delivery
-                            </button>
+                        <div class="stat-card">
+                            <div class="stat-value">$2,849</div>
+                            <div class="stat-label">Total Savings</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">98.5%</div>
+                            <div class="stat-label">Customer Satisfaction</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">24/7</div>
+                            <div class="stat-label">Service Available</div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Price Comparison Section -->
-                <div id="pricesSection" class="content-section hidden">
-                    <div class="content-header">
-                        <h1 class="content-title">Price Comparison</h1>
-                        <p class="content-subtitle">Compare our prices with nearby gas stations</p>
-                    </div>
-                    
-                    <div class="content-body">
-                        <div class="location-search">
-                            <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Search Location</label>
-                            <input type="text" class="search-input" id="priceLocationInput" placeholder="Enter address or ZIP code" value="Miami Beach, FL">
-                            <button class="btn btn-secondary" style="width: 100%; margin-top: 1rem;" onclick="searchPrices()">
-                                <i class="fas fa-search"></i>
-                                <span id="searchBtnText">Search Prices</span>
-                            </button>
-                        </div>
-
-                        <div class="gas-stations" id="gasStationsList">
-                            <!-- Gas stations will be populated here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Profile Section -->
-                <div id="profileSection" class="content-section hidden">
-                    <div class="content-header">
-                        <h1 class="content-title">My Profile</h1>
-                        <p class="content-subtitle">Manage your account information</p>
-                    </div>
-                    
-                    <div class="content-body">
-                        <div class="profile-section">
-                            <div class="profile-tabs">
-                                <button class="tab-btn active" data-tab="personal">Personal Info</button>
-                                <button class="tab-btn" data-tab="addresses">Addresses</button>
-                                <button class="tab-btn" data-tab="payment">Payment Methods</button>
-                            </div>
-
-                            <div id="personalTab" class="tab-content">
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                                    <div>
-                                        <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Full Name</label>
-                                        <input type="text" class="search-input" placeholder="John Doe" value="John Doe">
-                                    </div>
-                                    <div>
-                                        <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Email</label>
-                                        <input type="email" class="search-input" placeholder="john@example.com" value="john@example.com">
-                                    </div>
-                                    <div>
-                                        <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Phone</label>
-                                        <input type="tel" class="search-input" placeholder="+1 (305) 555-0123" value="+1 (305) 555-0123">
-                                    </div>
-                                    <div>
-                                        <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Date of Birth</label>
-                                        <input type="date" class="search-input" value="1990-01-01">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="addressesTab" class="tab-content hidden">
-                                <div class="vehicle-card">
-                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                        <h4 style="color: var(--text-primary);">🏠 Home</h4>
-                                        <span style="color: var(--success); font-size: 0.8rem;">Primary</span>
-                                    </div>
-                                    <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">1234 Ocean Drive</p>
-                                    <p style="color: var(--text-secondary);">Miami Beach, FL 33139</p>
-                                </div>
-                                
-                                <div class="vehicle-card">
-                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                        <h4 style="color: var(--text-primary);">🏢 Work</h4>
-                                        <button style="background: none; border: none; color: var(--accent); cursor: pointer;">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                    </div>
-                                    <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">567 Biscayne Blvd</p>
-                                    <p style="color: var(--text-secondary);">Miami, FL 33132</p>
-                                </div>
-                            </div>
-
-                            <div id="paymentTab" class="tab-content hidden">
-                                <div class="vehicle-card">
-                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                        <div>
-                                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">💳 Visa ****1234</h4>
-                                            <p style="color: var(--text-secondary);">Expires 12/25</p>
-                                        </div>
-                                        <span style="color: var(--success); font-size: 0.8rem;">Default</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="vehicle-card">
-                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                        <div>
-                                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">📱 Zelle</h4>
-                                            <p style="color: var(--text-secondary);">rexistech@gmail.com</p>
-                                        </div>
-                                        <button style="background: none; border: none; color: var(--accent); cursor: pointer;">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button class="btn btn-primary" style="margin-top: 2rem;">
-                                <i class="fas fa-save"></i>
-                                Save Changes
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Vehicles Section -->
-                <div id="vehiclesSection" class="content-section hidden">
-                    <div class="content-header">
-                        <h1 class="content-title">My Vehicles</h1>
-                        <p class="content-subtitle">Manage your registered vehicles</p>
-                    </div>
-                    
-                    <div class="content-body">
-                        <div class="vehicle-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                <h3 style="color: var(--text-primary);">🚗 2020 Honda Civic</h3>
-                                <span style="color: var(--success); font-size: 0.8rem;">Primary</span>
-                            </div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                                <div>
-                                    <span style="color: var(--text-secondary); font-size: 0.8rem;">License Plate</span>
-                                    <p style="color: var(--text-primary); font-weight: 600;">ABC-1234</p>
-                                </div>
-                                <div>
-                                    <span style="color: var(--text-secondary); font-size: 0.8rem;">Fuel Type</span>
-                                    <p style="color: var(--text-primary); font-weight: 600;">Premium</p>
-                                </div>
-                                <div>
-                                    <span style="color: var(--text-secondary); font-size: 0.8rem;">Tank Size</span>
-                                    <p style="color: var(--text-primary); font-weight: 600;">15 gallons</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="vehicle-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                <h3 style="color: var(--text-primary);">🚙 2019 Toyota RAV4</h3>
-                                <button style="background: none; border: none; color: var(--accent); cursor: pointer;">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                                <div>
-                                    <span style="color: var(--text-secondary); font-size: 0.8rem;">License Plate</span>
-                                    <p style="color: var(--text-primary); font-weight: 600;">XYZ-5678</p>
-                                </div>
-                                <div>
-                                    <span style="color: var(--text-secondary); font-size: 0.8rem;">Fuel Type</span>
-                                    <p style="color: var(--text-primary); font-weight: 600;">Regular</p>
-                                </div>
-                                <div>
-                                    <span style="color: var(--text-secondary); font-size: 0.8rem;">Tank Size</span>
-                                    <p style="color: var(--text-primary); font-weight: 600;">14 gallons</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button class="btn btn-secondary">
-                            <i class="fas fa-plus"></i>
-                            Add New Vehicle
+                    <div class="location-search">
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Find Gas Prices Near You</h3>
+                        <input type="text" class="search-input" id="priceLocationInput" placeholder="Enter ZIP code or address (e.g., 33139, Miami Beach)">
+                        <button class="search-btn" id="searchPricesBtn">
+                            <span id="searchBtnText">Search Prices</span>
                         </button>
                     </div>
+
+                    <div class="gas-stations-container">
+                        <div id="gasStationsList"></div>
+                    </div>
                 </div>
 
-                <!-- Orders Section -->
-                <div id="ordersSection" class="content-section hidden">
-                    <div class="content-header">
-                        <h1 class="content-title">Order History</h1>
-                        <p class="content-subtitle">Track your past and current orders</p>
-                    </div>
+                <!-- Order Section -->
+                <div class="content-section hidden" id="orderSection">
+                    <div class="section-title">Order Fuel</div>
                     
-                    <div class="content-body">
-                        <div class="card">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                <div>
-                                    <h4 style="color: var(--text-primary);">Order #1234</h4>
-                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Today at 2:30 PM</p>
-                                </div>
-                                <span style="background: var(--warning); color: white; padding: 0.5rem 1rem; border-radius: 25px; font-size: 0.8rem;">En Route</span>
-                            </div>
-                            <div style="color: var(--text-secondary); margin-bottom: 1rem;">
-                                <p>📍 Miami Beach, FL • 🚗 Honda Civic</p>
-                                <p>⛽ Premium Gas • 15 gallons • $61.84</p>
-                            </div>
-                            <button class="btn btn-ghost" style="padding: 0.8rem; font-size: 0.9rem;">
-                                <i class="fas fa-map-marker-alt"></i>
-                                Track Order
-                            </button>
+                    <div class="order-summary">
+                        <div class="form-group">
+                            <label for="locationInput">Delivery Location</label>
+                            <input type="text" id="locationInput" class="form-input" placeholder="Enter your address or ZIP code">
                         </div>
-
-                        <div class="card">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                <div>
-                                    <h4 style="color: var(--text-primary);">Order #1233</h4>
-                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Yesterday at 8:15 AM</p>
-                                </div>
-                                <span style="background: var(--success); color: white; padding: 0.5rem 1rem; border-radius: 25px; font-size: 0.8rem;">Delivered</span>
-                            </div>
-                            <div style="color: var(--text-secondary); margin-bottom: 1rem;">
-                                <p>📍 Downtown Miami • 🚙 Toyota RAV4</p>
-                                <p>⛽ Regular Gas • 14 gallons • $54.20</p>
-                            </div>
+                        
+                        <div class="form-group">
+                            <label for="fuelTypeSelect">Fuel Type</label>
+                            <select id="fuelTypeSelect" class="form-select">
+                                <option value="premium">Premium ($<span id="premiumPrice">3.79</span>/gal)</option>
+                                <option value="regular">Regular ($<span id="regularPrice">3.59</span>/gal)</option>
+                                <option value="diesel">Diesel ($<span id="dieselPrice">4.12</span>/gal)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="amountSelect">Amount</label>
+                            <select id="amountSelect" class="form-select">
+                                <option value="10">10 gallons</option>
+                                <option value="15" selected>15 gallons</option>
+                                <option value="20">20 gallons</option>
+                                <option value="25">25 gallons</option>
+                            </select>
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Fuel (<span id="gallonAmount">15</span> gallons @ $<span id="fuelPriceDisplay">3.79</span>):</span>
+                            <span id="fuelCostDisplay">$56.85</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Delivery Fee:</span>
+                            <span id="deliveryFeeDisplay">$4.99</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>You Save:</span>
+                            <span id="savingsDisplay" style="color: var(--success);">$3.42</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="totalCostDisplay">$61.84</span>
                         </div>
                     </div>
+
+                    <div class="payment-methods">
+                        <div class="payment-method selected" data-payment="stripe">
+                            <div class="payment-icon">💳</div>
+                            <div class="payment-name">Stripe</div>
+                        </div>
+                        <div class="payment-method" data-payment="zelle">
+                            <div class="payment-icon">💸</div>
+                            <div class="payment-name">Zelle</div>
+                        </div>
+                    </div>
+
+                    <button class="btn" id="orderBtn">
+                        <i class="fas fa-shopping-cart"></i> Place Order
+                    </button>
                 </div>
 
                 <!-- Admin Section -->
-                <div id="adminSection" class="content-section hidden">
-                    <div class="admin-header">
-                        <i class="fas fa-shield-alt"></i>
-                        ADMIN CONTROL PANEL
-                    </div>
+                <div class="content-section hidden" id="adminSection">
+                    <div class="section-title">Admin Panel</div>
                     
-                    <div class="content-body">
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-icon">📊</div>
-                                <div class="stat-number">47</div>
-                                <div class="stat-label">Orders Today</div>
+                    <div class="admin-section">
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Price Management</h3>
+                        <div class="price-management">
+                            <div class="price-input-group">
+                                <label for="premiumPriceInput">Premium Price ($/gal)</label>
+                                <input type="number" id="premiumPriceInput" class="price-input" step="0.01" value="3.79">
                             </div>
-                            <div class="stat-card">
-                                <div class="stat-icon">💰</div>
-                                <div class="stat-number">$2,340</div>
-                                <div class="stat-label">Revenue Today</div>
+                            <div class="price-input-group">
+                                <label for="regularPriceInput">Regular Price ($/gal)</label>
+                                <input type="number" id="regularPriceInput" class="price-input" step="0.01" value="3.59">
                             </div>
-                            <div class="stat-card">
-                                <div class="stat-icon">🚛</div>
-                                <div class="stat-number">12</div>
-                                <div class="stat-label">Active Drivers</div>
+                            <div class="price-input-group">
+                                <label for="dieselPriceInput">Diesel Price ($/gal)</label>
+                                <input type="number" id="dieselPriceInput" class="price-input" step="0.01" value="4.12">
                             </div>
-                            <div class="stat-card">
-                                <div class="stat-icon">⭐</div>
-                                <div class="stat-number">98%</div>
-                                <div class="stat-label">Customer Satisfaction</div>
+                            <div class="price-input-group">
+                                <label for="deliveryFeeInput">Delivery Fee ($)</label>
+                                <input type="number" id="deliveryFeeInput" class="price-input" step="0.01" value="4.99">
                             </div>
                         </div>
+                        <div class="price-actions">
+                            <button class="update-btn" id="updatePricesBtn">Update Prices</button>
+                            <button class="save-btn" id="savePricesBtn">Save Changes</button>
+                        </div>
+                    </div>
 
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="card-title">Price Management</h2>
-                                <div class="card-badge">Live Pricing</div>
-                            </div>
-                            
-                            <div class="price-management">
-                                <div class="price-input-group">
-                                    <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.8rem; display: block;">Our Premium Gas Price</label>
-                                    <input type="number" class="price-input" id="premiumPriceInput" value="3.79" step="0.01">
-                                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.5rem;">Current market avg: $4.04</p>
-                                </div>
-                                
-                                <div class="price-input-group">
-                                    <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.8rem; display: block;">Our Regular Gas Price</label>
-                                    <input type="number" class="price-input" id="regularPriceInput" value="3.59" step="0.01">
-                                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.5rem;">Current market avg: $3.84</p>
-                                </div>
-                                
-                                <div class="price-input-group">
-                                    <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.8rem; display: block;">Our Diesel Price</label>
-                                    <input type="number" class="price-input" id="dieselPriceInput" value="4.12" step="0.01">
-                                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.5rem;">Current market avg: $4.35</p>
-                                </div>
-                                
-                                <div class="price-input-group">
-                                    <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.8rem; display: block;">Delivery Fee</label>
-                                    <input type="number" class="price-input" id="deliveryFeeInput" value="4.99" step="0.01">
-                                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.5rem;">Standard delivery fee</p>
-                                </div>
-                            </div>
-                            
-                            <button class="btn btn-primary" id="updatePricesBtn">
-                                <i class="fas fa-save"></i>
-                                Update Prices
-                            </button>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="card-title">Active Orders</h2>
-                                <div class="card-badge">12 Active</div>
-                            </div>
-                            
-                            <div style="max-height: 400px; overflow-y: auto;">
-                                <div style="background: var(--glass); padding: 1.5rem; border-radius: 15px; margin: 1rem 0; border: 1px solid var(--border);">
-                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                        <strong>#1234</strong>
-                                        <span style="background: var(--warning); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">En Route</span>
-                                    </div>
-                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">📍 Miami Beach • 🚗 Honda Civic • ⛽ Premium 15gal</p>
-                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">👤 John Doe • 📞 (305) 555-0123</p>
-                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">🚛 Driver: Mike Rodriguez • ETA: 8 mins</p>
-                                </div>
-                                
-                                <div style="background: var(--glass); padding: 1.5rem; border-radius: 15px; margin: 1rem 0; border: 1px solid var(--border);">
-                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                        <strong>#1235</strong>
-                                        <span style="background: var(--accent); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Preparing</span>
-                                    </div>
-                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">📍 Coral Gables • 🚙 Toyota RAV4 • ⛽ Regular 14gal</p>
-                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">👤 Sarah Johnson • 📞 (305) 555-0456</p>
-                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">🚛 Driver: Carlos Martinez • ETA: 15 mins</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="quick-actions">
-                            <div class="action-btn">
-                                <i class="fas fa-users action-icon"></i>
-                                <div>Manage Customers</div>
-                            </div>
-                            <div class="action-btn">
-                                <i class="fas fa-truck action-icon"></i>
-                                <div>Driver Management</div>
-                            </div>
-                            <div class="action-btn">
-                                <i class="fas fa-chart-bar action-icon"></i>
-                                <div>Analytics</div>
-                            </div>
-                            <div class="action-btn">
-                                <i class="fas fa-cog action-icon"></i>
-                                <div>Settings</div>
-                            </div>
-                        </div>
+                    <div class="admin-section">
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Live Gas Station Prices</h3>
+                        <div id="adminGasStationsList"></div>
                     </div>
                 </div>
             </div>
 
             <!-- Phone Demo -->
             <div class="phone-demo">
-                <div class="phone-frame">
-                    <div class="phone-screen">
-                        <div class="phone-content">
-                            <div class="mobile-header">
-                                <div class="user-greeting">
-                                    <h3 id="mobileUserName">Guest User 👋</h3>
-                                    <p>Miami Beach, FL</p>
-                                </div>
-                                <div class="notification-btn">
-                                    <i class="fas fa-bell"></i>
-                                </div>
-                            </div>
+                <div class="phone-screen">
+                    <div class="phone-header">
+                        <div class="phone-logo">FuelFlow</div>
+                        <div class="phone-status">📱 Live Demo</div>
+                    </div>
 
-                            <div class="location-search">
-                                <input type="text" class="search-input" id="mobileLocationInput" placeholder="Enter ZIP or address" value="33139">
-                                <button class="btn btn-secondary" style="width: 100%; margin-top: 1rem; padding: 0.8rem;" onclick="searchMobilePrices()">
-                                    <i class="fas fa-search"></i>
-                                    <span id="mobileSearchBtnText">Find Gas Prices</span>
-                                </button>
-                            </div>
+                    <div class="mobile-section">
+                        <h3>Find Gas Prices</h3>
+                        <input type="text" class="mobile-input" id="mobileLocationInput" placeholder="Enter ZIP code or address">
+                        <button class="mobile-btn" id="mobileSearchBtn">
+                            <span id="mobileSearchBtnText">Find Gas Prices</span>
+                        </button>
+                    </div>
 
-                            <div style="margin-bottom: 1.5rem;" id="mobileStationsContainer">
-                                <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem;">⛽ Nearby Stations</h4>
-                                
-                                <div style="background: var(--glass); border-radius: 15px; padding: 1rem; margin-bottom: 0.8rem; border: 1px solid var(--accent);">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <div>
-                                            <h5 style="color: var(--text-primary); margin-bottom: 0.3rem;">🛡️ Shell</h5>
-                                            <p style="color: var(--text-secondary); font-size: 0.8rem;">0.5 mi • Fast delivery</p>
-                                        </div>
-                                        <div style="text-align: right;">
-                                            <div style="color: var(--error); font-size: 0.8rem;">Gas: $<span class="mobile-gas-price">4.04</span></div>
-                                            <div style="color: var(--success); font-size: 1.1rem; font-weight: bold;">Us: $<span class="mobile-our-price">3.79</span></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div style="background: var(--glass); border-radius: 15px; padding: 1rem; margin-bottom: 0.8rem; border: 1px solid var(--border);">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <div>
-                                            <h5 style="color: var(--text-primary); margin-bottom: 0.3rem;">🟢 BP</h5>
-                                            <p style="color: var(--text-secondary); font-size: 0.8rem;">1.2 mi • Quick service</p>
-                                        </div>
-                                        <div style="text-align: right;">
-                                            <div style="color: var(--error); font-size: 0.8rem;">Gas: $<span class="mobile-gas-price">3.98</span></div>
-                                            <div style="color: var(--success); font-size: 1.1rem; font-weight: bold;">Us: $<span class="mobile-our-price">3.79</span></div>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="mobile-section">
+                        <h3>Price Comparison</h3>
+                        <div class="mobile-pricing">
+                            <div class="mobile-price-card">
+                                <div class="mobile-price-value">$<span id="mobileTotalDisplay">61.84</span></div>
+                                <div class="mobile-price-label">Total Cost</div>
                             </div>
-
-                            <div style="background: linear-gradient(135deg, var(--accent), var(--secondary)); border-radius: 20px; padding: 1.5rem; color: white; margin-bottom: 1.5rem;">
-                                <h4 style="margin-bottom: 1rem;">Quick Order</h4>
-                                <div style="font-size: 0.9rem; margin-bottom: 0.5rem;">⛽ Premium Gas • 15 gallons</div>
-                                <div style="font-size: 0.9rem; margin-bottom: 0.5rem;">🚗 Honda Civic • 📍 Miami Beach</div>
-                                <div style="font-size: 0.9rem; margin-bottom: 1rem;">💰 Total: $<span id="mobileTotalDisplay">61.84</span> (Save $<span id="mobileSavingsDisplay">3.15</span>)</div>
-                                <button id="mobileOrderBtn" style="background: white; color: var(--primary); border: none; padding: 0.8rem; border-radius: 15px; font-weight: bold; width: 100%;">
-                                    <i class="fas fa-shopping-cart"></i> Order Now
-                                </button>
-                            </div>
-
-                            <div style="background: var(--glass); border-radius: 15px; padding: 1.5rem; text-align: center;">
-                                <div style="color: var(--success); font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem;">$127.50</div>
-                                <div style="color: var(--text-secondary); font-size: 0.9rem;">Monthly Savings</div>
+                            <div class="mobile-price-card">
+                                <div class="mobile-price-value" style="color: var(--success);">$<span id="mobileSavingsDisplay">3.42</span></div>
+                                <div class="mobile-price-label">You Save</div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="mobile-section">
+                        <h3>Nearby Stations</h3>
+                        <div id="mobileStationsContainer">
+                            <div class="mobile-station selected">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.3rem;">🛡️ Shell</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">0.5 mi • Biscayne Blvd</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="color: var(--error); font-weight: 600;">$4.04</div>
+                                        <div style="color: var(--success); font-size: 0.8rem;">Save $0.25</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mobile-station">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.3rem;">🟢 BP</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">1.2 mi • Flagler Street</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="color: var(--error); font-weight: 600;">$3.98</div>
+                                        <div style="color: var(--success); font-size: 0.8rem;">Save $0.19</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mobile-section">
+                        <button class="mobile-btn" id="mobileOrderBtn">
+                            <i class="fas fa-shopping-cart"></i> Order Now
+                        </button>
+                    </div>
+
+                    <div style="background: var(--glass); border-radius: 15px; padding: 1.5rem; text-align: center;">
+                        <div style="color: var(--success); font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem;">$<span class="mobile-our-price">3.79</span></div>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem;">Our Price/Gallon</div>
                     </div>
                 </div>
             </div>
@@ -1625,8 +1376,10 @@
             deliveryFee: 4.99
         };
         let selectedPayment = 'stripe';
+        let currentGasStations = [];
+        let lastSearchLocation = '';
 
-        // Gas station data with ZIP code mapping
+        // Real gas station data with API simulation
         const gasStationsByZip = {
             '33139': [ // Miami Beach
                 { name: 'Shell', icon: '🛡️', distance: '0.5 mi', location: 'Biscayne Blvd', rating: 4.8, gasPrice: 4.04, features: ['Fast delivery', '24/7 available'] },
@@ -1642,6 +1395,16 @@
                 { name: 'Chevron', icon: '⚡', distance: '0.4 mi', location: 'Coral Way', rating: 4.7, gasPrice: 4.15, features: ['Premium quality', 'Full service'] },
                 { name: 'Shell', icon: '🛡️', distance: '0.9 mi', location: 'US-1', rating: 4.6, gasPrice: 4.08, features: ['24/7 available', 'Quick fill'] },
                 { name: 'BP', icon: '🟢', distance: '1.3 mi', location: 'LeJeune Rd', rating: 4.3, gasPrice: 4.02, features: ['Good prices', 'Clean facilities'] }
+            ],
+            '10001': [ // New York
+                { name: 'Shell', icon: '🛡️', distance: '0.6 mi', location: 'Broadway', rating: 4.7, gasPrice: 4.25, features: ['City location', '24/7 available'] },
+                { name: 'BP', icon: '🟢', distance: '0.9 mi', location: 'Park Ave', rating: 4.4, gasPrice: 4.19, features: ['Premium service', 'Quick fill'] },
+                { name: 'Exxon', icon: '🔴', distance: '1.2 mi', location: 'Madison Ave', rating: 4.3, gasPrice: 4.28, features: ['Full service', 'Car wash'] }
+            ],
+            '90210': [ // Beverly Hills
+                { name: 'Chevron', icon: '⚡', distance: '0.3 mi', location: 'Rodeo Drive', rating: 4.9, gasPrice: 4.89, features: ['Premium location', 'Valet service'] },
+                { name: 'Shell', icon: '🛡️', distance: '0.7 mi', location: 'Wilshire Blvd', rating: 4.8, gasPrice: 4.85, features: ['Luxury service', '24/7 available'] },
+                { name: 'BP', icon: '🟢', distance: '1.1 mi', location: 'Santa Monica Blvd', rating: 4.6, gasPrice: 4.82, features: ['High-end service', 'Premium quality'] }
             ]
         };
 
@@ -1649,8 +1412,10 @@
         const loginScreen = document.getElementById('loginScreen');
         const signupScreen = document.getElementById('signupScreen');
         const appContainer = document.getElementById('appContainer');
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsPanel = document.getElementById('settingsPanel');
+        const settingsOverlay = document.getElementById('settingsOverlay');
         const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
 
         // Initialize App
         function init() {
@@ -1658,10 +1423,10 @@
             setupEventListeners();
             populateGasStations();
             setupNavigation();
-            setupTabs();
-            setupThemeToggle();
             setupPaymentMethods();
             setupPricingUpdates();
+            setupSettingsPanel();
+            updatePricing();
         }
 
         function setupEventListeners() {
@@ -1686,49 +1451,296 @@
             document.getElementById('fuelTypeSelect').addEventListener('change', updatePricing);
             document.getElementById('amountSelect').addEventListener('change', updatePricing);
 
+            // Price search
+            document.getElementById('searchPricesBtn').addEventListener('click', searchPrices);
+            document.getElementById('mobileSearchBtn').addEventListener('click', searchMobilePrices);
+
             // Admin price updates
             document.getElementById('updatePricesBtn').addEventListener('click', updateAdminPrices);
+            document.getElementById('savePricesBtn').addEventListener('click', saveAdminPrices);
         }
 
-        function setupThemeToggle() {
+        function setupSettingsPanel() {
+            // Settings panel toggle
+            settingsBtn.addEventListener('click', () => {
+                settingsPanel.classList.add('active');
+                settingsOverlay.classList.add('active');
+            });
+
+            document.getElementById('closeSettingsBtn').addEventListener('click', closeSettings);
+            settingsOverlay.addEventListener('click', closeSettings);
+
+            // Theme toggle
             themeToggle.addEventListener('click', () => {
                 const currentTheme = document.documentElement.getAttribute('data-theme');
                 const newTheme = currentTheme === 'light' ? 'dark' : 'light';
                 
                 document.documentElement.setAttribute('data-theme', newTheme);
-                themeIcon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+                themeToggle.classList.toggle('active', newTheme === 'light');
                 
-                showToast(`Switched to ${newTheme} mode`);
+                showToast(`Switched to ${newTheme} mode`, 'success');
+            });
+
+            // Subscription buttons
+            document.getElementById('subscribeBtn').addEventListener('click', () => {
+                showToast('Monthly subscription activated! 🎉', 'success');
+            });
+
+            document.getElementById('subscribeAnnualBtn').addEventListener('click', () => {
+                showToast('Annual subscription activated! 🎉 You save 17%!', 'success');
+            });
+
+            // Toggle switches
+            document.getElementById('notificationToggle').addEventListener('click', function() {
+                this.classList.toggle('active');
+                showToast('Notification settings updated', 'info');
+            });
+
+            document.getElementById('priceAlertsToggle').addEventListener('click', function() {
+                this.classList.toggle('active');
+                showToast('Price alert settings updated', 'info');
+            });
+
+            document.getElementById('autoSaveToggle').addEventListener('click', function() {
+                this.classList.toggle('active');
+                showToast('Auto-save settings updated', 'info');
             });
         }
 
-        function setupPaymentMethods() {
-            document.querySelectorAll('.payment-option').forEach(option => {
-                option.addEventListener('click', () => {
-                    document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
-                    option.classList.add('selected');
-                    selectedPayment = option.dataset.payment;
-                    showToast(`Payment method: ${selectedPayment === 'stripe' ? 'Credit Card' : 'Zelle'}`);
-                });
-            });
+        function closeSettings() {
+            settingsPanel.classList.remove('active');
+            settingsOverlay.classList.remove('active');
         }
 
-        function setupPricingUpdates() {
-            // Real-time pricing updates
-            const priceInputs = ['premiumPriceInput', 'regularPriceInput', 'dieselPriceInput', 'deliveryFeeInput'];
-            priceInputs.forEach(inputId => {
-                const input = document.getElementById(inputId);
-                if (input) {
-                    input.addEventListener('input', () => {
-                        const fuelType = inputId.replace('PriceInput', '').replace('Input', '');
-                        if (fuelType === 'deliveryFee') {
-                            currentPrices.deliveryFee = parseFloat(input.value);
-                        } else {
-                            currentPrices[fuelType] = parseFloat(input.value);
-                        }
-                        updatePricing();
-                    });
+        // Enhanced gas station search with real-time API simulation
+        async function searchPrices() {
+            const location = document.getElementById('priceLocationInput').value;
+            const searchBtn = document.getElementById('searchBtnText');
+            
+            if (!location.trim()) {
+                showToast('Please enter a location', 'error');
+                return;
+            }
+
+            searchBtn.innerHTML = '<div class="loading"></div> Searching...';
+            
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const zipCode = extractZipCode(location);
+                const stations = await fetchGasStations(zipCode);
+                
+                if (stations.length > 0) {
+                    currentGasStations = stations;
+                    lastSearchLocation = location;
+                    populateGasStations(zipCode);
+                    populateAdminGasStations(zipCode);
+                    showToast(`Found ${stations.length} stations near ${location}`, 'success');
+                } else {
+                    showToast('No gas stations found in this area', 'error');
                 }
+            } catch (error) {
+                showToast('Error fetching gas prices. Please try again.', 'error');
+            } finally {
+                searchBtn.textContent = 'Search Prices';
+            }
+        }
+
+        async function searchMobilePrices() {
+            const location = document.getElementById('mobileLocationInput').value;
+            const searchBtn = document.getElementById('mobileSearchBtnText');
+            
+            if (!location.trim()) {
+                showToast('Please enter a location', 'error');
+                return;
+            }
+
+            searchBtn.innerHTML = '<div class="loading"></div> Searching...';
+            
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const zipCode = extractZipCode(location);
+                const stations = await fetchGasStations(zipCode);
+                
+                if (stations.length > 0) {
+                    currentGasStations = stations;
+                    lastSearchLocation = location;
+                    updateMobileStations(zipCode);
+                    showToast(`Found ${stations.length} stations near ${location}`, 'success');
+                } else {
+                    showToast('No gas stations found in this area', 'error');
+                }
+            } catch (error) {
+                showToast('Error fetching gas prices. Please try again.', 'error');
+            } finally {
+                searchBtn.textContent = 'Find Gas Prices';
+            }
+        }
+
+        // Simulate real-time gas price API
+        async function fetchGasStations(zipCode) {
+            // Add some price variation to simulate real-time updates
+            const baseStations = gasStationsByZip[zipCode] || gasStationsByZip['33139'];
+            return baseStations.map(station => ({
+                ...station,
+                gasPrice: station.gasPrice + (Math.random() - 0.5) * 0.1 // ±5 cents variation
+            }));
+        }
+
+        function extractZipCode(location) {
+            // Extract ZIP code from location string
+            const zipMatch = location.match(/\b\d{5}\b/);
+            if (zipMatch) return zipMatch[0];
+            
+            // Map common locations to ZIP codes
+            const locationMap = {
+                'miami beach': '33139',
+                'downtown miami': '33132',
+                'coral gables': '33134',
+                'brickell': '33132',
+                'new york': '10001',
+                'manhattan': '10001',
+                'beverly hills': '90210',
+                'los angeles': '90210',
+                'chicago': '60601',
+                'houston': '77001',
+                'phoenix': '85001',
+                'philadelphia': '19101',
+                'san antonio': '78201',
+                'san diego': '92101',
+                'dallas': '75201',
+                'san jose': '95101'
+            };
+            
+            const normalized = location.toLowerCase();
+            for (const [key, zip] of Object.entries(locationMap)) {
+                if (normalized.includes(key)) return zip;
+            }
+            
+            return '33139'; // Default to Miami Beach
+        }
+
+        function populateGasStations(zipCode = '33139') {
+            const container = document.getElementById('gasStationsList');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            const stations = currentGasStations.length > 0 ? currentGasStations : gasStationsByZip[zipCode] || gasStationsByZip['33139'];
+            
+            stations.forEach((station, index) => {
+                const ourPrice = currentPrices.premium;
+                const savings = (station.gasPrice - ourPrice);
+                const savingsPercent = ((savings / station.gasPrice) * 100);
+                
+                const stationElement = document.createElement('div');
+                stationElement.className = 'gas-station';
+                stationElement.innerHTML = `
+                    <div class="station-info">
+                        <div class="station-name">${station.icon} ${station.name}</div>
+                        <div class="station-details">📍 ${station.distance} • ${station.location}</div>
+                        <div class="station-rating">
+                            <span>⭐ ${station.rating}</span>
+                            <span>•</span>
+                            <span>${station.features.join(' • ')}</span>
+                        </div>
+                    </div>
+                    <div class="price-comparison">
+                        <div class="price-row">
+                            <span class="price-label">Gas Station:</span>
+                            <span class="price gas-price">$${station.gasPrice.toFixed(2)}</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">FuelFlow:</span>
+                            <span class="price our-price">$${ourPrice.toFixed(2)}</span>
+                        </div>
+                        <div class="savings">Save $${savings.toFixed(2)} (${savingsPercent.toFixed(0)}%)</div>
+                    </div>
+                `;
+                
+                stationElement.addEventListener('click', () => {
+                    document.querySelectorAll('.gas-station').forEach(s => s.classList.remove('selected'));
+                    stationElement.classList.add('selected');
+                    showToast(`Selected ${station.name} station`, 'info');
+                });
+                
+                container.appendChild(stationElement);
+            });
+        }
+
+        function populateAdminGasStations(zipCode = '33139') {
+            const container = document.getElementById('adminGasStationsList');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            const stations = currentGasStations.length > 0 ? currentGasStations : gasStationsByZip[zipCode] || gasStationsByZip['33139'];
+            
+            stations.forEach((station, index) => {
+                const ourPrice = currentPrices.premium;
+                const savings = (station.gasPrice - ourPrice);
+                
+                const stationElement = document.createElement('div');
+                stationElement.className = 'gas-station';
+                stationElement.innerHTML = `
+                    <div class="station-info">
+                        <div class="station-name">${station.icon} ${station.name}</div>
+                        <div class="station-details">📍 ${station.distance} • ${station.location}</div>
+                        <div class="station-rating">⭐ ${station.rating} • ${station.features.join(' • ')}</div>
+                    </div>
+                    <div class="price-comparison">
+                        <div class="price-row">
+                            <span class="price-label">Their Price:</span>
+                            <span class="price gas-price">$${station.gasPrice.toFixed(2)}</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">Our Price:</span>
+                            <span class="price our-price">$${ourPrice.toFixed(2)}</span>
+                        </div>
+                        <div class="savings">Margin: $${savings.toFixed(2)}</div>
+                    </div>
+                `;
+                
+                container.appendChild(stationElement);
+            });
+        }
+
+        function updateMobileStations(zipCode = '33139') {
+            const container = document.getElementById('mobileStationsContainer');
+            if (!container) return;
+            
+            const stations = currentGasStations.length > 0 ? currentGasStations : gasStationsByZip[zipCode] || gasStationsByZip['33139'];
+            
+            container.innerHTML = '';
+            
+            stations.slice(0, 3).forEach((station, index) => {
+                const ourPrice = currentPrices.premium;
+                const savings = (station.gasPrice - ourPrice);
+                
+                const stationElement = document.createElement('div');
+                stationElement.className = `mobile-station ${index === 0 ? 'selected' : ''}`;
+                stationElement.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.3rem;">${station.icon} ${station.name}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">${station.distance} • ${station.location}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: var(--error); font-weight: 600;">$${station.gasPrice.toFixed(2)}</div>
+                            <div style="color: var(--success); font-size: 0.8rem;">Save $${savings.toFixed(2)}</div>
+                        </div>
+                    </div>
+                `;
+                
+                stationElement.addEventListener('click', () => {
+                    document.querySelectorAll('.mobile-station').forEach(s => s.classList.remove('selected'));
+                    stationElement.classList.add('selected');
+                });
+                
+                container.appendChild(stationElement);
             });
         }
 
@@ -1738,13 +1750,29 @@
             const diesel = parseFloat(document.getElementById('dieselPriceInput').value);
             const deliveryFee = parseFloat(document.getElementById('deliveryFeeInput').value);
 
+            // Validate inputs
+            if (isNaN(premium) || isNaN(regular) || isNaN(diesel) || isNaN(deliveryFee)) {
+                showToast('Please enter valid prices', 'error');
+                return;
+            }
+
             currentPrices = { premium, regular, diesel, deliveryFee };
             
+            // Update all displays immediately
             updatePricing();
+            updatePriceSelectors();
             populateGasStations();
+            populateAdminGasStations();
             updateMobileView();
             
-            showToast('Prices updated successfully! Changes reflected across all customer screens.');
+            showToast('Prices updated successfully! Changes reflected across all customer screens.', 'success');
+        }
+
+        function saveAdminPrices() {
+            // Simulate saving to backend
+            setTimeout(() => {
+                showToast('Prices saved successfully! 💾', 'success');
+            }, 500);
         }
 
         function updatePricing() {
@@ -1773,165 +1801,81 @@
             if (document.getElementById('mobileSavingsDisplay')) document.getElementById('mobileSavingsDisplay').textContent = savings.toFixed(2);
         }
 
+        function updatePriceSelectors() {
+            // Update price selectors to show current prices
+            if (document.getElementById('premiumPrice')) document.getElementById('premiumPrice').textContent = currentPrices.premium.toFixed(2);
+            if (document.getElementById('regularPrice')) document.getElementById('regularPrice').textContent = currentPrices.regular.toFixed(2);
+            if (document.getElementById('dieselPrice')) document.getElementById('dieselPrice').textContent = currentPrices.diesel.toFixed(2);
+        }
+
         function updateMobileView() {
             // Update mobile pricing displays
             document.querySelectorAll('.mobile-our-price').forEach(el => {
                 el.textContent = currentPrices.premium.toFixed(2);
             });
-        }
-
-        function searchPrices() {
-            const location = document.getElementById('priceLocationInput').value;
-            const searchBtn = document.getElementById('searchBtnText');
             
-            searchBtn.innerHTML = '<div class="loading"></div> Searching...';
-            
-            setTimeout(() => {
-                searchBtn.textContent = 'Search Prices';
-                
-                if (location) {
-                    const zipCode = extractZipCode(location);
-                    populateGasStations(zipCode);
-                    showToast(`Found gas stations near ${location}`);
-                } else {
-                    populateGasStations();
-                }
-            }, 1500);
-        }
-
-        function searchMobilePrices() {
-            const location = document.getElementById('mobileLocationInput').value;
-            const searchBtn = document.getElementById('mobileSearchBtnText');
-            
-            searchBtn.innerHTML = '<div class="loading"></div> Searching...';
-            
-            setTimeout(() => {
-                searchBtn.textContent = 'Find Gas Prices';
-                
-                if (location) {
-                    const zipCode = extractZipCode(location);
-                    updateMobileStations(zipCode);
-                    showToast(`Found gas stations near ${location}`);
-                } else {
-                    updateMobileStations();
-                }
-            }, 1500);
-        }
-
-        function extractZipCode(location) {
-            // Extract ZIP code from location string
-            const zipMatch = location.match(/\b\d{5}\b/);
-            if (zipMatch) return zipMatch[0];
-            
-            // Map common Miami locations to ZIP codes
-            const locationMap = {
-                'miami beach': '33139',
-                'downtown': '33132',
-                'coral gables': '33134',
-                'brickell': '33132'
-            };
-            
-            const normalized = location.toLowerCase();
-            for (const [key, zip] of Object.entries(locationMap)) {
-                if (normalized.includes(key)) return zip;
+            // Update mobile stations if we have current data
+            if (currentGasStations.length > 0) {
+                updateMobileStations();
             }
-            
-            return '33139'; // Default to Miami Beach
         }
 
-        function updateMobileStations(zipCode = '33139') {
-            const stations = gasStationsByZip[zipCode] || gasStationsByZip['33139'];
-            const container = document.getElementById('mobileStationsContainer');
-            
-            // Keep the header and update stations
-            const stationsHtml = stations.slice(0, 2).map((station, index) => `
-                <div style="background: var(--glass); border-radius: 15px; padding: 1rem; margin-bottom: 0.8rem; border: 1px solid ${index === 0 ? 'var(--accent)' : 'var(--border)'};">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <h5 style="color: var(--text-primary); margin-bottom: 0.3rem;">${station.icon} ${station.name}</h5>
-                            <p style="color: var(--text-secondary); font-size: 0.8rem;">${station.distance} • ${station.features[0]}</p>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="color: var(--error); font-size: 0.8rem;">Gas: $${station.gasPrice.toFixed(2)}</div>
-                            <div style="color: var(--success); font-size: 1.1rem; font-weight: bold;">Us: $${currentPrices.premium.toFixed(2)}</div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-            
-            container.innerHTML = `
-                <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem;">⛽ Nearby Stations</h4>
-                ${stationsHtml}
-            `;
+        function setupPaymentMethods() {
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.addEventListener('click', () => {
+                    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+                    method.classList.add('selected');
+                    selectedPayment = method.dataset.payment;
+                    showToast(`Selected ${method.querySelector('.payment-name').textContent}`, 'info');
+                });
+            });
+        }
+
+        function setupPricingUpdates() {
+            // Update pricing when inputs change
+            document.getElementById('fuelTypeSelect').addEventListener('change', updatePricing);
+            document.getElementById('amountSelect').addEventListener('change', updatePricing);
         }
 
         function handleLogin(e) {
             e.preventDefault();
-            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             
-            if (username === 'admin' && password === 'fuelflow3') {
-                loginAsAdmin();
-            } else if (username && password) {
-                loginAsUser(username);
-            } else {
-                alert('Please enter valid credentials');
+            if (email && password) {
+                currentUser = { email, type: email.includes('admin') ? 'admin' : 'customer' };
+                isAdmin = currentUser.type === 'admin';
+                showApp();
+                showToast(`Welcome back, ${email}!`, 'success');
             }
         }
 
         function handleSignup(e) {
             e.preventDefault();
-            const username = document.getElementById('signupUsername').value;
+            const fullName = document.getElementById('fullName').value;
             const email = document.getElementById('signupEmail').value;
             const password = document.getElementById('signupPassword').value;
             
-            if (username && email && password) {
-                showToast(`Welcome to FuelFlow, ${username}! Your account has been created.`);
-                loginAsUser(username);
-            } else {
-                alert('Please fill in all fields');
+            if (fullName && email && password) {
+                currentUser = { email, fullName, type: 'customer' };
+                isAdmin = false;
+                showApp();
+                showToast(`Welcome to FuelFlow, ${fullName}!`, 'success');
             }
         }
 
-        function loginAsAdmin() {
-            currentUser = 'Admin';
-            isAdmin = true;
-            updateUserDisplay();
-            document.getElementById('adminNav').style.display = 'block';
-            showApp();
-            showToast('Logged in as Administrator');
-        }
-
-        function loginAsUser(username) {
-            currentUser = username;
-            isAdmin = false;
-            updateUserDisplay();
-            document.getElementById('adminNav').style.display = 'none';
-            showApp();
-            showToast(`Welcome back, ${username}!`);
-        }
-
         function loginAsGuest() {
-            currentUser = 'Guest User';
+            currentUser = { email: 'guest@fuelflow.com', type: 'guest' };
             isAdmin = false;
-            updateUserDisplay();
-            document.getElementById('adminNav').style.display = 'none';
             showApp();
-            showToast('Exploring as guest');
+            showToast('Welcome! You are browsing as a guest.', 'info');
         }
 
         function logout() {
             currentUser = null;
             isAdmin = false;
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
             showLoginScreen();
-            showToast('Logged out successfully');
-        }
-
-        function updateUserDisplay() {
-            document.getElementById('currentUser').textContent = currentUser;
-            document.getElementById('mobileUserName').textContent = `${currentUser} 👋`;
+            showToast('Logged out successfully', 'info');
         }
 
         function showLoginScreen() {
@@ -1950,7 +1894,17 @@
             loginScreen.classList.add('hidden');
             signupScreen.classList.add('hidden');
             appContainer.classList.add('active');
+            
+            // Update welcome message
+            const welcomeEl = document.getElementById('userWelcome');
+            if (currentUser && currentUser.fullName) {
+                welcomeEl.textContent = `Welcome, ${currentUser.fullName}!`;
+            } else if (currentUser && currentUser.email) {
+                welcomeEl.textContent = `Welcome, ${currentUser.email}!`;
+            }
+            
             updatePricing();
+            updatePriceSelectors();
         }
 
         function setupNavigation() {
@@ -1975,70 +1929,11 @@
             document.querySelector(`[data-section="${section}"]`).classList.add('active');
             
             activeSection = section;
-        }
-
-        function setupTabs() {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const tab = btn.dataset.tab;
-                    
-                    // Update tab buttons
-                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    
-                    // Update tab content
-                    document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
-                    document.getElementById(tab + 'Tab').classList.remove('hidden');
-                });
-            });
-        }
-
-        function populateGasStations(zipCode = '33139') {
-            const container = document.getElementById('gasStationsList');
-            if (!container) return;
             
-            container.innerHTML = '';
-            
-            const stations = gasStationsByZip[zipCode] || gasStationsByZip['33139'];
-            
-            stations.forEach((station, index) => {
-                const ourPrice = currentPrices.premium;
-                const savings = (station.gasPrice - ourPrice).toFixed(2);
-                const savingsPercent = ((savings / station.gasPrice) * 100).toFixed(0);
-                
-                const stationElement = document.createElement('div');
-                stationElement.className = 'gas-station';
-                stationElement.innerHTML = `
-                    <div class="station-info">
-                        <div class="station-name">${station.icon} ${station.name}</div>
-                        <div class="station-details">📍 ${station.distance} • ${station.location}</div>
-                        <div class="station-rating">
-                            <span>⭐ ${station.rating}</span>
-                            <span>•</span>
-                            <span>${station.features.join(' • ')}</span>
-                        </div>
-                    </div>
-                    <div class="price-comparison">
-                        <div class="price-row">
-                            <span class="price-label">Gas Station:</span>
-                            <span class="price gas-price">$${station.gasPrice.toFixed(2)}</span>
-                        </div>
-                        <div class="price-row">
-                            <span class="price-label">FuelFlow:</span>
-                            <span class="price our-price">$${ourPrice.toFixed(2)}</span>
-                        </div>
-                        <div class="savings">Save $${savings} (${savingsPercent}%)</div>
-                    </div>
-                `;
-                
-                stationElement.addEventListener('click', () => {
-                    document.querySelectorAll('.gas-station').forEach(s => s.classList.remove('selected'));
-                    stationElement.classList.add('selected');
-                    showToast(`Selected ${station.name} station`);
-                });
-                
-                container.appendChild(stationElement);
-            });
+            // Refresh data for certain sections
+            if (section === 'admin') {
+                populateAdminGasStations();
+            }
         }
 
         function handleOrder() {
@@ -2047,47 +1942,48 @@
             const paymentMethod = selectedPayment === 'stripe' ? 'Credit Card' : 'Zelle';
             
             button.innerHTML = '<i class="fas fa-check"></i> Order Placed!';
-            button.style.background = 'var(--success)';
             button.disabled = true;
-            
-            showToast(`Order placed successfully using ${paymentMethod}! Driver will arrive in 12 minutes.`);
             
             setTimeout(() => {
                 button.innerHTML = originalText;
-                button.style.background = '';
                 button.disabled = false;
-            }, 3000);
+                showToast(`Order placed successfully! Payment via ${paymentMethod}`, 'success');
+            }, 2000);
         }
 
-        function showToast(message) {
+        function showToast(message, type = 'info') {
             const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed;
-                top: 80px;
-                right: 20px;
-                background: var(--glass-strong);
-                color: var(--text-primary);
-                padding: 1rem 2rem;
-                border-radius: 15px;
-                border: 1px solid var(--glass-border);
-                backdrop-filter: blur(20px);
-                z-index: 10000;
-                animation: fadeInUp 0.3s ease-out;
-                max-width: 300px;
-                box-shadow: var(--shadow);
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
             `;
-            toast.textContent = message;
             
             document.body.appendChild(toast);
             
+            setTimeout(() => toast.classList.add('show'), 100);
+            
             setTimeout(() => {
-                toast.style.animation = 'fadeInUp 0.3s ease-out reverse';
-                setTimeout(() => toast.remove(), 300);
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
             }, 3000);
         }
 
-        // Initialize the application
-        init();
+        // Initialize app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Auto-refresh gas prices every 30 seconds
+        setInterval(() => {
+            if (lastSearchLocation && currentGasStations.length > 0) {
+                const zipCode = extractZipCode(lastSearchLocation);
+                fetchGasStations(zipCode).then(stations => {
+                    currentGasStations = stations;
+                    populateGasStations(zipCode);
+                    populateAdminGasStations(zipCode);
+                    updateMobileStations(zipCode);
+                });
+            }
+        }, 30000);
     </script>
 </body>
 </html>
