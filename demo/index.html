@@ -3,9 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FuelFlow - On-Demand Fuel Delivery</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>FuelFlow - Premium Fuel Delivery</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #0F1419;
+            --primary-light: #1A202C;
+            --secondary: #FF6B35;
+            --secondary-light: #FF8A65;
+            --accent: #00D9FF;
+            --success: #00BFA6;
+            --warning: #FFB800;
+            --error: #FF5252;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0AEC0;
+            --text-dark: #2D3748;
+            --background: #0A0E13;
+            --surface: #1A202C;
+            --surface-light: #2D3748;
+            --border: #4A5568;
+            --border-light: #718096;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --shadow-xl: 0 35px 60px -12px rgba(0, 0, 0, 0.35);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,28 +37,40 @@
         }
 
         body {
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #0F172A;
-            background: linear-gradient(135deg, #1E3A8A 0%, #F97316 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--background) 0%, var(--primary) 50%, var(--primary-light) 100%);
+            color: var(--text-primary);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(0, 191, 166, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
-        /* App Container */
-        .app-container {
-            display: none;
-            min-height: 100vh;
-            background: #f8fafc;
+        /* Glass morphism effect */
+        .glass {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
         }
 
-        .app-container.active {
-            display: block;
+        .glass-strong {
+            background: rgba(26, 32, 44, 0.8);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
         }
 
         /* Login Screen */
@@ -43,455 +79,795 @@
             min-height: 100vh;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #1E3A8A 0%, #F97316 100%);
+            padding: 2rem;
         }
 
         .login-box {
-            background: white;
+            background: var(--glass);
+            backdrop-filter: blur(30px);
             padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            max-width: 400px;
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            max-width: 450px;
             width: 100%;
             text-align: center;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
         .login-logo {
-            font-size: 2.5rem;
-            color: #1E3A8A;
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 1rem;
         }
 
         .form-group {
-            margin: 1.5rem 0;
+            margin: 2rem 0;
             text-align: left;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            color: #374151;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
             font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .form-group input {
             width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            color: var(--text-primary);
             font-size: 1rem;
-            transition: border-color 0.3s;
+            transition: all 0.3s ease;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: #1E3A8A;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
+            transform: translateY(-2px);
         }
 
         .btn {
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 1rem 2rem;
+            border-radius: 15px;
             text-decoration: none;
             font-weight: 600;
             font-size: 1rem;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
             border: none;
             cursor: pointer;
             width: 100%;
-            margin: 0.5rem 0;
+            margin: 0.8rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-primary {
-            background: #1E3A8A;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
             color: white;
+            box-shadow: 0 10px 25px rgba(0, 217, 255, 0.3);
         }
 
         .btn-primary:hover {
-            background: #1E40AF;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 217, 255, 0.4);
         }
 
         .btn-secondary {
-            background: #F97316;
+            background: linear-gradient(135deg, var(--secondary), var(--warning));
             color: white;
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
         }
 
         .btn-secondary:hover {
-            background: #EA580C;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
         }
 
         .btn-ghost {
-            background: transparent;
-            color: #6B7280;
-            border: 2px solid #e5e7eb;
+            background: var(--glass);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
         }
 
         .btn-ghost:hover {
-            border-color: #1E3A8A;
-            color: #1E3A8A;
+            border-color: var(--accent);
+            background: rgba(0, 217, 255, 0.1);
+            transform: translateY(-2px);
         }
 
-        /* Demo Layout */
-        .demo-layout {
+        /* App Container */
+        .app-container {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .app-container.active {
+            display: block;
+        }
+
+        /* Main Layout */
+        .main-layout {
             display: grid;
-            grid-template-columns: 1fr 400px;
+            grid-template-columns: 280px 1fr 420px;
             gap: 2rem;
             padding: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
+            min-height: 100vh;
         }
 
-        .main-content {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .phone-demo {
+        /* Sidebar */
+        .sidebar {
+            background: var(--glass-strong);
+            border-radius: 25px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
             position: sticky;
             top: 2rem;
+            height: fit-content;
         }
 
-        /* Phone Mockup */
-        .phone-frame {
-            background: #000;
-            border-radius: 30px;
-            padding: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        .sidebar-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
         }
 
-        .phone-screen {
-            background: white;
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin: 0.8rem 0;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--glass);
+            color: var(--text-primary);
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            box-shadow: 0 8px 25px rgba(0, 217, 255, 0.3);
+        }
+
+        /* Main Content */
+        .main-content {
+            background: var(--glass-strong);
             border-radius: 25px;
-            padding: 20px;
-            height: 700px;
-            position: relative;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .content-header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, var(--glass), transparent);
+        }
+
+        .content-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .content-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .content-body {
+            padding: 2rem;
+            max-height: calc(100vh - 200px);
             overflow-y: auto;
         }
 
-        /* App Header */
-        .app-header {
+        /* Cards */
+        .card {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0 20px 0;
-            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 1.5rem;
         }
 
-        .user-info h3 {
-            color: #1E3A8A;
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-badge {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Gas Station Cards */
+        .gas-stations {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .gas-station {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gas-station::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .gas-station:hover::before,
+        .gas-station.selected::before {
+            transform: scaleX(1);
+        }
+
+        .gas-station:hover,
+        .gas-station.selected {
+            border-color: var(--accent);
+            background: rgba(0, 217, 255, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+        }
+
+        .station-info {
+            flex: 1;
+        }
+
+        .station-name {
             font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
         }
 
-        .user-info p {
-            color: #6B7280;
+        .station-details {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .station-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--warning);
+            font-size: 0.8rem;
+        }
+
+        .price-comparison {
+            text-align: right;
+            min-width: 150px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-right: 1rem;
+        }
+
+        .price {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .gas-price {
+            color: var(--error);
+        }
+
+        .our-price {
+            color: var(--success);
+        }
+
+        .savings {
+            color: var(--warning);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Phone Demo */
+        .phone-demo {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .phone-frame {
+            background: linear-gradient(135deg, #1a1a1a, #000);
+            border-radius: 35px;
+            padding: 12px;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+        }
+
+        .phone-frame::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 6px;
+            background: #333;
+            border-radius: 3px;
+        }
+
+        .phone-screen {
+            background: linear-gradient(135deg, var(--background), var(--primary));
+            border-radius: 30px;
+            height: 700px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phone-content {
+            padding: 2rem;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        /* Mobile Header */
+        .mobile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .user-greeting h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .user-greeting p {
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
 
-        .notification-icon {
-            background: #FEF3E2;
-            color: #F97316;
-            width: 40px;
-            height: 40px;
+        .notification-btn {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--accent);
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        /* Gas Comparison Section */
-        .gas-comparison {
-            margin: 20px 0;
-        }
-
-        .gas-station {
-            background: #f8fafc;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 15px;
-            margin: 10px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s;
+            font-size: 1.2rem;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .gas-station:hover {
-            border-color: #1E3A8A;
-            box-shadow: 0 2px 8px rgba(30,58,138,0.1);
-        }
-
-        .gas-station.selected {
-            border-color: #F97316;
-            background: #FEF3E2;
-        }
-
-        .station-info h4 {
-            color: #1E3A8A;
-            margin-bottom: 2px;
-        }
-
-        .station-info p {
-            color: #6B7280;
-            font-size: 0.8rem;
-        }
-
-        .price-info {
-            text-align: right;
-        }
-
-        .price {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #10B981;
-        }
-
-        .savings {
-            color: #F97316;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        /* Order Status */
-        .order-status {
-            background: linear-gradient(135deg, #1E3A8A, #3B82F6);
+        .notification-btn:hover {
+            background: var(--accent);
             color: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
+            transform: scale(1.1);
         }
 
-        .status-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .status-badge {
-            background: #F97316;
-            padding: 4px 12px;
+        /* Location Search */
+        .location-search {
+            background: var(--glass);
             border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--glass-border);
         }
 
-        /* Admin Dashboard */
-        .admin-header {
-            background: #DC2626;
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
+        }
+
+        /* Customer Profile Section */
+        .profile-section {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .profile-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
             color: white;
-            padding: 15px;
-            text-align: center;
-            font-weight: bold;
+            border-color: transparent;
         }
 
-        .admin-stats {
+        .vehicle-card {
+            background: var(--surface);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .vehicle-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Admin Controls */
+        .admin-header {
+            background: linear-gradient(135deg, var(--error), #ff1744);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .price-management {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            padding: 20px;
+            gap: 2rem;
+            margin: 2rem 0;
         }
 
-        .stat-card {
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 8px;
+        .price-input-group {
+            background: var(--glass);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .price-input {
+            width: 100%;
+            padding: 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .action-btn {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 1.5rem;
             text-align: center;
-            border: 1px solid #e5e7eb;
-        }
-
-        .stat-number {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #1E3A8A;
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: #6B7280;
-        }
-
-        /* Navigation */
-        .bottom-nav {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            border-top: 1px solid #e5e7eb;
-            display: flex;
-            padding: 10px;
-        }
-
-        .nav-item {
-            flex: 1;
-            text-align: center;
-            padding: 8px;
-            color: #6B7280;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
             cursor: pointer;
-            transition: color 0.3s;
         }
 
-        .nav-item.active {
-            color: #1E3A8A;
+        .action-btn:hover {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 217, 255, 0.3);
         }
 
-        .nav-item i {
+        .action-icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
             display: block;
-            font-size: 1.2rem;
-            margin-bottom: 4px;
         }
 
-        .nav-item span {
-            font-size: 0.7rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .demo-layout {
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .main-layout {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
-            
+
             .phone-demo {
-                order: -1;
                 position: static;
-            }
-            
-            .phone-frame {
                 max-width: 400px;
                 margin: 0 auto;
             }
         }
 
         @media (max-width: 768px) {
+            .main-layout {
+                padding: 1rem;
+            }
+
             .login-box {
                 margin: 1rem;
                 padding: 2rem;
             }
-            
-            .demo-layout {
-                padding: 1rem;
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .price-management {
+                grid-template-columns: 1fr;
             }
         }
 
-        /* Utility Classes */
-        .hidden {
-            display: none !important;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .mb-2 {
-            margin-bottom: 0.5rem;
-        }
-
-        .mb-4 {
-            margin-bottom: 1rem;
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
-        /* Web Dashboard Styles */
-        .web-dashboard {
-            padding: 2rem;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #e5e7eb;
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out;
         }
 
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+        .animate-pulse {
+            animation: pulse 2s infinite;
         }
 
-        .dashboard-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            border: 1px solid #e5e7eb;
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
         }
 
-        .card-header {
-            display: flex;
-            justify-content: between;
-            align-items: center;
-            margin-bottom: 1rem;
+        /* Utility Classes */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .text-success { color: var(--success); }
+        .text-warning { color: var(--warning); }
+        .text-error { color: var(--error); }
+        .font-bold { font-weight: 700; }
+        .font-semibold { color: 600; }
+        
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
 
-        .card-title {
-            color: #1E3A8A;
-            font-size: 1.2rem;
-            font-weight: 600;
+        ::-webkit-scrollbar-track {
+            background: var(--surface);
+            border-radius: 10px;
         }
 
-        .gas-list {
-            max-height: 300px;
-            overflow-y: auto;
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 10px;
         }
 
-        .logout-btn {
-            background: #DC2626;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .logout-btn:hover {
-            background: #B91C1C;
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
         }
     </style>
 </head>
 <body>
     <!-- Login Screen -->
     <div id="loginScreen" class="login-container">
-        <div class="login-box">
+        <div class="login-box animate-fadeInUp">
             <div class="login-logo">
-                <i class="fas fa-gas-pump"></i>
+                <i class="fas fa-gas-pump animate-float"></i>
                 FuelFlow
             </div>
-            <h2 style="color: #374151; margin-bottom: 2rem;">Welcome to FuelFlow</h2>
-            <p style="color: #6B7280; margin-bottom: 2rem;">Miami's premier fuel delivery service</p>
+            <h2 style="margin-bottom: 0.5rem; font-weight: 600;">Welcome Back</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Miami's premium fuel delivery service</p>
             
             <form id="loginForm">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Enter username">
+                    <input type="text" id="username" name="username" placeholder="Enter your username">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter password">
+                    <input type="password" id="password" name="password" placeholder="Enter your password">
                 </div>
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-sign-in-alt"></i>
@@ -499,7 +875,7 @@
                 </button>
             </form>
             
-            <div style="margin: 1.5rem 0; text-align: center; color: #6B7280;">or</div>
+            <div style="margin: 2rem 0; text-align: center; color: var(--text-secondary);">or</div>
             
             <button id="guestBtn" class="btn btn-secondary">
                 <i class="fas fa-user"></i>
@@ -511,9 +887,9 @@
                 Create New Account
             </button>
             
-            <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e5e7eb; font-size: 0.9rem; color: #6B7280;">
-                <p><strong>Demo Credentials:</strong></p>
-                <p>Admin: admin / fuelflow3</p>
+            <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.9rem; color: var(--text-secondary);">
+                <p style="margin-bottom: 0.5rem;"><strong>Demo Credentials:</strong></p>
+                <p>Admin: <code>admin</code> / <code>fuelflow3</code></p>
                 <p>Or continue as guest to explore</p>
             </div>
         </div>
@@ -521,12 +897,13 @@
 
     <!-- Signup Screen -->
     <div id="signupScreen" class="login-container hidden">
-        <div class="login-box">
+        <div class="login-box animate-fadeInUp">
             <div class="login-logo">
-                <i class="fas fa-gas-pump"></i>
+                <i class="fas fa-gas-pump animate-float"></i>
                 FuelFlow
             </div>
-            <h2 style="color: #374151; margin-bottom: 2rem;">Create Account</h2>
+            <h2 style="margin-bottom: 0.5rem; font-weight: 600;">Join FuelFlow</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">Start saving on fuel delivery today</p>
             
             <form id="signupForm">
                 <div class="form-group">
@@ -539,7 +916,7 @@
                 </div>
                 <div class="form-group">
                     <label for="signupPassword">Password</label>
-                    <input type="password" id="signupPassword" name="signupPassword" placeholder="Create a password" required>
+                    <input type="password" id="signupPassword" name="signupPassword" placeholder="Create a secure password" required>
                 </div>
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-user-plus"></i>
@@ -554,376 +931,543 @@
         </div>
     </div>
 
-    <!-- Main App -->
+    <!-- Main Application -->
     <div id="appContainer" class="app-container">
-        <div class="demo-layout">
-            <!-- Web Dashboard -->
+        <div class="main-layout">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-logo">
+                    <i class="fas fa-gas-pump"></i>
+                    FuelFlow
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-section="dashboard">
+                            <i class="fas fa-home"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="prices">
+                            <i class="fas fa-chart-line"></i>
+                            Price Comparison
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="profile">
+                            <i class="fas fa-user-circle"></i>
+                            My Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="vehicles">
+                            <i class="fas fa-car"></i>
+                            My Vehicles
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-section="orders">
+                            <i class="fas fa-list-alt"></i>
+                            Order History
+                        </a>
+                    </li>
+                    <li class="nav-item" id="adminNav" style="display: none;">
+                        <a href="#" class="nav-link" data-section="admin">
+                            <i class="fas fa-shield-alt"></i>
+                            Admin Panel
+                        </a>
+                    </li>
+                </ul>
+
+                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+                    <button id="logoutBtn" class="btn btn-ghost" style="font-size: 0.9rem; padding: 0.8rem;">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Content -->
             <div class="main-content">
-                <div id="webDashboard" class="web-dashboard">
-                    <div class="dashboard-header">
-                        <div>
-                            <h1 style="color: #1E3A8A; margin-bottom: 0.5rem;">FuelFlow Dashboard</h1>
-                            <p style="color: #6B7280;">Miami, Florida • <span id="currentUser">Guest User</span></p>
+                <!-- Dashboard Section -->
+                <div id="dashboardSection" class="content-section">
+                    <div class="content-header">
+                        <h1 class="content-title">Dashboard</h1>
+                        <p class="content-subtitle">Welcome back, <span id="currentUser">Guest User</span> • Miami, Florida</p>
+                    </div>
+                    
+                    <div class="content-body">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">💰</div>
+                                <div class="stat-number">$127.50</div>
+                                <div class="stat-label">Monthly Savings</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">⛽</div>
+                                <div class="stat-number">24</div>
+                                <div class="stat-label">Orders This Month</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">⚡</div>
+                                <div class="stat-number">12 min</div>
+                                <div class="stat-label">Avg Delivery Time</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">🎯</div>
+                                <div class="stat-number">98%</div>
+                                <div class="stat-label">On-Time Rate</div>
+                            </div>
                         </div>
-                        <button id="logoutBtn" class="logout-btn">
-                            <i class="fas fa-sign-out-alt"></i>
-                            Logout
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">Quick Order</h2>
+                                <div class="card-badge">Available Now</div>
+                            </div>
+                            
+                            <div class="location-search">
+                                <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Delivery Location</label>
+                                <input type="text" class="search-input" id="locationInput" placeholder="Enter address or ZIP code" value="Miami Beach, FL 33139">
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                                <div>
+                                    <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Fuel Type</label>
+                                    <select style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 15px; color: var(--text-primary);">
+                                        <option>Premium Gas</option>
+                                        <option>Regular Gas</option>
+                                        <option>Diesel</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Amount</label>
+                                    <select style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 15px; color: var(--text-primary);">
+                                        <option>Fill Tank (15 gal)</option>
+                                        <option>10 gallons</option>
+                                        <option>20 gallons</option>
+                                        <option>Custom amount</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div style="background: var(--glass); padding: 2rem; border-radius: 20px; margin-bottom: 2rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                    <span>Fuel Cost (15 gal × $3.79):</span>
+                                    <span>$56.85</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                    <span>Delivery Fee:</span>
+                                    <span>$4.99</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                    <span class="text-success">You Save vs Gas Station:</span>
+                                    <span class="text-success font-bold">$3.15</span>
+                                </div>
+                                <hr style="border: none; height: 1px; background: var(--border); margin: 1rem 0;">
+                                <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 700;">
+                                    <span>Total:</span>
+                                    <span>$61.84</span>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary" id="orderBtn">
+                                <i class="fas fa-shopping-cart"></i>
+                                Order Now - 12min delivery
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Comparison Section -->
+                <div id="pricesSection" class="content-section hidden">
+                    <div class="content-header">
+                        <h1 class="content-title">Price Comparison</h1>
+                        <p class="content-subtitle">Compare our prices with nearby gas stations</p>
+                    </div>
+                    
+                    <div class="content-body">
+                        <div class="location-search">
+                            <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Search Location</label>
+                            <input type="text" class="search-input" id="priceLocationInput" placeholder="Enter address or ZIP code" value="Miami Beach, FL">
+                            <button class="btn btn-secondary" style="width: 100%; margin-top: 1rem;" onclick="searchPrices()">
+                                <i class="fas fa-search"></i>
+                                Search Prices
+                            </button>
+                        </div>
+
+                        <div class="gas-stations" id="gasStationsList">
+                            <!-- Gas stations will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Section -->
+                <div id="profileSection" class="content-section hidden">
+                    <div class="content-header">
+                        <h1 class="content-title">My Profile</h1>
+                        <p class="content-subtitle">Manage your account information</p>
+                    </div>
+                    
+                    <div class="content-body">
+                        <div class="profile-section">
+                            <div class="profile-tabs">
+                                <button class="tab-btn active" data-tab="personal">Personal Info</button>
+                                <button class="tab-btn" data-tab="addresses">Addresses</button>
+                                <button class="tab-btn" data-tab="payment">Payment Methods</button>
+                            </div>
+
+                            <div id="personalTab" class="tab-content">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                                    <div>
+                                        <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Full Name</label>
+                                        <input type="text" class="search-input" placeholder="John Doe" value="John Doe">
+                                    </div>
+                                    <div>
+                                        <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Email</label>
+                                        <input type="email" class="search-input" placeholder="john@example.com" value="john@example.com">
+                                    </div>
+                                    <div>
+                                        <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Phone</label>
+                                        <input type="tel" class="search-input" placeholder="+1 (305) 555-0123" value="+1 (305) 555-0123">
+                                    </div>
+                                    <div>
+                                        <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Date of Birth</label>
+                                        <input type="date" class="search-input" value="1990-01-01">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="addressesTab" class="tab-content hidden">
+                                <div class="vehicle-card">
+                                    <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1rem;">
+                                        <h4 style="color: var(--text-primary);">🏠 Home</h4>
+                                        <span style="color: var(--success); font-size: 0.8rem;">Primary</span>
+                                    </div>
+                                    <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">1234 Ocean Drive</p>
+                                    <p style="color: var(--text-secondary);">Miami Beach, FL 33139</p>
+                                </div>
+                                
+                                <div class="vehicle-card">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                        <h4 style="color: var(--text-primary);">🏢 Work</h4>
+                                        <button style="background: none; border: none; color: var(--accent); cursor: pointer;">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                    <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">567 Biscayne Blvd</p>
+                                    <p style="color: var(--text-secondary);">Miami, FL 33132</p>
+                                </div>
+                            </div>
+
+                            <div id="paymentTab" class="tab-content hidden">
+                                <div class="vehicle-card">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">💳 Visa ****1234</h4>
+                                            <p style="color: var(--text-secondary);">Expires 12/25</p>
+                                        </div>
+                                        <span style="color: var(--success); font-size: 0.8rem;">Default</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary" style="margin-top: 2rem;">
+                                <i class="fas fa-save"></i>
+                                Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicles Section -->
+                <div id="vehiclesSection" class="content-section hidden">
+                    <div class="content-header">
+                        <h1 class="content-title">My Vehicles</h1>
+                        <p class="content-subtitle">Manage your registered vehicles</p>
+                    </div>
+                    
+                    <div class="content-body">
+                        <div class="vehicle-card">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <h3 style="color: var(--text-primary);">🚗 2020 Honda Civic</h3>
+                                <span style="color: var(--success); font-size: 0.8rem;">Primary</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                <div>
+                                    <span style="color: var(--text-secondary); font-size: 0.8rem;">License Plate</span>
+                                    <p style="color: var(--text-primary); font-weight: 600;">ABC-1234</p>
+                                </div>
+                                <div>
+                                    <span style="color: var(--text-secondary); font-size: 0.8rem;">Fuel Type</span>
+                                    <p style="color: var(--text-primary); font-weight: 600;">Premium</p>
+                                </div>
+                                <div>
+                                    <span style="color: var(--text-secondary); font-size: 0.8rem;">Tank Size</span>
+                                    <p style="color: var(--text-primary); font-weight: 600;">15 gallons</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="vehicle-card">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <h3 style="color: var(--text-primary);">🚙 2019 Toyota RAV4</h3>
+                                <button style="background: none; border: none; color: var(--accent); cursor: pointer;">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                <div>
+                                    <span style="color: var(--text-secondary); font-size: 0.8rem;">License Plate</span>
+                                    <p style="color: var(--text-primary); font-weight: 600;">XYZ-5678</p>
+                                </div>
+                                <div>
+                                    <span style="color: var(--text-secondary); font-size: 0.8rem;">Fuel Type</span>
+                                    <p style="color: var(--text-primary); font-weight: 600;">Regular</p>
+                                </div>
+                                <div>
+                                    <span style="color: var(--text-secondary); font-size: 0.8rem;">Tank Size</span>
+                                    <p style="color: var(--text-primary); font-weight: 600;">14 gallons</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-plus"></i>
+                            Add New Vehicle
                         </button>
                     </div>
+                </div>
 
-                    <!-- Admin Dashboard -->
-                    <div id="adminDashboard" class="hidden">
-                        <div class="admin-header">
-                            <i class="fas fa-shield-alt"></i>
-                            ADMIN DASHBOARD
-                        </div>
-                        <div class="dashboard-grid">
-                            <div class="dashboard-card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Today's Stats</h3>
+                <!-- Orders Section -->
+                <div id="ordersSection" class="content-section hidden">
+                    <div class="content-header">
+                        <h1 class="content-title">Order History</h1>
+                        <p class="content-subtitle">Track your past and current orders</p>
+                    </div>
+                    
+                    <div class="content-body">
+                        <div class="card">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <div>
+                                    <h4 style="color: var(--text-primary);">Order #1234</h4>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Today at 2:30 PM</p>
                                 </div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                                    <div class="stat-card">
-                                        <div class="stat-number">47</div>
-                                        <div class="stat-label">Orders Today</div>
-                                    </div>
-                                    <div class="stat-card">
-                                        <div class="stat-number">$2,340</div>
-                                        <div class="stat-label">Revenue</div>
-                                    </div>
-                                    <div class="stat-card">
-                                        <div class="stat-number">12</div>
-                                        <div class="stat-label">Active Drivers</div>
-                                    </div>
-                                    <div class="stat-card">
-                                        <div class="stat-number">98%</div>
-                                        <div class="stat-label">On-Time Rate</div>
-                                    </div>
+                                <span style="background: var(--warning); color: white; padding: 0.5rem 1rem; border-radius: 25px; font-size: 0.8rem;">En Route</span>
+                            </div>
+                            <div style="color: var(--text-secondary); margin-bottom: 1rem;">
+                                <p>📍 Miami Beach, FL • 🚗 Honda Civic</p>
+                                <p>⛽ Premium Gas • 15 gallons • $61.84</p>
+                            </div>
+                            <button class="btn btn-ghost" style="padding: 0.8rem; font-size: 0.9rem;">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Track Order
+                            </button>
+                        </div>
+
+                        <div class="card">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <div>
+                                    <h4 style="color: var(--text-primary);">Order #1233</h4>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Yesterday at 8:15 AM</p>
+                                </div>
+                                <span style="background: var(--success); color: white; padding: 0.5rem 1rem; border-radius: 25px; font-size: 0.8rem;">Delivered</span>
+                            </div>
+                            <div style="color: var(--text-secondary); margin-bottom: 1rem;">
+                                <p>📍 Downtown Miami • 🚙 Toyota RAV4</p>
+                                <p>⛽ Regular Gas • 14 gallons • $54.20</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Section -->
+                <div id="adminSection" class="content-section hidden">
+                    <div class="admin-header">
+                        <i class="fas fa-shield-alt"></i>
+                        ADMIN CONTROL PANEL
+                    </div>
+                    
+                    <div class="content-body">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">📊</div>
+                                <div class="stat-number">47</div>
+                                <div class="stat-label">Orders Today</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">💰</div>
+                                <div class="stat-number">$2,340</div>
+                                <div class="stat-label">Revenue Today</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">🚛</div>
+                                <div class="stat-number">12</div>
+                                <div class="stat-label">Active Drivers</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">⭐</div>
+                                <div class="stat-number">98%</div>
+                                <div class="stat-label">Customer Satisfaction</div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">Price Management</h2>
+                                <div class="card-badge">Live Pricing</div>
+                            </div>
+                            
+                            <div class="price-management">
+                                <div class="price-input-group">
+                                    <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.8rem; display: block;">Our Premium Gas Price</label>
+                                    <input type="number" class="price-input" value="3.79" step="0.01">
+                                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.5rem;">Current market avg: $4.04</p>
+                                </div>
+                                
+                                <div class="price-input-group">
+                                    <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.8rem; display: block;">Our Regular Gas Price</label>
+                                    <input type="number" class="price-input" value="3.59" step="0.01">
+                                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.5rem;">Current market avg: $3.84</p>
+                                </div>
+                                
+                                <div class="price-input-group">
+                                    <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.8rem; display: block;">Our Diesel Price</label>
+                                    <input type="number" class="price-input" value="4.12" step="0.01">
+                                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.5rem;">Current market avg: $4.35</p>
+                                </div>
+                                
+                                <div class="price-input-group">
+                                    <label style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.8rem; display: block;">Delivery Fee</label>
+                                    <input type="number" class="price-input" value="4.99" step="0.01">
+                                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.5rem;">Standard delivery fee</p>
                                 </div>
                             </div>
                             
-                            <div class="dashboard-card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Active Orders</h3>
-                                </div>
-                                <div style="max-height: 300px; overflow-y: auto;">
-                                    <div style="padding: 10px; border: 1px solid #e5e7eb; border-radius: 8px; margin: 8px 0;">
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <span><strong>Order #1234</strong></span>
-                                            <span style="color: #F97316; font-weight: bold;">En Route</span>
-                                        </div>
-                                        <div style="color: #6B7280; font-size: 0.9rem;">Miami Beach • Premium Gas • 15 gal</div>
-                                    </div>
-                                    <div style="padding: 10px; border: 1px solid #e5e7eb; border-radius: 8px; margin: 8px 0;">
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <span><strong>Order #1235</strong></span>
-                                            <span style="color: #10B981; font-weight: bold;">Delivered</span>
-                                        </div>
-                                        <div style="color: #6B7280; font-size: 0.9rem;">Downtown • Regular Gas • 12 gal</div>
-                                    </div>
-                                    <div style="padding: 10px; border: 1px solid #e5e7eb; border-radius: 8px; margin: 8px 0;">
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <span><strong>Order #1236</strong></span>
-                                            <span style="color: #3B82F6; font-weight: bold;">Preparing</span>
-                                        </div>
-                                        <div style="color: #6B7280; font-size: 0.9rem;">Coral Gables • Premium Gas • 20 gal</div>
-                                    </div>
-                                </div>
-                            </div>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-save"></i>
+                                Update Prices
+                            </button>
+                        </div>
 
-                            <div class="dashboard-card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Driver Locations</h3>
-                                </div>
-                                <div style="background: #f8fafc; height: 200px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #6B7280;">
-                                    <i class="fas fa-map-marked-alt" style="font-size: 3rem; margin-right: 1rem;"></i>
-                                    <div>
-                                        <div style="font-weight: bold;">Live Map View</div>
-                                        <div style="font-size: 0.9rem;">12 drivers active in Miami area</div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="card-title">Active Orders</h2>
+                                <div class="card-badge">12 Active</div>
+                            </div>
+                            
+                            <div style="max-height: 400px; overflow-y: auto;">
+                                <div style="background: var(--glass); padding: 1.5rem; border-radius: 15px; margin: 1rem 0; border: 1px solid var(--border);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                        <strong>#1234</strong>
+                                        <span style="background: var(--warning); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">En Route</span>
                                     </div>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">📍 Miami Beach • 🚗 Honda Civic • ⛽ Premium 15gal</p>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">👤 John Doe • 📞 (305) 555-0123</p>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">🚛 Driver: Mike Rodriguez • ETA: 8 mins</p>
+                                </div>
+                                
+                                <div style="background: var(--glass); padding: 1.5rem; border-radius: 15px; margin: 1rem 0; border: 1px solid var(--border);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                        <strong>#1235</strong>
+                                        <span style="background: var(--accent); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Preparing</span>
+                                    </div>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">📍 Coral Gables • 🚙 Toyota RAV4 • ⛽ Regular 14gal</p>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">👤 Sarah Johnson • 📞 (305) 555-0456</p>
+                                    <p style="color: var(--text-secondary); font-size: 0.9rem;">🚛 Driver: Carlos Martinez • ETA: 15 mins</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Regular User Dashboard -->
-                    <div id="userDashboard">
-                        <div class="dashboard-grid">
-                            <div class="dashboard-card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Gas Stations Near You</h3>
-                                    <span style="color: #6B7280; font-size: 0.9rem;">📍 Miami, FL</span>
-                                </div>
-                                <div class="gas-list">
-                                    <div class="gas-station selected" data-station="shell">
-                                        <div class="station-info">
-                                            <h4>🛡️ Shell</h4>
-                                            <p>📍 0.5 mi • Biscayne Blvd</p>
-                                            <p>⭐ 4.8 rating • Fast delivery</p>
-                                        </div>
-                                        <div class="price-info">
-                                            <div class="price">$3.89</div>
-                                            <div class="savings">Save $0.15/gal</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="gas-station" data-station="chevron">
-                                        <div class="station-info">
-                                            <h4>⚡ Chevron</h4>
-                                            <p>📍 0.8 mi • Collins Ave</p>
-                                            <p>⭐ 4.6 rating • Premium quality</p>
-                                        </div>
-                                        <div class="price-info">
-                                            <div class="price">$3.92</div>
-                                            <div class="savings">Save $0.12/gal</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="gas-station" data-station="bp">
-                                        <div class="station-info">
-                                            <h4>🟢 BP</h4>
-                                            <p>📍 1.2 mi • Flagler Street</p>
-                                            <p>⭐ 4.5 rating • Quick service</p>
-                                        </div>
-                                        <div class="price-info">
-                                            <div class="price">$3.85</div>
-                                            <div class="savings">Save $0.19/gal</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="gas-station" data-station="exxon">
-                                        <div class="station-info">
-                                            <h4>🔴 Exxon</h4>
-                                            <p>📍 1.5 mi • US Highway 1</p>
-                                            <p>⭐ 4.4 rating • 24/7 available</p>
-                                        </div>
-                                        <div class="price-info">
-                                            <div class="price">$3.95</div>
-                                            <div class="savings">Save $0.09/gal</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="gas-station" data-station="sunoco">
-                                        <div class="station-info">
-                                            <h4>☀️ Sunoco</h4>
-                                            <p>📍 2.1 mi • Miami Beach</p>
-                                            <p>⭐ 4.3 rating • Beach location</p>
-                                        </div>
-                                        <div class="price-info">
-                                            <div class="price">$3.87</div>
-                                            <div class="savings">Save $0.17/gal</div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="quick-actions">
+                            <div class="action-btn">
+                                <i class="fas fa-users action-icon"></i>
+                                <div>Manage Customers</div>
                             </div>
-
-                            <div class="dashboard-card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Quick Order</h3>
-                                </div>
-                                <div style="padding: 1rem; background: #f8fafc; border-radius: 8px; margin-bottom: 1rem;">
-                                    <div style="margin-bottom: 1rem;">
-                                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Location:</label>
-                                        <div style="padding: 8px; background: white; border-radius: 6px; border: 1px solid #e5e7eb;">
-                                            📍 Miami Beach, FL 33139
-                                        </div>
-                                    </div>
-                                    <div style="margin-bottom: 1rem;">
-                                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Fuel Type:</label>
-                                        <select style="width: 100%; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px;">
-                                            <option>Premium Gas ($3.89/gal)</option>
-                                            <option>Regular Gas ($3.69/gal)</option>
-                                            <option>Diesel ($4.12/gal)</option>
-                                        </select>
-                                    </div>
-                                    <div style="margin-bottom: 1rem;">
-                                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Amount:</label>
-                                        <select style="width: 100%; padding: 8px; border: 1px solid #e5e7eb; border-radius: 6px;">
-                                            <option>Fill Tank (15 gallons)</option>
-                                            <option>10 gallons</option>
-                                            <option>20 gallons</option>
-                                            <option>Custom amount</option>
-                                        </select>
-                                    </div>
-                                    <div style="background: white; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
-                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                            <span>Fuel Cost:</span>
-                                            <span>$58.35</span>
-                                        </div>
-                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                            <span>Delivery Fee:</span>
-                                            <span>$4.99</span>
-                                        </div>
-                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                            <span>You Save:</span>
-                                            <span style="color: #10B981; font-weight: bold;">$2.25</span>
-                                        </div>
-                                        <hr style="margin: 0.5rem 0;">
-                                        <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem;">
-                                            <span>Total:</span>
-                                            <span>$63.34</span>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-primary" id="orderBtn">
-                                        <i class="fas fa-shopping-cart"></i>
-                                        Order Now - 15min delivery
-                                    </button>
-                                </div>
+                            <div class="action-btn">
+                                <i class="fas fa-truck action-icon"></i>
+                                <div>Driver Management</div>
                             </div>
-
-                            <div class="dashboard-card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Your Savings</h3>
-                                </div>
-                                <div style="text-align: center; padding: 2rem;">
-                                    <div style="font-size: 3rem; color: #10B981; font-weight: bold; margin-bottom: 1rem;">$127.50</div>
-                                    <div style="color: #6B7280; margin-bottom: 1rem;">Saved this month</div>
-                                    <div style="background: #f0fdf4; padding: 1rem; border-radius: 8px; color: #166534;">
-                                        <div style="font-weight: bold;">💰 Money saved</div>
-                                        <div style="font-size: 0.9rem;">vs. gas stations: $87.25</div>
-                                        <div style="font-size: 0.9rem;">vs. time value: $40.25</div>
-                                    </div>
-                                </div>
+                            <div class="action-btn">
+                                <i class="fas fa-chart-bar action-icon"></i>
+                                <div>Analytics</div>
+                            </div>
+                            <div class="action-btn">
+                                <i class="fas fa-cog action-icon"></i>
+                                <div>Settings</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Mobile Phone Demo -->
+            <!-- Phone Demo -->
             <div class="phone-demo">
                 <div class="phone-frame">
                     <div class="phone-screen">
-                        <div class="app-header">
-                            <div class="user-info">
-                                <h3 id="mobileUsername">Guest User 👋</h3>
-                                <p>Miami Beach, FL</p>
-                            </div>
-                            <div class="notification-icon">
-                                <i class="fas fa-bell"></i>
-                            </div>
-                        </div>
-
-                        <div id="mobileContent">
-                            <!-- Home Screen -->
-                            <div id="homeScreen">
-                                <div class="gas-comparison">
-                                    <h4 style="margin-bottom: 15px; color: #1E3A8A;">⛽ Gas Near You</h4>
-                                    
-                                    <div class="gas-station selected">
-                                        <div class="station-info">
-                                            <h4>🛡️ Shell Station</h4>
-                                            <p>📍 0.5 mi • 5 min delivery</p>
-                                        </div>
-                                        <div class="price-info">
-                                            <div class="price">$3.89</div>
-                                            <div class="savings">Save $0.15</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="gas-station">
-                                        <div class="station-info">
-                                            <h4>🟢 BP Station</h4>
-                                            <p>📍 1.2 mi • 8 min delivery</p>
-                                        </div>
-                                        <div class="price-info">
-                                            <div class="price">$3.85</div>
-                                            <div class="savings">Save $0.19</div>
-                                        </div>
-                                    </div>
+                        <div class="phone-content">
+                            <div class="mobile-header">
+                                <div class="user-greeting">
+                                    <h3 id="mobileUserName">Guest User 👋</h3>
+                                    <p>Miami Beach, FL</p>
                                 </div>
-
-                                <div class="order-status">
-                                    <div class="status-header">
-                                        <h4>Quick Order</h4>
-                                        <div class="status-badge">Available</div>
-                                    </div>
-                                    <div style="margin: 10px 0;">
-                                        <div style="display: flex; align-items: center; gap: 10px; margin: 5px 0;">
-                                            <i class="fas fa-gas-pump"></i>
-                                            <span>Premium Gas - 15 gallons</span>
-                                        </div>
-                                        <div style="display: flex; align-items: center; gap: 10px; margin: 5px 0;">
-                                            <i class="fas fa-clock"></i>
-                                            <span>Delivery in 15 minutes</span>
-                                        </div>
-                                        <div style="display: flex; align-items: center; gap: 10px; margin: 5px 0;">
-                                            <i class="fas fa-dollar-sign"></i>
-                                            <span>Total: $63.34 (Save $2.25)</span>
-                                        </div>
-                                    </div>
-                                    <button id="mobileOrderBtn" style="background: white; color: #1E3A8A; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; width: 100%;">
-                                        <i class="fas fa-shopping-cart"></i> Order Now
-                                    </button>
-                                </div>
-
-                                <div style="background: #10B981; color: white; padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0;">
-                                    <div style="font-size: 1.1rem; font-weight: bold;">Monthly Savings</div>
-                                    <div style="font-size: 1.8rem; font-weight: bold;">$127.50 💰</div>
+                                <div class="notification-btn">
+                                    <i class="fas fa-bell"></i>
                                 </div>
                             </div>
 
-                            <!-- Admin Mobile Screen -->
-                            <div id="adminMobileScreen" class="hidden">
-                                <div class="admin-header">
-                                    <i class="fas fa-shield-alt"></i>
-                                    ADMIN PANEL
-                                </div>
-                                <div class="admin-stats">
-                                    <div class="stat-card">
-                                        <div class="stat-number">47</div>
-                                        <div class="stat-label">Orders Today</div>
-                                    </div>
-                                    <div class="stat-card">
-                                        <div class="stat-number">$2.3K</div>
-                                        <div class="stat-label">Revenue</div>
-                                    </div>
-                                    <div class="stat-card">
-                                        <div class="stat-number">12</div>
-                                        <div class="stat-label">Drivers</div>
-                                    </div>
-                                    <div class="stat-card">
-                                        <div class="stat-number">98%</div>
-                                        <div class="stat-label">On-Time</div>
+                            <div class="location-search">
+                                <input type="text" class="search-input" placeholder="Enter ZIP or address" value="33139">
+                                <button class="btn btn-secondary" style="width: 100%; margin-top: 1rem; padding: 0.8rem;">
+                                    <i class="fas fa-search"></i>
+                                    Find Gas Prices
+                                </button>
+                            </div>
+
+                            <div style="margin-bottom: 1.5rem;">
+                                <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem;">⛽ Nearby Stations</h4>
+                                
+                                <div style="background: var(--glass); border-radius: 15px; padding: 1rem; margin-bottom: 0.8rem; border: 1px solid var(--accent);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <h5 style="color: var(--text-primary); margin-bottom: 0.3rem;">🛡️ Shell</h5>
+                                            <p style="color: var(--text-secondary); font-size: 0.8rem;">0.5 mi • Fast delivery</p>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <div style="color: var(--error); font-size: 0.8rem;">Gas: $4.04</div>
+                                            <div style="color: var(--success); font-size: 1.1rem; font-weight: bold;">Us: $3.79</div>
+                                        </div>
                                     </div>
                                 </div>
                                 
-                                <div style="margin: 20px 0;">
-                                    <h4 style="margin-bottom: 10px; color: #1E3A8A;">Live Orders</h4>
-                                    <div style="background: #f8fafc; padding: 10px; border-radius: 8px; margin: 8px 0; border: 1px solid #e5e7eb;">
-                                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
-                                            <span><strong>#1234</strong></span>
-                                            <span style="color: #F97316;">En Route</span>
+                                <div style="background: var(--glass); border-radius: 15px; padding: 1rem; margin-bottom: 0.8rem; border: 1px solid var(--border);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <h5 style="color: var(--text-primary); margin-bottom: 0.3rem;">🟢 BP</h5>
+                                            <p style="color: var(--text-secondary); font-size: 0.8rem;">1.2 mi • Quick service</p>
                                         </div>
-                                        <div style="color: #6B7280; font-size: 0.8rem;">Miami Beach • 15 gal</div>
-                                    </div>
-                                    <div style="background: #f8fafc; padding: 10px; border-radius: 8px; margin: 8px 0; border: 1px solid #e5e7eb;">
-                                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
-                                            <span><strong>#1235</strong></span>
-                                            <span style="color: #10B981;">Delivered</span>
+                                        <div style="text-align: right;">
+                                            <div style="color: var(--error); font-size: 0.8rem;">Gas: $3.98</div>
+                                            <div style="color: var(--success); font-size: 1.1rem; font-weight: bold;">Us: $3.79</div>
                                         </div>
-                                        <div style="color: #6B7280; font-size: 0.8rem;">Downtown • 12 gal</div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="bottom-nav">
-                            <div class="nav-item active" data-screen="home">
-                                <i class="fas fa-home"></i>
-                                <span>Home</span>
+                            <div style="background: linear-gradient(135deg, var(--accent), var(--secondary)); border-radius: 20px; padding: 1.5rem; color: white; margin-bottom: 1.5rem;">
+                                <h4 style="margin-bottom: 1rem;">Quick Order</h4>
+                                <div style="font-size: 0.9rem; margin-bottom: 0.5rem;">⛽ Premium Gas • 15 gallons</div>
+                                <div style="font-size: 0.9rem; margin-bottom: 0.5rem;">🚗 Honda Civic • 📍 Miami Beach</div>
+                                <div style="font-size: 0.9rem; margin-bottom: 1rem;">💰 Total: $61.84 (Save $3.15)</div>
+                                <button id="mobileOrderBtn" style="background: white; color: var(--primary); border: none; padding: 0.8rem; border-radius: 15px; font-weight: bold; width: 100%;">
+                                    <i class="fas fa-shopping-cart"></i> Order Now
+                                </button>
                             </div>
-                            <div class="nav-item" data-screen="stations">
-                                <i class="fas fa-gas-pump"></i>
-                                <span>Stations</span>
-                            </div>
-                            <div class="nav-item" data-screen="orders">
-                                <i class="fas fa-list"></i>
-                                <span>Orders</span>
-                            </div>
-                            <div class="nav-item" data-screen="profile">
-                                <i class="fas fa-user"></i>
-                                <span>Profile</span>
+
+                            <div style="background: var(--glass); border-radius: 15px; padding: 1.5rem; text-align: center;">
+                                <div style="color: var(--success); font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem;">$127.50</div>
+                                <div style="color: var(--text-secondary); font-size: 0.9rem;">Monthly Savings</div>
                             </div>
                         </div>
                     </div>
@@ -933,70 +1477,98 @@
     </div>
 
     <script>
-        // Global state
+        // Global State
         let currentUser = null;
         let isAdmin = false;
-        let selectedStation = 'shell';
+        let activeSection = 'dashboard';
 
-        // DOM elements
+        // Gas station data
+        const gasStations = [
+            {
+                name: 'Shell',
+                icon: '🛡️',
+                distance: '0.5 mi',
+                location: 'Biscayne Blvd',
+                rating: 4.8,
+                gasPrice: 4.04,
+                ourPrice: 3.79,
+                features: ['Fast delivery', '24/7 available']
+            },
+            {
+                name: 'BP',
+                icon: '🟢',
+                distance: '1.2 mi',
+                location: 'Flagler Street',
+                rating: 4.5,
+                gasPrice: 3.98,
+                ourPrice: 3.79,
+                features: ['Quick service', 'Premium quality']
+            },
+            {
+                name: 'Chevron',
+                icon: '⚡',
+                distance: '0.8 mi',
+                location: 'Collins Ave',
+                rating: 4.6,
+                gasPrice: 4.09,
+                ourPrice: 3.79,
+                features: ['Premium quality', 'Loyalty rewards']
+            },
+            {
+                name: 'Exxon',
+                icon: '🔴',
+                distance: '1.5 mi',
+                location: 'US Highway 1',
+                rating: 4.4,
+                gasPrice: 4.15,
+                ourPrice: 3.79,
+                features: ['24/7 available', 'Car wash']
+            },
+            {
+                name: 'Sunoco',
+                icon: '☀️',
+                distance: '2.1 mi',
+                location: 'Miami Beach',
+                rating: 4.3,
+                gasPrice: 3.95,
+                ourPrice: 3.79,
+                features: ['Beach location', 'Quick fill']
+            }
+        ];
+
+        // DOM Elements
         const loginScreen = document.getElementById('loginScreen');
         const signupScreen = document.getElementById('signupScreen');
         const appContainer = document.getElementById('appContainer');
-        const loginForm = document.getElementById('loginForm');
-        const signupForm = document.getElementById('signupForm');
-        const guestBtn = document.getElementById('guestBtn');
-        const signupBtn = document.getElementById('signupBtn');
-        const backToLoginBtn = document.getElementById('backToLoginBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const currentUserSpan = document.getElementById('currentUser');
-        const mobileUsername = document.getElementById('mobileUsername');
-        const adminDashboard = document.getElementById('adminDashboard');
-        const userDashboard = document.getElementById('userDashboard');
-        const adminMobileScreen = document.getElementById('adminMobileScreen');
-        const homeScreen = document.getElementById('homeScreen');
 
-        // Initialize app
+        // Initialize App
         function init() {
             showLoginScreen();
             setupEventListeners();
-            setupGasStationSelection();
-            setupMobileNavigation();
-        }
-
-        function showLoginScreen() {
-            loginScreen.classList.remove('hidden');
-            signupScreen.classList.add('hidden');
-            appContainer.classList.remove('active');
-        }
-
-        function showSignupScreen() {
-            loginScreen.classList.add('hidden');
-            signupScreen.classList.remove('hidden');
-            appContainer.classList.remove('active');
-        }
-
-        function showApp() {
-            loginScreen.classList.add('hidden');
-            signupScreen.classList.add('hidden');
-            appContainer.classList.add('active');
+            populateGasStations();
+            setupNavigation();
+            setupTabs();
         }
 
         function setupEventListeners() {
             // Login form
-            loginForm.addEventListener('submit', handleLogin);
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
             
             // Signup form
-            signupForm.addEventListener('submit', handleSignup);
+            document.getElementById('signupForm').addEventListener('submit', handleSignup);
             
             // Navigation buttons
-            guestBtn.addEventListener('click', () => loginAsGuest());
-            signupBtn.addEventListener('click', () => showSignupScreen());
-            backToLoginBtn.addEventListener('click', () => showLoginScreen());
-            logoutBtn.addEventListener('click', () => logout());
+            document.getElementById('guestBtn').addEventListener('click', () => loginAsGuest());
+            document.getElementById('signupBtn').addEventListener('click', () => showSignupScreen());
+            document.getElementById('backToLoginBtn').addEventListener('click', () => showLoginScreen());
+            document.getElementById('logoutBtn').addEventListener('click', () => logout());
             
             // Order buttons
             document.getElementById('orderBtn').addEventListener('click', handleOrder);
             document.getElementById('mobileOrderBtn').addEventListener('click', handleOrder);
+
+            // Location search
+            document.getElementById('locationInput').addEventListener('input', updatePricing);
         }
 
         function handleLogin(e) {
@@ -1020,7 +1592,7 @@
             const password = document.getElementById('signupPassword').value;
             
             if (username && email && password) {
-                alert(`Account created successfully for ${username}!`);
+                alert(`Welcome to FuelFlow, ${username}! Your account has been created.`);
                 loginAsUser(username);
             } else {
                 alert('Please fill in all fields');
@@ -1031,7 +1603,7 @@
             currentUser = 'Admin';
             isAdmin = true;
             updateUserDisplay();
-            showAdminDashboard();
+            document.getElementById('adminNav').style.display = 'block';
             showApp();
         }
 
@@ -1039,7 +1611,7 @@
             currentUser = username;
             isAdmin = false;
             updateUserDisplay();
-            showUserDashboard();
+            document.getElementById('adminNav').style.display = 'none';
             showApp();
         }
 
@@ -1047,7 +1619,7 @@
             currentUser = 'Guest User';
             isAdmin = false;
             updateUserDisplay();
-            showUserDashboard();
+            document.getElementById('adminNav').style.display = 'none';
             showApp();
         }
 
@@ -1060,49 +1632,127 @@
         }
 
         function updateUserDisplay() {
-            currentUserSpan.textContent = currentUser;
-            mobileUsername.textContent = `${currentUser} 👋`;
+            document.getElementById('currentUser').textContent = currentUser;
+            document.getElementById('mobileUserName').textContent = `${currentUser} 👋`;
         }
 
-        function showAdminDashboard() {
-            adminDashboard.classList.remove('hidden');
-            userDashboard.classList.add('hidden');
-            adminMobileScreen.classList.remove('hidden');
-            homeScreen.classList.add('hidden');
+        function showLoginScreen() {
+            loginScreen.classList.remove('hidden');
+            signupScreen.classList.add('hidden');
+            appContainer.classList.remove('active');
         }
 
-        function showUserDashboard() {
-            adminDashboard.classList.add('hidden');
-            userDashboard.classList.remove('hidden');
-            adminMobileScreen.classList.add('hidden');
-            homeScreen.classList.remove('hidden');
+        function showSignupScreen() {
+            loginScreen.classList.add('hidden');
+            signupScreen.classList.remove('hidden');
+            appContainer.classList.remove('active');
         }
 
-        function setupGasStationSelection() {
-            document.querySelectorAll('.gas-station').forEach(station => {
-                station.addEventListener('click', function() {
-                    // Remove selected from all stations
-                    document.querySelectorAll('.gas-station').forEach(s => s.classList.remove('selected'));
-                    // Add selected to clicked station
-                    this.classList.add('selected');
-                    selectedStation = this.dataset.station;
+        function showApp() {
+            loginScreen.classList.add('hidden');
+            signupScreen.classList.add('hidden');
+            appContainer.classList.add('active');
+        }
+
+        function setupNavigation() {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const section = link.dataset.section;
+                    switchSection(section);
                 });
             });
         }
 
-        function setupMobileNavigation() {
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    // Remove active from all nav items
-                    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-                    // Add active to clicked item
-                    this.classList.add('active');
+        function switchSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
+            
+            // Show selected section
+            document.getElementById(section + 'Section').classList.remove('hidden');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            document.querySelector(`[data-section="${section}"]`).classList.add('active');
+            
+            activeSection = section;
+        }
+
+        function setupTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tab = btn.dataset.tab;
                     
-                    const screen = this.dataset.screen;
-                    // Handle screen switching logic here
-                    console.log('Switched to:', screen);
+                    // Update tab buttons
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // Update tab content
+                    document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+                    document.getElementById(tab + 'Tab').classList.remove('hidden');
                 });
             });
+        }
+
+        function populateGasStations() {
+            const container = document.getElementById('gasStationsList');
+            container.innerHTML = '';
+            
+            gasStations.forEach((station, index) => {
+                const savings = (station.gasPrice - station.ourPrice).toFixed(2);
+                const savingsPercent = ((savings / station.gasPrice) * 100).toFixed(0);
+                
+                const stationElement = document.createElement('div');
+                stationElement.className = 'gas-station';
+                stationElement.innerHTML = `
+                    <div class="station-info">
+                        <div class="station-name">${station.icon} ${station.name}</div>
+                        <div class="station-details">📍 ${station.distance} • ${station.location}</div>
+                        <div class="station-rating">
+                            <span>⭐ ${station.rating}</span>
+                            <span>•</span>
+                            <span>${station.features.join(' • ')}</span>
+                        </div>
+                    </div>
+                    <div class="price-comparison">
+                        <div class="price-row">
+                            <span class="price-label">Gas Station:</span>
+                            <span class="price gas-price">$${station.gasPrice.toFixed(2)}</span>
+                        </div>
+                        <div class="price-row">
+                            <span class="price-label">FuelFlow:</span>
+                            <span class="price our-price">$${station.ourPrice.toFixed(2)}</span>
+                        </div>
+                        <div class="savings">Save $${savings} (${savingsPercent}%)</div>
+                    </div>
+                `;
+                
+                stationElement.addEventListener('click', () => {
+                    document.querySelectorAll('.gas-station').forEach(s => s.classList.remove('selected'));
+                    stationElement.classList.add('selected');
+                });
+                
+                container.appendChild(stationElement);
+            });
+        }
+
+        function searchPrices() {
+            const location = document.getElementById('priceLocationInput').value;
+            if (location) {
+                // Simulate searching with location
+                populateGasStations();
+                // Add a toast notification
+                showToast('Prices updated for ' + location);
+            }
+        }
+
+        function updatePricing() {
+            const location = document.getElementById('locationInput').value;
+            // Simulate real-time pricing updates based on location
+            if (location) {
+                // Update mobile view pricing as well
+                showToast('Pricing updated for your location');
+            }
         }
 
         function handleOrder() {
@@ -1110,74 +1760,44 @@
             const originalText = button.innerHTML;
             
             button.innerHTML = '<i class="fas fa-check"></i> Order Placed!';
-            button.style.background = '#10B981';
-            button.style.color = 'white';
+            button.style.background = 'var(--success)';
             button.disabled = true;
+            
+            showToast('Order placed successfully! Driver will arrive in 12 minutes.');
             
             setTimeout(() => {
                 button.innerHTML = originalText;
                 button.style.background = '';
-                button.style.color = '';
                 button.disabled = false;
-                
-                // Show mock order tracking
-                if (button.id === 'mobileOrderBtn') {
-                    showMobileOrderTracking();
-                }
             }, 3000);
         }
 
-        function showMobileOrderTracking() {
-            const orderStatus = document.querySelector('.order-status');
-            orderStatus.innerHTML = `
-                <div class="status-header">
-                    <h4>Order #${Math.floor(Math.random() * 9000) + 1000}</h4>
-                    <div class="status-badge pulse">Preparing</div>
-                </div>
-                <div style="margin: 10px 0;">
-                    <div style="display: flex; align-items: center; gap: 10px; margin: 5px 0;">
-                        <i class="fas fa-user"></i>
-                        <span>Driver: Mike Rodriguez</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 10px; margin: 5px 0;">
-                        <i class="fas fa-truck"></i>
-                        <span>ETA: 12 minutes</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 10px; margin: 5px 0;">
-                        <i class="fas fa-phone"></i>
-                        <span>+1 (305) 555-0123</span>
-                    </div>
-                </div>
-                <button style="background: transparent; color: white; border: 2px solid white; padding: 10px 20px; border-radius: 8px; font-weight: bold; width: 100%;">
-                    <i class="fas fa-map-marker-alt"></i> Track Live
-                </button>
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--glass-strong);
+                color: var(--text-primary);
+                padding: 1rem 2rem;
+                border-radius: 15px;
+                border: 1px solid var(--glass-border);
+                backdrop-filter: blur(20px);
+                z-index: 10000;
+                animation: fadeInUp 0.3s ease-out;
             `;
+            toast.textContent = message;
             
-            // Simulate status updates
+            document.body.appendChild(toast);
+            
             setTimeout(() => {
-                const badge = orderStatus.querySelector('.status-badge');
-                badge.textContent = 'En Route';
-                badge.style.background = '#F97316';
-            }, 5000);
+                toast.style.animation = 'fadeInUp 0.3s ease-out reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
         }
 
-        // Contact email update
-        document.addEventListener('DOMContentLoaded', function() {
-            // Update all contact emails to rexistech@gmail.com
-            document.querySelectorAll('a[href*="partnerships@fuelflow.com"]').forEach(link => {
-                link.href = 'mailto:rexistech@gmail.com';
-                link.textContent = link.textContent.replace('partnerships@fuelflow.com', 'rexistech@gmail.com');
-            });
-            
-            // Update email displays
-            document.querySelectorAll('p').forEach(p => {
-                if (p.textContent.includes('partnerships@fuelflow.com')) {
-                    p.innerHTML = p.innerHTML.replace('partnerships@fuelflow.com', 'rexistech@gmail.com');
-                }
-            });
-        });
-
-        // Initialize the app
+        // Initialize the application
         init();
     </script>
 </body>
