@@ -8,59 +8,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Dark theme (default) */
-            --primary: #0B1426;
-            --primary-light: #1E293B;
-            --secondary: #FF6B35;
-            --secondary-light: #FF8A65;
-            --accent: #00D9FF;
-            --accent-dark: #0891B2;
-            --success: #10B981;
-            --warning: #F59E0B;
-            --error: #EF4444;
-            --text-primary: #F8FAFC;
-            --text-secondary: #94A3B8;
-            --text-dark: #334155;
-            --background: #020617;
-            --surface: #1E293B;
-            --surface-light: #334155;
-            --border: #475569;
-            --border-light: #64748B;
-            --glass: rgba(248, 250, 252, 0.08);
-            --glass-border: rgba(248, 250, 252, 0.12);
-            --glass-strong: rgba(30, 41, 59, 0.9);
-            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
-            --shadow-xl: 0 35px 60px -12px rgba(0, 0, 0, 0.5);
-            --gradient-primary: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
-            --gradient-surface: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
-        }
-
-        [data-theme="light"] {
-            /* Light theme */
-            --primary: #1E40AF;
-            --primary-light: #3B82F6;
-            --secondary: #FF6B35;
-            --secondary-light: #FF8A65;
-            --accent: #0EA5E9;
-            --accent-dark: #0369A1;
-            --success: #10B981;
-            --warning: #F59E0B;
-            --error: #EF4444;
-            --text-primary: #0F172A;
-            --text-secondary: #475569;
-            --text-dark: #334155;
-            --background: #F8FAFC;
-            --surface: #FFFFFF;
-            --surface-light: #F1F5F9;
-            --border: #E2E8F0;
-            --border-light: #CBD5E1;
-            --glass: rgba(255, 255, 255, 0.9);
-            --glass-border: rgba(0, 0, 0, 0.08);
+            /* Psychologically soothing color palette */
+            --primary: #2563EB;           /* Calming blue - trust & reliability */
+            --primary-light: #3B82F6;     /* Lighter blue */
+            --secondary: #059669;         /* Soothing green - savings & nature */
+            --secondary-light: #10B981;   /* Lighter green */
+            --accent: #0EA5E9;           /* Sky blue - freedom & openness */
+            --accent-light: #38BDF8;     /* Light sky blue */
+            --success: #22C55E;          /* Fresh green - positive outcomes */
+            --warning: #F59E0B;          /* Warm amber - attention without alarm */
+            --error: #EF4444;           /* Soft red - gentle alerts */
+            --text-primary: #1F2937;     /* Soft dark gray - easy on eyes */
+            --text-secondary: #6B7280;   /* Medium gray - readable secondary */
+            --text-light: #9CA3AF;      /* Light gray */
+            --background: #F8FAFC;       /* Soft white - clean & spacious */
+            --surface: #FFFFFF;          /* Pure white - clarity */
+            --surface-soft: #F1F5F9;     /* Very soft blue-gray */
+            --border: #E5E7EB;           /* Gentle border */
+            --border-light: #F3F4F6;     /* Very light border */
+            
+            /* Soothing gradients */
+            --gradient-hero: linear-gradient(135deg, #3B82F6 0%, #10B981 100%);
+            --gradient-savings: linear-gradient(135deg, #059669 0%, #22C55E 100%);
+            --gradient-trust: linear-gradient(135deg, #0EA5E9 0%, #3B82F6 100%);
+            --gradient-soft: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+            
+            /* Glass effects for mobile */
+            --glass: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.2);
             --glass-strong: rgba(255, 255, 255, 0.95);
-            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 35px 60px -12px rgba(0, 0, 0, 0.15);
-            --gradient-primary: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
-            --gradient-surface: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
+            
+            /* Soft shadows */
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --shadow-strong: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
 
         * {
@@ -70,15 +51,26 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, var(--background) 0%, var(--primary) 50%, var(--primary-light) 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gradient-soft);
             color: var(--text-primary);
             min-height: 100vh;
+            margin: 0;
+            padding: 0;
             overflow-x: hidden;
-            transition: all 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            /* Mobile optimizations */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Enhanced Animated Background */
+        /* Subtle animated background for mobile */
         body::before {
             content: '';
             position: fixed;
@@ -87,36 +79,46 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 107, 53, 0.12) 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 70% 70%, rgba(0, 217, 255, 0.08) 0%, transparent 40%);
+                radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 60%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(14, 165, 233, 0.06) 0%, transparent 30%);
             pointer-events: none;
             z-index: -1;
-            animation: float 20s infinite linear;
+            animation: gentleFloat 25s infinite ease-in-out;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-20px) rotate(1deg); }
-            66% { transform: translateY(10px) rotate(-1deg); }
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0px) scale(1); opacity: 0.8; }
+            50% { transform: translateY(-10px) scale(1.02); opacity: 1; }
         }
 
-        /* Enhanced Glass morphism */
+        /* Mobile App Container */
+        .mobile-app {
+            max-width: 430px;
+            width: 100%;
+            min-height: 100vh;
+            margin: 0 auto;
+            background: var(--surface);
+            position: relative;
+            box-shadow: var(--shadow-medium);
+            overflow: hidden;
+        }
+
+        /* Mobile Glass Effects */
         .glass {
             background: var(--glass);
-            backdrop-filter: blur(24px);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: var(--shadow);
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
         }
 
         .glass-strong {
             background: var(--glass-strong);
-            backdrop-filter: blur(32px);
+            backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            box-shadow: var(--shadow-xl);
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
         }
 
         /* Improved Settings Panel */
@@ -1049,564 +1051,191 @@
             color: white;
             transform: translateY(-1px);
         }
+        
+        /* Savings calculator animations */
+        .savings-animation {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+        
+        .savings-breakdown {
+            animation: slideInUp 0.8s ease;
+        }
+        
+        .savings-highlight {
+            background: var(--gradient-savings);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .savings-amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        
+        .savings-yearly {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .convenience-benefits {
+            display: grid;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .benefit-item {
+            background: var(--surface-soft);
+            padding: 0.8rem;
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .savings-error {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--error);
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            border-radius: 16px;
+        }
+        
+        .error-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
 <body>
-    <!-- Settings Button -->
-    <button class="settings-btn" id="settingsBtn">
-        <i class="fas fa-cog"></i>
-    </button>
-
-    <!-- Settings Panel -->
-    <div class="settings-overlay" id="settingsOverlay"></div>
-    <div class="settings-panel" id="settingsPanel">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-            <h2 style="color: var(--text-primary); margin: 0; font-size: 1.5rem; font-weight: 700;">Settings</h2>
-            <button id="closeSettingsBtn" style="background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; padding: 0.5rem;">×</button>
-        </div>
-
-        <!-- User Location Settings -->
-        <div style="margin-bottom: 2rem;">
-            <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 600;">Your Location</h3>
-            <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.5rem;">
-                <div class="form-group" style="margin-bottom: 1rem;">
-                    <label for="userZipCode" style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.5rem; display: block;">Default ZIP Code</label>
-                    <input type="text" id="userZipCode" class="form-input" placeholder="Enter your Miami ZIP code (33xxx)" pattern="33[0-9]{3}">
+    <!-- Mobile App Container -->
+    <div class="mobile-app">
+        
+        <!-- Landing/Welcome Screen -->
+        <div class="landing-screen" id="landingScreen">
+            <!-- Hero Section -->
+            <div style="background: var(--gradient-hero); padding: 2rem 1.5rem; text-align: center; color: white; position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"grain\" width=\"100\" height=\"100\" patternUnits=\"userSpaceOnUse\"><circle cx=\"50\" cy=\"50\" r=\"0.5\" fill=\"white\" opacity=\"0.1\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23grain)\"/></svg>'); opacity: 0.1;"></div>
+                
+                <div style="position: relative; z-index: 1;">
+                    <div style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.02em;">⛽ FuelFlow</div>
+                    <div style="font-size: 1.1rem; font-weight: 500; opacity: 0.95; margin-bottom: 2rem;">Premium fuel delivery to your door</div>
+                    
+                    <!-- Value Proposition Cards -->
+                    <div style="display: grid; gap: 1rem; margin-bottom: 2rem;">
+                        <div class="glass" style="padding: 1.5rem; text-align: left;">
+                            <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                                <div style="background: var(--gradient-savings); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <span style="font-size: 1.5rem;">💰</span>
+                                </div>
+                                <div>
+                                    <div style="font-size: 1.2rem; font-weight: 700; color: white;">Save Money Daily</div>
+                                    <div style="font-size: 0.9rem; opacity: 0.9;">Compare prices instantly</div>
+                                </div>
+                            </div>
+                            <div style="background: rgba(34, 197, 94, 0.2); border-radius: 12px; padding: 1rem;">
+                                <div style="font-size: 2rem; font-weight: 800; color: #22C55E; margin-bottom: 0.5rem;">$0.25-$0.40</div>
+                                <div style="font-size: 0.9rem; opacity: 0.9;">Average savings per gallon in Miami</div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass" style="padding: 1.5rem; text-align: left;">
+                            <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                                <div style="background: var(--gradient-trust); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                    <span style="font-size: 1.5rem;">🚗</span>
+                                </div>
+                                <div>
+                                    <div style="font-size: 1.2rem; font-weight: 700; color: white;">Never Leave Home</div>
+                                    <div style="font-size: 0.9rem; opacity: 0.9;">We come to you</div>
+                                </div>
+                            </div>
+                            <div style="background: rgba(14, 165, 233, 0.2); border-radius: 12px; padding: 1rem;">
+                                <div style="font-size: 2rem; font-weight: 800; color: #0EA5E9; margin-bottom: 0.5rem;">$4.99</div>
+                                <div style="font-size: 0.9rem; opacity: 0.9;">Flat delivery fee anywhere in Miami</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="startTrialBtn" style="background: white; color: var(--primary); border: none; padding: 1rem 2rem; border-radius: 16px; font-weight: 700; font-size: 1.1rem; width: 100%; box-shadow: var(--shadow-medium); transition: all 0.3s ease;">
+                        Start FREE 2-Week Trial 🎉
+                    </button>
+                    
+                    <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                        ✓ No credit card required • ✓ Cancel anytime • ✓ Safe & reliable
+                    </div>
                 </div>
-                <div class="form-group" style="margin-bottom: 1rem;">
-                    <label for="userAddress" style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.5rem; display: block;">Default Address</label>
-                    <input type="text" id="userAddress" class="form-input" placeholder="Enter your delivery address">
-                </div>
-                <button id="saveLocationBtn" style="background: var(--gradient-primary); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%;">
-                    Save Location
-                </button>
             </div>
-        </div>
-
-        <!-- Subscription Info -->
-        <div style="margin-bottom: 2rem;">
-            <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 600;">Subscription</h3>
-            <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.5rem;">
-                <div id="subscriptionStatus">
-                    <!-- This will be populated dynamically -->
-                </div>
-                <button id="manageSubscriptionBtn" style="background: transparent; border: 2px solid var(--accent); color: var(--accent); padding: 0.8rem 1.5rem; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; margin-top: 1rem;">
-                    Manage Subscription
-                </button>
-            </div>
-        </div>
-
-        <!-- Appearance Settings -->
-        <div style="margin-bottom: 2rem;">
-            <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem; font-weight: 600;">Appearance</h3>
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 16px;">
-                <div>
-                    <div style="color: var(--text-primary); font-weight: 600;">Dark Mode</div>
-                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Toggle between light and dark themes</div>
-                </div>
-                <div style="position: relative; width: 56px; height: 28px; background: var(--border); border-radius: 28px; cursor: pointer; transition: all 0.3s ease;" id="themeToggle">
-                    <div style="position: absolute; top: 2px; left: 2px; width: 24px; height: 24px; background: white; border-radius: 50%; transition: all 0.3s ease;" id="themeToggleThumb"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Login Screen -->
-    <div class="login-screen" id="loginScreen">
-        <div class="login-box">
-            <div class="logo">FuelFlow</div>
-            <div class="subtitle">Premium fuel delivery to your location</div>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" class="form-input" placeholder="Enter your password" required>
-                </div>
-                <button type="submit" class="btn">Login</button>
-            </form>
-            <button class="btn btn-outline" id="guestBtn">Continue as Guest</button>
-            <button class="btn btn-outline" id="signupBtn">Create Account</button>
-        </div>
-    </div>
-
-    <!-- Signup Screen -->
-    <div class="signup-screen hidden" id="signupScreen">
-        <div class="login-box">
-            <div class="logo">FuelFlow</div>
-            <div class="subtitle">Create your account and subscribe to FuelFlow</div>
-            <form id="signupForm">
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" class="form-input" placeholder="Enter your full name" required>
-                </div>
-                <div class="form-group">
-                    <label for="signupEmail">Email</label>
-                    <input type="email" id="signupEmail" class="form-input" placeholder="Enter your email" required>
-                </div>
-                <div class="form-group">
-                    <label for="signupPassword">Password</label>
-                    <input type="password" id="signupPassword" class="form-input" placeholder="Create a password" required>
-                </div>
-                <div class="form-group">
-                    <label for="zipCode">Your Miami ZIP Code</label>
-                    <input type="text" id="zipCode" class="form-input" placeholder="Enter your ZIP code (33xxx)" pattern="33[0-9]{3}" required>
+            
+            <!-- Savings Calculator -->
+            <div style="padding: 2rem 1.5rem; background: var(--surface);">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">See Your Savings Today</div>
+                    <div style="color: var(--text-secondary); font-size: 1rem;">Real Miami gas prices vs FuelFlow prices</div>
                 </div>
                 
-                <!-- Subscription Plans -->
-                <div class="form-group" style="margin-top: 2rem;">
-                    <label style="font-size: 1.1rem; font-weight: 700; color: var(--accent);">Choose Your Subscription Plan</label>
-                    <div class="subscription-plans" style="margin-top: 1rem;">
-                        <div class="plan-option">
-                            <input type="radio" name="subscription" value="trial" id="trialPlan" checked>
-                            <label for="trialPlan" class="plan-label" style="border-color: var(--success);">
-                                <div class="plan-name" style="color: var(--success);">🎉 Free Trial</div>
-                                <div class="plan-price" style="color: var(--success);">FREE for 14 days</div>
-                                <div class="plan-features">• Full access • Unlimited deliveries • Cancel anytime</div>
-                            </label>
+                <div style="background: var(--surface-soft); border-radius: 20px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <label style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.5rem; display: block;">Enter your ZIP code</label>
+                        <input type="text" id="savingsZipInput" placeholder="33139" maxlength="5" style="width: 100%; padding: 1rem; border: 2px solid var(--border-light); border-radius: 16px; font-size: 1.1rem; text-align: center; font-weight: 600; background: white;">
+                    </div>
+                    
+                    <div id="savingsComparison" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div style="background: #FEF2F2; border: 2px solid #FECACA; border-radius: 16px; padding: 1.5rem; text-align: center;">
+                            <div style="color: #DC2626; font-weight: 600; margin-bottom: 0.5rem;">⛽ Gas Stations</div>
+                            <div style="font-size: 2rem; font-weight: 800; color: #DC2626; margin-bottom: 0.5rem;" id="stationPrice">$4.09</div>
+                            <div style="color: #7F1D1D; font-size: 0.9rem;">per gallon average</div>
                         </div>
-                        <div class="plan-option">
-                            <input type="radio" name="subscription" value="monthly" id="monthlyPlan">
-                            <label for="monthlyPlan" class="plan-label">
-                                <div class="plan-name">Monthly Plan</div>
-                                <div class="plan-price">$29.99/month</div>
-                                <div class="plan-features">• Unlimited deliveries • Premium support • Same-day delivery</div>
-                            </label>
+                        
+                        <div style="background: #F0FDF4; border: 2px solid #BBF7D0; border-radius: 16px; padding: 1.5rem; text-align: center;">
+                            <div style="color: var(--secondary); font-weight: 600; margin-bottom: 0.5rem;">🎯 FuelFlow</div>
+                            <div style="font-size: 2rem; font-weight: 800; color: var(--secondary); margin-bottom: 0.5rem;" id="fuelflowPrice">$3.79</div>
+                            <div style="color: #166534; font-size: 0.9rem;">delivered to you</div>
                         </div>
-                        <div class="plan-option">
-                            <input type="radio" name="subscription" value="annual" id="annualPlan">
-                            <label for="annualPlan" class="plan-label">
-                                <div class="plan-name">Annual Plan</div>
-                                <div class="plan-price">$299.99/year <span class="save-badge">Save $60!</span></div>
-                                <div class="plan-features">• Everything in Monthly • 15% fuel discount • Priority scheduling</div>
-                            </label>
-                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 1.5rem; padding: 1rem; background: var(--gradient-savings); border-radius: 16px; color: white;">
+                        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">You Save</div>
+                        <div style="font-size: 2.5rem; font-weight: 800;" id="savingsAmount">$0.30</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9;">per gallon + time & convenience</div>
                     </div>
                 </div>
                 
-                <button type="submit" class="btn" id="signupSubmitBtn">Start Free Trial & Create Account</button>
-            </form>
-            <button class="btn btn-outline" id="backToLoginBtn">Back to Login</button>
-            <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary); text-align: center;">
-                FuelFlow is currently available only in Miami-Dade County, FL
-            </div>
-        </div>
-    </div>
-
-    <!-- Main App -->
-    <div class="app-container" id="appContainer">
-        <div class="app-header">
-            <div class="app-logo">FuelFlow</div>
-            <div class="user-info">
-                <span id="userWelcome">Welcome back!</span>
-                <button class="logout-btn" id="logoutBtn">Logout</button>
-            </div>
-        </div>
-
-        <div class="main-layout">
-            <div>
-                <!-- Navigation -->
-                <div class="nav-container">
-                    <div class="nav-tabs">
-                        <a href="#" class="nav-link active" data-section="dashboard">
-                            <i class="fas fa-tachometer-alt"></i> Dashboard
-                        </a>
-                        <a href="#" class="nav-link" data-section="order">
-                            <i class="fas fa-shopping-cart"></i> Order Fuel
-                        </a>
-                        <a href="#" class="nav-link" data-section="admin">
-                            <i class="fas fa-cogs"></i> Admin
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Dashboard Section -->
-                <div class="content-section" id="dashboardSection">
-                    <div class="section-title">Dashboard</div>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-value">1,247</div>
-                            <div class="stat-label">Total Orders</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">$2,849</div>
-                            <div class="stat-label">Total Savings</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">98.5%</div>
-                            <div class="stat-label">Customer Satisfaction</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">24/7</div>
-                            <div class="stat-label">Service Available</div>
-                        </div>
-                    </div>
-
-                    <div class="location-search">
-                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Find Gas Prices Near You</h3>
-                        <input type="text" class="search-input" id="priceLocationInput" placeholder="Enter Miami ZIP code (e.g., 33139, 33143, 33101, 33180)">
-                        <div style="display: grid; grid-template-columns: 1fr auto; gap: 0.5rem;">
-                            <button class="search-btn" id="searchPricesBtn">
-                                <span id="searchBtnText">🔍 Search Gas Stations</span>
-                            </button>
-                            <button class="search-btn" id="clearSearchBtn" style="background: var(--error); max-width: 100px;">
-                                Clear
-                            </button>
-                        </div>
-                        <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary);">
-                            <strong>Quick Miami Tests:</strong> Try different Miami areas to see gas stations!
-                        </div>
-                        <div class="quick-test-buttons">
-                            <button class="quick-test-btn" onclick="testZipCode('33139')">Miami Beach</button>
-                            <button class="quick-test-btn" onclick="testZipCode('33143')">Coral Gables</button>
-                            <button class="quick-test-btn" onclick="testZipCode('33101')">Downtown</button>
-                            <button class="quick-test-btn" onclick="testZipCode('33180')">Aventura</button>
-                            <button class="quick-test-btn" onclick="testZipCode('33010')">Hialeah</button>
-                            <button class="quick-test-btn" onclick="testZipCode('33157')">Kendall</button>
-                        </div>
-                    </div>
-
-                    <div class="gas-stations-container">
-                        <div id="gasStationsList"></div>
-                    </div>
-                </div>
-
-                <!-- Order Section -->
-                <div class="content-section hidden" id="orderSection">
-                    <div class="section-title">Order Fuel</div>
-                    
-                    <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
-                        <div class="form-group">
-                            <label for="locationInput">Delivery Location</label>
-                            <input type="text" id="locationInput" class="form-input" placeholder="Enter your address or ZIP code">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="fuelTypeSelect">Fuel Type</label>
-                            <select id="fuelTypeSelect" class="form-input">
-                                <option value="premium">Premium ($<span id="premiumPrice">3.79</span>/gal)</option>
-                                <option value="regular">Regular ($<span id="regularPrice">3.59</span>/gal)</option>
-                                <option value="diesel">Diesel ($<span id="dieselPrice">4.12</span>/gal)</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="amountSelect">Amount</label>
-                            <select id="amountSelect" class="form-input">
-                                <option value="10">10 gallons</option>
-                                <option value="15" selected>15 gallons</option>
-                                <option value="20">20 gallons</option>
-                                <option value="25">25 gallons</option>
-                            </select>
-                        </div>
-                        
-                        <div style="border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 1rem;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span>Fuel (<span id="gallonAmount">15</span> gallons @ $<span id="fuelPriceDisplay">3.79</span>):</span>
-                                <span id="fuelCostDisplay">$56.85</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span>Delivery Fee:</span>
-                                <span id="deliveryFeeDisplay">$4.99</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; color: var(--success); font-weight: 600;">
-                                <span>You Save:</span>
-                                <span id="savingsDisplay">$3.42</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 700; color: var(--accent); border-top: 1px solid var(--border); padding-top: 1rem;">
-                                <span>Total:</span>
-                                <span id="totalCostDisplay">$61.84</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Vehicle Selection -->
-                    <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
-                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Vehicle Information</h3>
-                        <div class="form-group">
-                            <label for="vehicleSelect">Select Your Vehicle</label>
-                            <select id="vehicleSelect" class="form-input">
-                                <option value="">Choose your vehicle...</option>
-                                <option value="sedan">🚗 Sedan (13-16 gallon tank)</option>
-                                <option value="suv">🚙 SUV/Crossover (16-22 gallon tank)</option>
-                                <option value="truck">🛻 Pickup Truck (20-30 gallon tank)</option>
-                                <option value="luxury">🏎️ Luxury Car (16-20 gallon tank)</option>
-                                <option value="sports">🏁 Sports Car (12-18 gallon tank)</option>
-                                <option value="van">🚐 Van/Minivan (18-25 gallon tank)</option>
-                                <option value="other">🚘 Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="vehicleDetails">Vehicle Details (Make, Model, Year, Color)</label>
-                            <input type="text" id="vehicleDetails" class="form-input" placeholder="e.g., 2020 Honda Accord White">
-                        </div>
-                        <div class="form-group">
-                            <label for="licensePlate">License Plate (Optional)</label>
-                            <input type="text" id="licensePlate" class="form-input" placeholder="ABC-1234">
-                        </div>
-                    </div>
-
-                    <!-- Photo Upload & Instructions -->
-                    <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
-                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Vehicle Photos & Instructions</h3>
-                        <div class="form-group">
-                            <label for="vehiclePhoto">Upload Vehicle Photo</label>
-                            <div class="photo-upload-area" id="vehiclePhotoArea">
-                                <input type="file" id="vehiclePhoto" accept="image/*" capture="camera" style="display: none;">
-                                <div class="upload-content">
-                                    <i class="fas fa-camera" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
-                                    <div style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.5rem;">Take Photo of Your Vehicle</div>
-                                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Help our driver identify your car</div>
-                                </div>
-                            </div>
-                            <div id="vehiclePhotoPreview" class="photo-preview hidden"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="fuelCapPhoto">Upload Fuel Cap Photo (Optional)</label>
-                            <div class="photo-upload-area" id="fuelCapPhotoArea">
-                                <input type="file" id="fuelCapPhoto" accept="image/*" capture="camera" style="display: none;">
-                                <div class="upload-content">
-                                    <i class="fas fa-gas-pump" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
-                                    <div style="color: var(--text-primary); font-weight: 600; margin-bottom: 0.5rem;">Photo of Fuel Cap</div>
-                                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Show how to open your fuel door</div>
-                                </div>
-                            </div>
-                            <div id="fuelCapPhotoPreview" class="photo-preview hidden"></div>
-                        </div>
-                    </div>
-
-                    <!-- Delivery Instructions -->
-                    <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
-                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Delivery Instructions</h3>
-                        <div class="form-group">
-                            <label for="fuelTankInstructions">Fuel Tank Opening Instructions</label>
-                            <textarea id="fuelTankInstructions" class="form-input" rows="3" placeholder="e.g., Push button inside driver door, or pull lever next to driver seat, or press directly on fuel door"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="deliveryNotes">Special Delivery Notes</label>
-                            <textarea id="deliveryNotes" class="form-input" rows="3" placeholder="e.g., Gate code, parking location, security instructions, preferred contact method"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="contactPreference">Preferred Contact Method</label>
-                            <select id="contactPreference" class="form-input">
-                                <option value="text">📱 Text Message</option>
-                                <option value="call">📞 Phone Call</option>
-                                <option value="app">📲 App Notification</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Payment Methods -->
-                    <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
-                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Payment Method</h3>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div style="background: var(--glass); border: 2px solid var(--glass-border); border-radius: 20px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s ease;" class="payment-method selected" data-payment="stripe">
-                                <div style="font-size: 2rem; margin-bottom: 1rem;">💳</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">Stripe</div>
-                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">Credit/Debit Cards</div>
-                            </div>
-                            <div style="background: var(--glass); border: 2px solid var(--glass-border); border-radius: 20px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s ease;" class="payment-method" data-payment="zelle">
-                                <div style="font-size: 2rem; margin-bottom: 1rem;">💸</div>
-                                <div style="font-weight: 600; color: var(--text-primary);">Zelle</div>
-                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">Bank Transfer</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button class="btn" id="orderBtn">
-                        <i class="fas fa-shopping-cart"></i> Complete Order
+                <button id="getStartedBtn" style="background: var(--gradient-hero); color: white; border: none; padding: 1.2rem 2rem; border-radius: 16px; font-weight: 700; font-size: 1.1rem; width: 100%; box-shadow: var(--shadow-medium); transition: all 0.3s ease;">
+                    Get Started - 14 Days FREE
+                </button>
+                
+                <div style="text-align: center; margin-top: 1rem;">
+                    <button id="loginExistingBtn" style="background: none; border: none; color: var(--primary); font-weight: 600; text-decoration: underline; cursor: pointer;">
+                        Already have an account? Sign in
                     </button>
                 </div>
-
-                <!-- Admin Section -->
-                <div class="content-section hidden" id="adminSection">
-                    <div class="section-title">Admin Panel</div>
-                    
-                    <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
-                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Price Management</h3>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
-                            <div style="background: var(--glass); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--glass-border);">
-                                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Premium Price ($/gal)</label>
-                                <input type="number" id="premiumPriceInput" step="0.01" value="3.79" style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; color: var(--text-primary); font-size: 1.1rem; font-weight: 600;">
-                            </div>
-                            <div style="background: var(--glass); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--glass-border);">
-                                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Regular Price ($/gal)</label>
-                                <input type="number" id="regularPriceInput" step="0.01" value="3.59" style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; color: var(--text-primary); font-size: 1.1rem; font-weight: 600;">
-                            </div>
-                            <div style="background: var(--glass); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--glass-border);">
-                                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Diesel Price ($/gal)</label>
-                                <input type="number" id="dieselPriceInput" step="0.01" value="4.12" style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; color: var(--text-primary); font-size: 1.1rem; font-weight: 600;">
-                            </div>
-                            <div style="background: var(--glass); border-radius: 16px; padding: 1.5rem; border: 1px solid var(--glass-border);">
-                                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">Delivery Fee ($)</label>
-                                <input type="number" id="deliveryFeeInput" step="0.01" value="4.99" style="width: 100%; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; color: var(--text-primary); font-size: 1.1rem; font-weight: 600;">
-                            </div>
-                        </div>
-                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                            <button style="background: var(--gradient-primary); color: white; border: none; padding: 1rem 2rem; border-radius: 16px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; flex: 1;" id="updatePricesBtn">Update Prices</button>
-                            <button style="background: linear-gradient(135deg, var(--success), var(--accent)); color: white; border: none; padding: 1rem 2rem; border-radius: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;" id="savePricesBtn">Save Changes</button>
-                        </div>
-                    </div>
-
-                    <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem;">
-                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Live Gas Station Prices</h3>
-                        <div id="adminGasStationsList"></div>
-                    </div>
-                </div>
             </div>
-
-            <!-- Phone Demo -->
-            <div class="phone-demo">
-                <div class="phone-screen">
-                    <!-- Mobile Header -->
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
-                        <div style="font-size: 1.3rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">FuelFlow</div>
-                        <div style="color: var(--text-secondary); font-size: 0.8rem;">📱 Mobile App</div>
+            
+            <!-- Trust Indicators -->
+            <div style="padding: 1.5rem; background: var(--surface-soft); text-align: center;">
+                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Trusted by Miami residents</div>
+                <div style="display: flex; justify-content: space-around; align-items: center;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">24/7</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Service</div>
                     </div>
-
-                    <!-- Mobile Navigation -->
-                    <div style="display: flex; margin-bottom: 1.5rem; background: var(--glass); border-radius: 16px; padding: 0.5rem;">
-                        <button class="mobile-nav-btn active" data-mobile-section="dashboard" style="flex: 1; background: var(--gradient-primary); color: white; border: none; padding: 0.6rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">📊 Dashboard</button>
-                        <button class="mobile-nav-btn" data-mobile-section="order" style="flex: 1; background: transparent; color: var(--text-secondary); border: none; padding: 0.6rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; margin-left: 0.5rem;">🛒 Order</button>
-                        <button class="mobile-nav-btn" data-mobile-section="settings" style="flex: 1; background: transparent; color: var(--text-secondary); border: none; padding: 0.6rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; margin-left: 0.5rem;">⚙️ Settings</button>
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.5rem; font-weight: 800; color: var(--secondary);">4.9★</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Rating</div>
                     </div>
-
-                    <!-- Mobile Dashboard Section -->
-                    <div id="mobileDashboardSection" class="mobile-section">
-                        <div style="margin-bottom: 1.5rem;">
-                            <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1rem; font-weight: 700;">Find Gas Prices</h3>
-                            <input type="text" id="mobileLocationInput" placeholder="Enter Miami ZIP code (e.g., 33139)" style="width: 100%; padding: 0.8rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-primary); font-size: 0.9rem; margin-bottom: 1rem;">
-                            <button id="mobileSearchBtn" style="background: var(--gradient-primary); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%;">
-                                <span id="mobileSearchBtnText">Find Gas Prices</span>
-                            </button>
-                        </div>
-
-                        <div style="margin-bottom: 1.5rem;">
-                            <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1rem; font-weight: 700;">Price Comparison</h3>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                                <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; text-align: center;">
-                                    <div style="font-size: 1.3rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem;">$<span id="mobileTotalDisplay">61.84</span></div>
-                                    <div style="color: var(--text-secondary); font-size: 0.7rem;">Total Cost</div>
-                                </div>
-                                <div style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem; text-align: center;">
-                                    <div style="font-size: 1.3rem; font-weight: 800; color: var(--success); margin-bottom: 0.5rem;">$<span id="mobileSavingsDisplay">3.42</span></div>
-                                    <div style="color: var(--text-secondary); font-size: 0.7rem;">You Save</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="margin-bottom: 1.5rem;">
-                            <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1rem; font-weight: 700;">Nearby Stations</h3>
-                            <div id="mobileStationsContainer">
-                                <!-- Default station -->
-                                <div style="background: var(--glass); border: 1px solid var(--accent); border-radius: 12px; padding: 1rem; margin-bottom: 0.8rem;">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <div>
-                                            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.3rem;">🛡️ Shell</div>
-                                            <div style="font-size: 0.7rem; color: var(--text-secondary);">0.5 mi • Coral Way</div>
-                                        </div>
-                                        <div style="text-align: right;">
-                                            <div style="color: var(--error); font-weight: 600; font-size: 0.9rem;">$4.04</div>
-                                            <div style="color: var(--success); font-size: 0.7rem;">Save $0.25</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="background: var(--glass); border-radius: 16px; padding: 1.5rem; text-align: center;">
-                            <div style="color: var(--success); font-size: 1.8rem; font-weight: bold; margin-bottom: 0.5rem;">$<span class="mobile-our-price">3.79</span></div>
-                            <div style="color: var(--text-secondary); font-size: 0.8rem;">Our Price/Gallon</div>
-                        </div>
-                    </div>
-
-                    <!-- Mobile Order Section -->
-                    <div id="mobileOrderSection" class="mobile-section hidden">
-                        <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1rem; font-weight: 700;">Place Order</h3>
-                        
-                        <!-- Quick Order Form -->
-                        <div style="background: var(--glass); border-radius: 16px; padding: 1rem; margin-bottom: 1rem;">
-                            <div style="margin-bottom: 1rem;">
-                                <label style="color: var(--text-primary); font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 0.5rem;">Location</label>
-                                <input type="text" id="mobileLocationOrder" placeholder="Your address or ZIP" style="width: 100%; padding: 0.8rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); font-size: 0.8rem;">
-                            </div>
-                            <div style="margin-bottom: 1rem;">
-                                <label style="color: var(--text-primary); font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 0.5rem;">Vehicle</label>
-                                <select id="mobileVehicleType" style="width: 100%; padding: 0.8rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); font-size: 0.8rem;">
-                                    <option value="">Select vehicle...</option>
-                                    <option value="sedan">🚗 Sedan</option>
-                                    <option value="suv">🚙 SUV</option>
-                                    <option value="truck">🛻 Truck</option>
-                                    <option value="luxury">🏎️ Luxury</option>
-                                </select>
-                            </div>
-                            <div style="margin-bottom: 1rem;">
-                                <label style="color: var(--text-primary); font-size: 0.8rem; font-weight: 600; display: block; margin-bottom: 0.5rem;">Fuel Tank Instructions</label>
-                                <textarea id="mobileFuelInstructions" placeholder="How to open your fuel tank..." style="width: 100%; padding: 0.8rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); font-size: 0.8rem; rows: 2; resize: vertical;"></textarea>
-                            </div>
-                        </div>
-
-                        <!-- Order Total -->
-                        <div style="background: var(--glass); border-radius: 16px; padding: 1rem; margin-bottom: 1rem;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span style="color: var(--text-secondary); font-size: 0.8rem;">15 gallons @ $3.79:</span>
-                                <span style="color: var(--text-primary); font-size: 0.8rem; font-weight: 600;">$56.85</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span style="color: var(--text-secondary); font-size: 0.8rem;">Delivery Fee:</span>
-                                <span style="color: var(--text-primary); font-size: 0.8rem; font-weight: 600;">$4.99</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; padding-top: 0.5rem; border-top: 1px solid var(--border);">
-                                <span style="color: var(--text-primary); font-size: 0.9rem; font-weight: 700;">Total:</span>
-                                <span style="color: var(--accent); font-size: 0.9rem; font-weight: 700;">$61.84</span>
-                            </div>
-                        </div>
-
-                        <button id="mobileOrderBtn" style="background: var(--gradient-primary); color: white; border: none; padding: 1rem; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; font-size: 0.9rem;">
-                            🛒 Place Order
-                        </button>
-                    </div>
-
-                    <!-- Mobile Settings Section -->
-                    <div id="mobileSettingsSection" class="mobile-section hidden">
-                        <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1rem; font-weight: 700;">Settings</h3>
-                        
-                        <!-- Subscription Status -->
-                        <div style="background: var(--glass); border-radius: 16px; padding: 1rem; margin-bottom: 1rem;">
-                            <div style="color: var(--text-primary); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Subscription</div>
-                            <div id="mobileSubscriptionStatus" style="color: var(--success); font-size: 0.8rem; margin-bottom: 0.5rem;">🎉 Free Trial Active</div>
-                            <div style="color: var(--text-secondary); font-size: 0.7rem;">Full access until trial expires</div>
-                        </div>
-
-                        <!-- Location Settings -->
-                        <div style="background: var(--glass); border-radius: 16px; padding: 1rem; margin-bottom: 1rem;">
-                            <div style="color: var(--text-primary); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Default Location</div>
-                            <input type="text" id="mobileDefaultZip" placeholder="Miami ZIP code (33xxx)" style="width: 100%; padding: 0.7rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); font-size: 0.8rem; margin-bottom: 0.5rem;">
-                            <button id="mobileSaveLocation" style="background: var(--accent); color: white; border: none; padding: 0.7rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.8rem; width: 100%;">
-                                Save Location
-                            </button>
-                        </div>
-
-                        <!-- Theme Toggle -->
-                        <div style="background: var(--glass); border-radius: 16px; padding: 1rem;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <div>
-                                    <div style="color: var(--text-primary); font-size: 0.9rem; font-weight: 600;">Dark Mode</div>
-                                    <div style="color: var(--text-secondary); font-size: 0.7rem;">Toggle theme</div>
-                                </div>
-                                <div style="position: relative; width: 40px; height: 20px; background: var(--border); border-radius: 20px; cursor: pointer;" id="mobileThemeToggle">
-                                    <div style="position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: white; border-radius: 50%; transition: all 0.3s ease;" id="mobileThemeToggleThumb"></div>
-                                </div>
-                            </div>
-                        </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent);">Safe</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);">& Insured</div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
 
     <script>
         // Global State
@@ -1625,13 +1254,14 @@
 
         // Initialize App
         function init() {
-            showLoginScreen();
+            showLandingPage();
             setupEventListeners();
             setupNavigation();
             setupPaymentMethods();
             setupSettingsPanel();
             setupPhotoUpload();
             setupMobileNavigation();
+            setupLandingPageInteractions();
             updatePricing();
             loadUserSettings();
             // Load default gas stations for Miami Beach
@@ -1685,6 +1315,10 @@
             document.getElementById('signupBtn').addEventListener('click', () => showSignupScreen());
             document.getElementById('backToLoginBtn').addEventListener('click', () => showLoginScreen());
             document.getElementById('logoutBtn').addEventListener('click', () => logout());
+            
+            // Landing page navigation
+            document.getElementById('loginExistingBtn').addEventListener('click', () => showScreen('login'));
+            document.getElementById('signInBtn').addEventListener('click', () => showScreen('login'));
             
             // Order functionality
             document.getElementById('orderBtn').addEventListener('click', handleOrder);
@@ -2407,6 +2041,68 @@
             }
         }
 
+        // Landing page interactions
+        function setupLandingPageInteractions() {
+            // Start Trial button
+            document.getElementById('startTrialBtn').addEventListener('click', () => {
+                showScreen('signup');
+            });
+            
+            // Get Started button
+            document.getElementById('getStartedBtn').addEventListener('click', () => {
+                showScreen('signup');
+            });
+            
+            // Sign In button
+            document.getElementById('signInBtn').addEventListener('click', () => {
+                showScreen('login');
+            });
+            
+            // Savings calculator
+            const savingsZipInput = document.getElementById('savingsZipInput');
+            const savingsResults = document.getElementById('savingsResults');
+            
+            savingsZipInput.addEventListener('input', async (e) => {
+                const zipCode = e.target.value.trim();
+                if (zipCode.length === 5 && zipCode.match(/^33[0-9]{3}$/)) {
+                    savingsResults.innerHTML = `
+                        <div class="savings-animation">
+                            <div class="loading"></div>
+                            <div>Calculating savings...</div>
+                        </div>
+                    `;
+                    
+                    // Simulate calculation
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                    
+                    const monthlySavings = 45 + Math.floor(Math.random() * 30);
+                    const yearlySavings = monthlySavings * 12;
+                    const convenience = ['2-hour delivery window', 'Never run out of gas', 'No gas station visits'];
+                    
+                    savingsResults.innerHTML = `
+                        <div class="savings-breakdown">
+                            <div class="savings-highlight">
+                                <div class="savings-amount">$${monthlySavings}/month</div>
+                                <div class="savings-yearly">$${yearlySavings}/year saved</div>
+                            </div>
+                            <div class="convenience-benefits">
+                                ${convenience.map(benefit => `<div class="benefit-item">✓ ${benefit}</div>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                } else if (zipCode.length === 5 && !zipCode.match(/^33[0-9]{3}$/)) {
+                    savingsResults.innerHTML = `
+                        <div class="savings-error">
+                            <div class="error-icon">⚠️</div>
+                            <div>FuelFlow is currently only available in Miami-Dade County, FL</div>
+                        </div>
+                    `;
+                } else {
+                    savingsResults.innerHTML = '';
+                }
+            });
+        }
+        
         // Mobile search function
         async function searchMobilePrices() {
             const location = document.getElementById('mobileLocationInput').value.trim();
@@ -2731,6 +2427,33 @@
         }
 
         // Login functions
+        // Screen management functions
+        function showLandingPage() {
+            document.getElementById('landingScreen').classList.remove('hidden');
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('signupScreen').classList.add('hidden');
+            document.getElementById('appContainer').classList.remove('active');
+        }
+        
+        function showScreen(screenName) {
+            // Hide all screens
+            document.getElementById('landingScreen').classList.add('hidden');
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('signupScreen').classList.add('hidden');
+            document.getElementById('appContainer').classList.remove('active');
+            
+            // Show target screen
+            if (screenName === 'landing') {
+                document.getElementById('landingScreen').classList.remove('hidden');
+            } else if (screenName === 'login') {
+                document.getElementById('loginScreen').classList.remove('hidden');
+            } else if (screenName === 'signup') {
+                document.getElementById('signupScreen').classList.remove('hidden');
+            } else if (screenName === 'app') {
+                document.getElementById('appContainer').classList.add('active');
+            }
+        }
+        
         function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('email').value;
@@ -2815,21 +2538,15 @@
         }
 
         function showLoginScreen() {
-            document.getElementById('loginScreen').classList.remove('hidden');
-            document.getElementById('signupScreen').classList.add('hidden');
-            document.getElementById('appContainer').classList.remove('active');
+            showScreen('login');
         }
 
         function showSignupScreen() {
-            document.getElementById('loginScreen').classList.add('hidden');
-            document.getElementById('signupScreen').classList.remove('hidden');
-            document.getElementById('appContainer').classList.remove('active');
+            showScreen('signup');
         }
 
         function showApp() {
-            document.getElementById('loginScreen').classList.add('hidden');
-            document.getElementById('signupScreen').classList.add('hidden');
-            document.getElementById('appContainer').classList.add('active');
+            showScreen('app');
             
             const welcomeEl = document.getElementById('userWelcome');
             if (currentUser && currentUser.fullName) {
