@@ -6,6 +6,11 @@
     <title>FuelFlow - Premium Fuel Delivery</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <style>
         :root {
             /* iOS-inspired calm color palette */
@@ -1127,6 +1132,16 @@
             font-size: 2rem;
             margin-bottom: 0.5rem;
         }
+        
+        /* App section styles */
+        .app-section {
+            animation: fadeInUp 0.3s ease;
+        }
+        
+        .app-tab:hover {
+            background: rgba(0, 122, 255, 0.1) !important;
+            color: var(--primary) !important;
+        }
     </style>
 </head>
 <body>
@@ -1326,16 +1341,78 @@
         </div>
         
         <!-- App Content (placeholder for after login) -->
-        <div class="hidden" id="appContainer" style="padding: 2rem 1.5rem; min-height: 100vh; background: var(--background);">
-            <div style="text-align: center; padding: 3rem 1rem;">
-                <div style="font-size: 2rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">Welcome to FuelFlow!</div>
-                <div style="font-size: 16px; color: var(--text-secondary); margin-bottom: 2rem;" id="userWelcome">Your account is ready</div>
-                <button class="ios-button" onclick="logout()">Sign Out</button>
+        <div class="hidden" id="appContainer" style="padding: 1rem; min-height: 100vh; background: var(--background);">
+            <!-- Navigation Tabs -->
+            <div style="display: flex; background: var(--surface); border-radius: 12px; padding: 4px; margin-bottom: 1.5rem; border: 1px solid var(--border-light);">
+                <button onclick="showAppSection('dashboard')" class="app-tab active" id="dashboardTab" style="flex: 1; padding: 12px; border: none; background: var(--primary); color: white; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">Dashboard</button>
+                <button onclick="showAppSection('customers')" class="app-tab" id="customersTab" style="flex: 1; padding: 12px; border: none; background: transparent; color: var(--text-secondary); border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">Customers</button>
+                <button onclick="showAppSection('orders')" class="app-tab" id="ordersTab" style="flex: 1; padding: 12px; border: none; background: transparent; color: var(--text-secondary); border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">Orders</button>
+            </div>
+            
+            <!-- Dashboard Section -->
+            <div id="dashboardSection" class="app-section">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">Welcome to FuelFlow!</div>
+                    <div style="font-size: 16px; color: var(--text-secondary);" id="userWelcome">Your account is ready</div>
+                </div>
+                
+                <!-- Stats Cards -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: var(--surface); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-light); text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;" id="totalCustomersCount">-</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">Total Customers</div>
+                    </div>
+                    <div style="background: var(--surface); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-light); text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.5rem;" id="totalOrdersCount">-</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">Total Orders</div>
+                    </div>
+                </div>
+                
+                <button class="ios-button" onclick="logout()" style="margin-top: 2rem;">Sign Out</button>
+            </div>
+            
+            <!-- Customers Section -->
+            <div id="customersSection" class="app-section hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Customers</div>
+                    <button onclick="loadCustomersData()" class="ios-button-secondary" style="padding: 8px 16px; font-size: 14px;">Refresh</button>
+                </div>
+                
+                <div id="customersContainer" style="background: var(--surface); border-radius: 12px; border: 1px solid var(--border-light); min-height: 200px; padding: 1rem;">
+                    <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">Click Refresh to load customer data</div>
+                </div>
+            </div>
+            
+            <!-- Orders Section -->
+            <div id="ordersSection" class="app-section hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">Orders</div>
+                    <button onclick="loadOrdersData()" class="ios-button-secondary" style="padding: 8px 16px; font-size: 14px;">Refresh</button>
+                </div>
+                
+                <div id="ordersContainer" style="background: var(--surface); border-radius: 12px; border: 1px solid var(--border-light); min-height: 200px; padding: 1rem;">
+                    <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">Click Refresh to load orders data</div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDemo-Replace-With-Real-Key",
+            authDomain: "fuelflow-demo.firebaseapp.com",
+            projectId: "fuelflow-demo",
+            storageBucket: "fuelflow-demo.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:demo123456"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+        
         // Global State
         let currentUser = null;
         let isAdmin = false;
@@ -1350,6 +1427,146 @@
         let currentGasStations = [];
         let lastSearchLocation = '';
 
+        // Firebase Database Functions
+        
+        // Save customer to database
+        async function saveCustomer(customerData) {
+            try {
+                const docRef = await db.collection('customers').add({
+                    ...customerData,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    lastActive: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                console.log('Customer saved with ID:', docRef.id);
+                return docRef.id;
+            } catch (error) {
+                console.error('Error saving customer:', error);
+                throw error;
+            }
+        }
+        
+        // Save order to database
+        async function saveOrder(orderData) {
+            try {
+                const docRef = await db.collection('orders').add({
+                    ...orderData,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    status: 'pending'
+                });
+                console.log('Order saved with ID:', docRef.id);
+                return docRef.id;
+            } catch (error) {
+                console.error('Error saving order:', error);
+                throw error;
+            }
+        }
+        
+        // Get customer data
+        async function getCustomer(customerId) {
+            try {
+                const doc = await db.collection('customers').doc(customerId).get();
+                if (doc.exists) {
+                    return { id: doc.id, ...doc.data() };
+                } else {
+                    console.log('No customer found');
+                    return null;
+                }
+            } catch (error) {
+                console.error('Error getting customer:', error);
+                throw error;
+            }
+        }
+        
+        // Get all customers (admin view)
+        async function getAllCustomers() {
+            try {
+                const snapshot = await db.collection('customers')
+                    .orderBy('createdAt', 'desc')
+                    .get();
+                
+                const customers = [];
+                snapshot.forEach(doc => {
+                    customers.push({ id: doc.id, ...doc.data() });
+                });
+                
+                console.log('Retrieved', customers.length, 'customers');
+                return customers;
+            } catch (error) {
+                console.error('Error getting customers:', error);
+                throw error;
+            }
+        }
+        
+        // Get customer orders
+        async function getCustomerOrders(customerId) {
+            try {
+                const snapshot = await db.collection('orders')
+                    .where('customerId', '==', customerId)
+                    .orderBy('createdAt', 'desc')
+                    .get();
+                
+                const orders = [];
+                snapshot.forEach(doc => {
+                    orders.push({ id: doc.id, ...doc.data() });
+                });
+                
+                return orders;
+            } catch (error) {
+                console.error('Error getting orders:', error);
+                throw error;
+            }
+        }
+        
+        // Update gas station prices in database
+        async function updateGasStationPrices(stationData) {
+            try {
+                await db.collection('gasStations').doc(stationData.id).set({
+                    ...stationData,
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+                
+                console.log('Gas station prices updated');
+            } catch (error) {
+                console.error('Error updating gas station prices:', error);
+                throw error;
+            }
+        }
+        
+        // Get analytics data
+        async function getAnalytics() {
+            try {
+                const [customersSnapshot, ordersSnapshot] = await Promise.all([
+                    db.collection('customers').get(),
+                    db.collection('orders').get()
+                ]);
+                
+                const totalCustomers = customersSnapshot.size;
+                const totalOrders = ordersSnapshot.size;
+                
+                let totalRevenue = 0;
+                let completedOrders = 0;
+                
+                ordersSnapshot.forEach(doc => {
+                    const order = doc.data();
+                    if (order.status === 'completed') {
+                        completedOrders++;
+                        totalRevenue += order.total || 0;
+                    }
+                });
+                
+                return {
+                    totalCustomers,
+                    totalOrders,
+                    completedOrders,
+                    totalRevenue,
+                    conversionRate: totalOrders > 0 ? (completedOrders / totalOrders * 100).toFixed(1) : 0
+                };
+            } catch (error) {
+                console.error('Error getting analytics:', error);
+                throw error;
+            }
+        }
+        
         // Initialize App
         function init() {
             showLandingPage();
@@ -1364,6 +1581,26 @@
             loadUserSettings();
             // Load default gas stations for Miami Beach
             loadDefaultGasStations();
+            
+            // Initialize Firebase connection
+            testFirebaseConnection();
+        }
+        
+        // Test Firebase connection
+        async function testFirebaseConnection() {
+            try {
+                // Test write
+                await db.collection('test').doc('connection').set({
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    status: 'connected'
+                });
+                
+                console.log('✅ Firebase connected successfully');
+                showToast('Database connected', 'success');
+            } catch (error) {
+                console.error('❌ Firebase connection failed:', error);
+                showToast('Database connection failed - using local storage', 'error');
+            }
         }
 
         // Load user settings from localStorage
@@ -2574,10 +2811,54 @@
             const password = document.getElementById('password').value;
             
             if (email && password) {
-                currentUser = { email, type: email.includes('admin') ? 'admin' : 'customer' };
-                isAdmin = currentUser.type === 'admin';
-                showApp();
-                showToast(`Welcome back!`, 'success');
+                showToast('Signing in...', 'info');
+                
+                // For demo purposes, simulate login (in real app, use Firebase Auth)
+                setTimeout(async () => {
+                    try {
+                        // Try to find user in database
+                        const customersSnapshot = await db.collection('customers')
+                            .where('email', '==', email)
+                            .limit(1)
+                            .get();
+                        
+                        if (!customersSnapshot.empty) {
+                            const customerDoc = customersSnapshot.docs[0];
+                            currentUser = { id: customerDoc.id, ...customerDoc.data() };
+                            
+                            // Update last active
+                            await db.collection('customers').doc(customerDoc.id).update({
+                                lastActive: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+                            
+                            console.log('User found in database:', currentUser);
+                        } else {
+                            // Create new user for demo
+                            currentUser = { 
+                                email, 
+                                fullName: email.split('@')[0],
+                                accountType: email.includes('admin') ? 'admin' : 'customer'
+                            };
+                        }
+                        
+                        isAdmin = currentUser.accountType === 'admin';
+                        
+                        // Save to localStorage
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                        
+                        showApp();
+                        showToast(`Welcome back, ${currentUser.fullName || email}!`, 'success');
+                        
+                    } catch (error) {
+                        console.error('Login error:', error);
+                        
+                        // Fallback login
+                        currentUser = { email, type: email.includes('admin') ? 'admin' : 'customer' };
+                        isAdmin = currentUser.type === 'admin';
+                        showApp();
+                        showToast('Welcome back!', 'success');
+                    }
+                }, 1000);
             } else {
                 showToast('Please enter email and password', 'error');
             }
@@ -2598,12 +2879,68 @@
             }
             
             if (fullName && email && password && zipCode) {
-                // Simulate subscription processing
+                // Show processing message
                 showToast('Creating your account...', 'info');
                 
-                setTimeout(() => {
-                    const now = new Date();
-                    const trialEndDate = new Date(now.getTime() + (14 * 24 * 60 * 60 * 1000)); // 14 days from now
+                // Save to Firebase
+                const now = new Date();
+                const trialEndDate = new Date(now.getTime() + (14 * 24 * 60 * 60 * 1000));
+                
+                const customerData = {
+                    fullName,
+                    email,
+                    zipCode,
+                    subscriptionPlan,
+                    subscriptionActive: true,
+                    isTrialUser: subscriptionPlan === 'trial',
+                    trialEndDate: subscriptionPlan === 'trial' ? trialEndDate.toISOString() : null,
+                    accountType: 'customer'
+                };
+                
+                // Save to Firebase
+                saveCustomer(customerData)
+                    .then(customerId => {
+                        console.log('Customer saved to database with ID:', customerId);
+                        
+                        // Set current user
+                        currentUser = {
+                            id: customerId,
+                            ...customerData
+                        };
+                        
+                        // Also save to localStorage as backup
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                        localStorage.setItem('subscriptionActive', 'true');
+                        localStorage.setItem('subscriptionPlan', subscriptionPlan);
+                        localStorage.setItem('userZipCode', zipCode);
+                        localStorage.setItem('isTrialUser', subscriptionPlan === 'trial');
+                        
+                        if (subscriptionPlan === 'trial') {
+                            localStorage.setItem('trialEndDate', trialEndDate.toISOString());
+                        }
+                        
+                        isAdmin = false;
+                        showApp();
+                        
+                        const welcomeMessage = subscriptionPlan === 'trial' 
+                            ? `Welcome ${fullName}! Your 14-day free trial has started.`
+                            : `Welcome ${fullName}! Your ${subscriptionPlan} subscription is active.`;
+                        
+                        showToast(welcomeMessage, 'success');
+                    })
+                    .catch(error => {
+                        console.error('Error saving customer:', error);
+                        showToast('Account created locally (database unavailable)', 'info');
+                        
+                        // Fallback to localStorage
+                        currentUser = customerData;
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                        showApp();
+                    });
+            } else {
+                showToast('Please fill in all fields', 'error');
+            }
+        }
                     
                     currentUser = { 
                         email, 
@@ -2673,10 +3010,13 @@
             
             const welcomeEl = document.getElementById('userWelcome');
             if (currentUser && currentUser.fullName) {
-                welcomeEl.textContent = `Welcome, ${currentUser.fullName}!`;
+                welcomeEl.textContent = `Welcome back, ${currentUser.fullName}!`;
             } else if (currentUser && currentUser.email) {
-                welcomeEl.textContent = `Welcome, ${currentUser.email}!`;
+                welcomeEl.textContent = `Welcome back, ${currentUser.email.split('@')[0]}!`;
             }
+            
+            // Load dashboard by default
+            showAppSection('dashboard');
             
             updatePricing();
         }
@@ -2828,6 +3168,143 @@
         
         function setupSubscriptionPlanSelection() {
             // Already implemented above
+        }
+        
+        // App section management
+        function showAppSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.app-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Remove active state from all tabs
+            document.querySelectorAll('.app-tab').forEach(tab => {
+                tab.style.background = 'transparent';
+                tab.style.color = 'var(--text-secondary)';
+            });
+            
+            // Show target section
+            document.getElementById(sectionName + 'Section').classList.remove('hidden');
+            
+            // Set active tab
+            const activeTab = document.getElementById(sectionName + 'Tab');
+            activeTab.style.background = 'var(--primary)';
+            activeTab.style.color = 'white';
+            
+            // Load data if needed
+            if (sectionName === 'customers') {
+                loadCustomersData();
+            } else if (sectionName === 'orders') {
+                loadOrdersData();
+            } else if (sectionName === 'dashboard') {
+                loadDashboardStats();
+            }
+        }
+        
+        // Load dashboard statistics
+        async function loadDashboardStats() {
+            try {
+                const analytics = await getAnalytics();
+                
+                document.getElementById('totalCustomersCount').textContent = analytics.totalCustomers;
+                document.getElementById('totalOrdersCount').textContent = analytics.totalOrders;
+                
+                console.log('Dashboard stats loaded:', analytics);
+            } catch (error) {
+                console.error('Error loading dashboard stats:', error);
+                document.getElementById('totalCustomersCount').textContent = '0';
+                document.getElementById('totalOrdersCount').textContent = '0';
+            }
+        }
+        
+        // Load and display customers data
+        async function loadCustomersData() {
+            const container = document.getElementById('customersContainer');
+            container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">Loading customers...</div>';
+            
+            try {
+                const customers = await getAllCustomers();
+                
+                if (customers.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">No customers found</div>';
+                    return;
+                }
+                
+                let html = '';
+                customers.forEach((customer, index) => {
+                    const createdDate = customer.createdAt ? new Date(customer.createdAt.toDate()).toLocaleDateString() : 'Unknown';
+                    const subscriptionStatus = customer.subscriptionActive ? 
+                        (customer.isTrialUser ? '🆓 Trial' : '💎 Paid') : '❌ Inactive';
+                    
+                    html += `
+                        <div style="padding: 1rem; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.2rem;">${customer.fullName || 'Unknown'}</div>
+                                <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 0.2rem;">${customer.email}</div>
+                                <div style="font-size: 12px; color: var(--text-secondary);">📍 ${customer.zipCode} • Joined: ${createdDate}</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 14px; font-weight: 600; margin-bottom: 0.2rem;">${subscriptionStatus}</div>
+                                <div style="font-size: 12px; color: var(--text-secondary);">${customer.subscriptionPlan || 'trial'}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                container.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading customers:', error);
+                container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--error);">Error loading customers. Check console for details.</div>';
+            }
+        }
+        
+        // Load and display orders data
+        async function loadOrdersData() {
+            const container = document.getElementById('ordersContainer');
+            container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">Loading orders...</div>';
+            
+            try {
+                // Get all orders
+                const ordersSnapshot = await db.collection('orders').orderBy('createdAt', 'desc').limit(20).get();
+                const orders = [];
+                
+                ordersSnapshot.forEach(doc => {
+                    orders.push({ id: doc.id, ...doc.data() });
+                });
+                
+                if (orders.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-secondary);">No orders found</div>';
+                    return;
+                }
+                
+                let html = '';
+                orders.forEach((order, index) => {
+                    const createdDate = order.createdAt ? new Date(order.createdAt.toDate()).toLocaleDateString() : 'Unknown';
+                    const statusColor = order.status === 'completed' ? 'var(--secondary)' : 
+                                       order.status === 'pending' ? 'var(--warning)' : 'var(--error)';
+                    
+                    html += `
+                        <div style="padding: 1rem; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.2rem;">Order #${order.id.substring(0, 8)}</div>
+                                <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 0.2rem;">${order.customerEmail || 'Unknown customer'}</div>
+                                <div style="font-size: 12px; color: var(--text-secondary);">📅 ${createdDate}</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 14px; font-weight: 600; color: ${statusColor}; margin-bottom: 0.2rem; text-transform: capitalize;">${order.status || 'pending'}</div>
+                                <div style="font-size: 12px; color: var(--text-secondary);">$${order.total ? order.total.toFixed(2) : '0.00'}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                container.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--error);">Error loading orders. Check console for details.</div>';
+            }
         }
 
         // Initialize app when DOM is loaded
